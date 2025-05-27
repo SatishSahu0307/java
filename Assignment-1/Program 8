@@ -1,0 +1,28 @@
+import java.util.*;
+class DigitAddition 
+{
+    public static void main(String[] args) 
+    {
+        Scanner ob = new Scanner(System.in);
+        System.out.print("Enter a 4-digit number: ");
+        int number = ob.nextInt();
+        if (number < 1000 || number > 9999)
+	{
+                System.out.println("Error: Please enter a valid 4-digit number (between 1000 and 9999).");
+        } 
+	else
+        {
+                int thousandsDigit = number / 1000;
+                int hundredsDigit = (number % 1000) / 100;               
+                int tensDigit = (number % 100) / 10;               
+                int unitsDigit = number % 10;                
+                int sumOfDigits = thousandsDigit + hundredsDigit + tensDigit + unitsDigit;        
+                System.out.println("Original Number:" + number);
+                System.out.println("Thousands Digit:" + thousandsDigit);
+                System.out.println("Hundreds Digit:" + hundredsDigit);
+                System.out.println("Tens Digit:" + tensDigit);
+                System.out.println("Units Digit:" + unitsDigit);
+                System.out.println("Sum of Digits:" + sumOfDigits);
+         }
+     }
+}
