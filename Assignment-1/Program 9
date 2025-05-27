@@ -1,0 +1,16 @@
+import java.util.*;
+class AreaCalculator 
+{
+    public static void main(String[] args)
+	{
+        Scanner ob = new Scanner(System.in);
+        System.out.print("Enter the base of the triangle: ");
+        double base = ob.nextDouble();
+	      System.out.print("Enter the height of the triangle: ");
+        double height = ob.nextDouble();
+        double area = 0.5 * base * height;
+	      System.out.println("Base entered: " + base);
+        System.out.println("Height entered: " + height);
+        System.out.println("Area of the triangle: " + area);
+   }
+}
