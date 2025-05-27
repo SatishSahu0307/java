@@ -1,0 +1,17 @@
+import java.util.*;
+class NumberSwapper
+{
+     public static void main(String[] args) 
+	{
+            Scanner ob = new Scanner(System.in);
+            System.out.print("Enter the first number: ");
+            int number1 = ob.nextInt();
+            System.out.print("Enter the second number: ");
+            int number2 = ob.nextInt();
+	          System.out.println("Before swap: number1 = " + number1 + ", number2 = " + number2);
+	          number1 = number1 + number2;
+            number2 = number1 - number2;
+            number1 = number1 - number2;
+            System.out.println("After swap: number1 = " + number1 + ", number2 = " + number2);
+	}
+}
