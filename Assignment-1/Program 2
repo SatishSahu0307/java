@@ -1,0 +1,26 @@
+import java.util.*;
+class AddSubtract
+{
+     public static void main(String[] args) 
+	{
+        Scanner ob = new Scanner(System.in);
+        System.out.print("Enter the first number: ");
+        int number1 = ob.nextInt();
+        System.out.print("Enter the second number: ");
+        int number2 = ob.nextInt();
+        int sum = number1 + number2;
+        int difference = number1 - number2;
+        System.out.println("First Number Entered: " + number1);
+        System.out.println("Second Number Entered: " + number2);
+        System.out.println("Sum (" + number1 + " + " + number2 + "): " + sum);
+        System.out.println("Difference (" + number1 + " - " + number2 + "): " + difference);
+        int carry = (number1 & number2) << 1;
+        number1 = number1 ^ number2;
+        number2 = carry;
+	System.out.println("Sum (" + number1 + " + " + number2 + "): " + sum);
+	int negB = ~number2;
+        negB = negB + 1;
+        System.out.println("Difference (" + number1 + " - " + negB + "): " + difference);
+        }
+}
+
