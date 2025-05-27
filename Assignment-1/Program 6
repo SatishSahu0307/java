@@ -1,0 +1,14 @@
+import java.util.*;
+class CubeCalculator 
+{
+    public static void main(String[] args)
+    {
+        Scanner ob = new Scanner(System.in);
+        System.out.print("Enter a number to calculate its cube: ");
+        double number = ob.nextDouble();
+        double cube = number * number * number;
+        System.out.println("Number entered: " + number);
+        System.out.println("Cube of " + number + ": " + cube);
+    }
+}
+
