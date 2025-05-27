@@ -1,0 +1,24 @@
+import java.util.*;
+class FirstLastAddition 
+{
+    public static void main(String[] args) 
+    {
+        Scanner ob = new Scanner(System.in);
+        System.out.print("Enter a 4-digit number: ");
+        int number = ob.nextInt();
+        if (number < 1000 || number > 9999)
+	      {
+                System.out.println("Error: Please enter a valid 4-digit number (between 1000 and 9999).");
+        } 
+	else
+        {
+                int firstDigit = number / 1000;              
+                int lastDigit = number % 10;                
+                int add = firstDigit + lastDigit;        
+                System.out.println("Original Number:" + number);
+                System.out.println("First Digit:" + firstDigit);
+                System.out.println("Last Digit:" + lastDigit);
+                System.out.println("Addition:" + add);
+        }
+     }
+}
