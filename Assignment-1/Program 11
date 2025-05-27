@@ -1,0 +1,24 @@
+import java.util.*;
+class Student
+{
+    public static void main(String[] args) 
+    {
+        Scanner ob = new Scanner(System.in);
+        System.out.print("Enter First Student marks:");
+        int number1 = ob.nextInt();
+	      System.out.print("Enter Second Student marks:");
+        int number2 = ob.nextInt();
+	      System.out.print("Enter Third Student marks:");
+        int number3 = ob.nextInt();
+	      System.out.print("Enter Fourth Student marks:");
+        int number4 = ob.nextInt();
+	      System.out.print("Enter Fifth Student marks:");
+        int number5 = ob.nextInt();
+        int totalmarks = number1 + number2 + number3 + number4 + number5;            
+        double average = totalmarks/5;
+	      double percentage = totalmarks/100*500;   
+        System.out.println("Total marks of students:" + totalmarks);
+	      System.out.println("Total average of students:" + average);
+	      System.out.println("Total percentage of students:" + percentage);
+     }
+ }
