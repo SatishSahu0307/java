@@ -1,0 +1,72 @@
+import java.util.Scanner;
+
+public class AreaCalculator {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+
+        do {
+            // Display the menu to the user
+            System.out.println("\n--- Geometrical Area Calculator ---");
+            System.out.println("1. Calculate Area of Circle");
+            System.out.println("2. Calculate Area of Rectangle");
+            System.out.println("3. Calculate Area of Triangle");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            // Read the user's choice
+            choice = scanner.nextInt();
+
+            // Perform action based on user's choice using a switch statement
+            switch (choice) {
+                case 1: // Area of Circle
+                    System.out.print("Enter the radius of the circle: ");
+                    double radius = scanner.nextDouble();
+                    if (radius < 0) {
+                        System.out.println("Radius cannot be negative. Please enter a positive value.");
+                    } else {
+                        double circleArea = Math.PI * radius * radius;
+                        System.out.println("Area of Circle: " + String.format("%.2f", circleArea));
+                    }
+                    break;
+
+                case 2: // Area of Rectangle
+                    System.out.print("Enter the length of the rectangle: ");
+                    double length = scanner.nextDouble();
+                    System.out.print("Enter the width of the rectangle: ");
+                    double width = scanner.nextDouble();
+                    if (length < 0 || width < 0) {
+                        System.out.println("Length and width cannot be negative. Please enter positive values.");
+                    } else {
+                        double rectangleArea = length * width;
+                        System.out.println("Area of Rectangle: " + String.format("%.2f", rectangleArea));
+                    }
+                    break;
+
+                case 3: // Area of Triangle
+                    System.out.print("Enter the base of the triangle: ");
+                    double base = scanner.nextDouble();
+                    System.out.print("Enter the height of the triangle: ");
+                    double height = scanner.nextDouble();
+                    if (base < 0 || height < 0) {
+                        System.out.println("Base and height cannot be negative. Please enter positive values.");
+                    } else {
+                        double triangleArea = 0.5 * base * height;
+                        System.out.println("Area of Triangle: " + String.format("%.2f", triangleArea));
+                    }
+                    break;
+
+                case 4: // Exit
+                    System.out.println("Exiting the program. Goodbye!");
+                    break;
+
+                default: // Invalid choice
+                    System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                    break;
+            }
+        } while (choice != 4); // Continue loop until user chooses to exit
+
+        scanner.close(); // Close the scanner
+    }
+}
