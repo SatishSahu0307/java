@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class NumberSignChecker {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a number: ");
+        double number = scanner.nextDouble(); // Read the number from the user
+
+        // Determine a value to switch on based on the number's sign
+        // 1: Positive
+        // -1: Negative
+        // 0: Zero
+        int signIndicator;
+        if (number > 0) {
+            signIndicator = 1;
+        } else if (number < 0) {
+            signIndicator = -1;
+        } else {
+            signIndicator = 0;
+        }
+
+        // Use a switch statement to print whether the number is positive, negative, or zero
+        switch (signIndicator) {
+            case 1:
+                System.out.println("The number " + number + " is positive.");
+                break;
+            case -1:
+                System.out.println("The number " + number + " is negative.");
+                break;
+            case 0:
+                System.out.println("The number " + number + " is zero.");
+                break;
+            default:
+                // This case should ideally not be reached with the current logic
+                System.out.println("An unexpected error occurred.");
+                break;
+        }
+
+        scanner.close(); // Close the scanner to prevent resource leak
+    }
+}
