@@ -1,0 +1,44 @@
+import java.util.Scanner;
+
+public class TriangleChecker {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the three angles of the triangle:");
+
+        System.out.print("Angle 1: ");
+        int angle1 = scanner.nextInt(); // Read the first angle
+
+        System.out.print("Angle 2: ");
+        int angle2 = scanner.nextInt(); // Read the second angle
+
+        System.out.print("Angle 3: ");
+        int angle3 = scanner.nextInt(); // Read the third angle
+
+        // A triangle can be formed if:
+        // 1. All angles are positive.
+        // 2. The sum of the angles is exactly 180 degrees.
+        if (angle1 > 0 && angle2 > 0 && angle3 > 0) { // Check if all angles are positive
+            if (angle1 + angle2 + angle3 == 180) { // Check if the sum is 180
+                System.out.println("A triangle can be formed with angles " + angle1 + ", " + angle2 + ", and " + angle3 + ".");
+
+                // Now, classify the type of triangle
+                if (angle1 == angle2 && angle2 == angle3) {
+                    System.out.println("It is an Equilateral triangle.");
+                } else if (angle1 == angle2 || angle1 == angle3 || angle2 == angle3) {
+                    System.out.println("It is an Isosceles triangle.");
+                } else {
+                    System.out.println("It is a Scalene triangle.");
+                }
+            } else {
+                System.out.println("A triangle cannot be formed. The sum of the angles is " + (angle1 + angle2 + angle3) + ", which is not 180 degrees.");
+            }
+        } else {
+            System.out.println("A triangle cannot be formed. All angles must be positive values.");
+        }
+
+        scanner.close(); // Close the scanner to prevent resource leak
+    }
+}
