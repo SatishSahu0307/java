@@ -1,0 +1,59 @@
+import java.util.Scanner;
+
+public class SimpleCalculator {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("--- Simple Calculator Menu ---");
+        System.out.println("a. + (Addition)");
+        System.out.println("b. - (Subtraction)");
+        System.out.println("c. * (Multiplication)");
+        System.out.println("d. / (Division)");
+        System.out.print("Enter your choice (a, b, c, or d): ");
+
+        // Read the user's choice
+        char choice = scanner.next().charAt(0);
+
+        System.out.print("Enter the first number: ");
+        double num1 = scanner.nextDouble(); // Read the first number
+
+        System.out.print("Enter the second number: ");
+        double num2 = scanner.nextDouble(); // Read the second number
+
+        double result = 0; // Variable to store the result of the operation
+        boolean isValidOperation = true; // Flag to check if the operation is valid
+
+        // Perform the operation based on user's choice using a switch statement
+        switch (choice) {
+            case 'a':
+                result = num1 + num2;
+                System.out.println("Result of Addition: " + num1 + " + " + num2 + " = " + result);
+                break;
+            case 'b':
+                result = num1 - num2;
+                System.out.println("Result of Subtraction: " + num1 + " - " + num2 + " = " + result);
+                break;
+            case 'c':
+                result = num1 * num2;
+                System.out.println("Result of Multiplication: " + num1 + " * " + num2 + " = " + result);
+                break;
+            case 'd':
+                if (num2 != 0) { // Check for division by zero
+                    result = num1 / num2;
+                    System.out.println("Result of Division: " + num1 + " / " + num2 + " = " + result);
+                } else {
+                    System.out.println("Error: Cannot divide by zero!");
+                    isValidOperation = false; // Set flag to false if division by zero occurs
+                }
+                break;
+            default:
+                System.out.println("Invalid choice! Please select a valid operation (a, b, c, or d).");
+                isValidOperation = false; // Set flag to false for invalid choice
+                break;
+        }
+
+        scanner.close(); // Close the scanner to prevent resource leak
+    }
+}
