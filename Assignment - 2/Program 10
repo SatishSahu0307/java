@@ -1,0 +1,25 @@
+import java.util.Scanner;
+
+public class VotingEligibility {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the candidate's age: ");
+        int age = scanner.nextInt(); // Read the age input from the user
+
+        // Define the minimum voting age
+        final int MIN_VOTING_AGE = 18;
+
+        // Check if the candidate is eligible to vote
+        if (age >= MIN_VOTING_AGE) {
+            System.out.println("The candidate with age " + age + " is eligible to cast their vote.");
+        } else {
+            System.out.println("The candidate with age " + age + " is not eligible to cast their vote yet.");
+            System.out.println("They will be eligible in " + (MIN_VOTING_AGE - age) + " year(s).");
+        }
+
+        scanner.close(); // Close the scanner to prevent resource leak
+    }
+}
