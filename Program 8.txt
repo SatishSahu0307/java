@@ -1,0 +1,36 @@
+import java.util.Scanner;
+
+public class LeapYear {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a year: ");
+        int year = scanner.nextInt(); // Read the year input from the user
+
+        boolean isLeap = false; // Initialize a boolean variable to store the result
+
+        /*
+         * A year is a leap year if it satisfies one of the following conditions:
+         * 1. It is divisible by 400.
+         * 2. It is divisible by 4 but not by 100.
+         */
+        if (year % 400 == 0) {
+            isLeap = true; // Condition 1: Divisible by 400
+        } else if (year % 4 == 0 && year % 100 != 0) {
+            isLeap = true; // Condition 2: Divisible by 4 but not by 100
+        } else {
+            isLeap = false; // Not a leap year
+        }
+
+        // Print the result based on the 'isLeap' variable
+        if (isLeap) {
+            System.out.println(year + " is a leap year.");
+        } else {
+            System.out.println(year + " is not a leap year.");
+        }
+
+        scanner.close(); // Close the scanner to prevent resource leak
+    }
+}

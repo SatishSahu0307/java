@@ -1,0 +1,48 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+/**
+ * This program prompts the user to enter three numbers and then
+ * determines and prints the largest of the three using a series of if-else if-else statements.
+ */
+public class LargerNumberFinder {
+
+    public static void main(String[] args) {
+        // 1. Create a Scanner object to get input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome to the Largest Number Finder (for three numbers)!");
+
+        // 2. Prompt the user for the first number and read it
+        System.out.print("Please enter the first number: ");
+        // Using double to allow for decimal numbers
+        double number1 = scanner.nextDouble();
+
+        // 3. Prompt the user for the second number and read it
+        System.out.print("Please enter the second number: ");
+        double number2 = scanner.nextDouble();
+
+        // 4. Prompt the user for the third number and read it
+        System.out.print("Please enter the third number: ");
+        double number3 = scanner.nextDouble();
+
+        double largestNumber; // Variable to store the largest number
+
+        // 5. Find the largest number using if-else if-else statements
+        // This logic compares all three numbers to find the largest.
+        if (number1 >= number2 && number1 >= number3) {
+            largestNumber = number1; // If number1 is greater than or equal to both others
+        } else if (number2 >= number1 && number2 >= number3) {
+            largestNumber = number2; // If number2 is greater than or equal to both others
+        } else {
+            largestNumber = number3; // Otherwise, number3 must be the largest
+        }
+
+        // 6. Print the result to the console
+        System.out.println("\nComparing " + number1 + ", " + number2 + ", and " + number3 + ":");
+        System.out.println("The largest number is: " + largestNumber);
+
+        // 7. Close the scanner to release system resources
+        scanner.close();
+        System.out.println("Thank you for using the Largest Number Finder!");
+    }
+}
