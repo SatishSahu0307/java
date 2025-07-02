@@ -1,0 +1,113 @@
+package packone;
+import java.util.*;
+/**
+ * This class demonstrates different access modifiers (public, private, protected, default).
+ * It will be accessed from another package (packtwo) to show accessibility rules.
+ */
+public class MyClassInPackOne {
+
+    // Public member: Accessible from anywhere
+    public int publicVar = 10;
+    public void publicMethod() {
+        System.out.println("  (packone.MyClassInPackOne) Public method accessed.");
+    }
+
+    // Private member: Accessible only within this class
+    private int privateVar = 20;
+    private void privateMethod() {
+        System.out.println("  (packone.MyClassInPackOne) Private method accessed.");
+    }
+
+    // Protected member: Accessible within this package and by subclasses in any package
+    protected int protectedVar = 30;
+    protected void protectedMethod() {
+        System.out.println("  (packone.MyClassInPackOne) Protected method accessed.");
+    }
+
+    // Default (package-private) member: Accessible only within this package
+    int defaultVar = 40; // No access modifier keyword means default
+    void defaultMethod() {
+        System.out.println("  (packone.MyClassInPackOne) Default method accessed.");
+    }
+
+    // Method to demonstrate internal access to private members
+    public void demonstrateInternalAccess() {
+        System.out.println("  (packone.MyClassInPackOne) Inside MyClassInPackOne:");
+        System.out.println("  Accessing privateVar internally: " + privateVar);
+        privateMethod();
+    }
+}
+
+
+// --- File 2: packtwo/AccessChecker.java ---
+// This class belongs to the 'packtwo' package and imports 'packone.MyClassInPackOne'.
+package packtwo;
+
+import packone.MyClassInPackOne; // Import the class from packone
+
+/**
+ * This class attempts to access members of MyClassInPackOne (from packone)
+ * to demonstrate the rules of access modifiers across different packages.
+ */
+public class AccessChecker {
+
+    public static void main(String[] args) {
+        System.out.println("--- Attempting to access members of MyClassInPackOne from packtwo.AccessChecker ---");
+
+        MyClassInPackOne obj = new MyClassInPackOne(); // Create an object of MyClassInPackOne
+
+        // --- Accessing Public Members ---
+        System.out.println("\n1. Public Members:");
+        System.out.println("  Accessing publicVar: " + obj.publicVar); // Accessible
+        obj.publicMethod(); // Accessible
+
+        // --- Accessing Private Members ---
+        System.out.println("\n2. Private Members:");
+        // obj.privateVar = 25; // COMPILE ERROR: privateVar has private access in packone.MyClassInPackOne
+        // obj.privateMethod(); // COMPILE ERROR: privateMethod() has private access in packone.MyClassInPackOne
+        System.out.println("  Private members are NOT directly accessible from another package/class.");
+        obj.demonstrateInternalAccess(); // Can access through a public method in the original class
+
+        // --- Accessing Protected Members ---
+        System.out.println("\n3. Protected Members:");
+        // obj.protectedVar = 35; // COMPILE ERROR: protectedVar has protected access in packone.MyClassInPackOne
+        // obj.protectedMethod(); // COMPILE ERROR: protectedMethod() has protected access in packone.MyClassInPackOne
+        System.out.println("  Protected members are NOT directly accessible from a non-subclass in another package.");
+        System.out.println("  (Access is possible via inheritance, as shown in SubClassInPackTwo below)");
+
+        // --- Accessing Default (Package-Private) Members ---
+        System.out.println("\n4. Default (Package-Private) Members:");
+        // obj.defaultVar = 45; // COMPILE ERROR: defaultVar is not public in packone.MyClassInPackOne; cannot be accessed from outside package
+        // obj.defaultMethod(); // COMPILE ERROR: defaultMethod() is not public in packone.MyClassInPackOne; cannot be accessed from outside package
+        System.out.println("  Default members are NOT accessible from another package.");
+
+        System.out.println("\n--- End of direct access demonstration from packtwo.AccessChecker ---");
+    }
+}
+
+// --- File 3: packtwo/SubClassInPackTwo.java ---
+// This class extends MyClassInPackOne, demonstrating protected member access via inheritance.
+package packtwo;
+
+import packone.MyClassInPackOne; // Import the class from packone
+
+/**
+ * This class extends MyClassInPackOne from packone to demonstrate
+ * protected member access through inheritance.
+ */
+class SubClassInPackTwo extends MyClassInPackOne { // Note: Must be public or default, not private
+
+    public void accessProtectedMembers() {
+        System.out.println("\n--- Accessing Protected Members from SubClassInPackTwo (subclass in another package) ---");
+        System.out.println("  Accessing protectedVar: " + protectedVar); // Accessible because SubClassInPackTwo is a subclass
+        protectedMethod(); // Accessible because SubClassInPackTwo is a subclass
+        System.out.println("  Protected members ARE accessible from a subclass in another package.");
+    }
+
+    public static void main(String[] args) {
+        // This main is just for demonstrating this specific subclass's access.
+        // The primary demo runs via AccessChecker.main().
+        SubClassInPackTwo subObj = new SubClassInPackTwo();
+        subObj.accessProtectedMembers();
+    }
+}
