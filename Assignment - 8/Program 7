@@ -1,0 +1,65 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+import java.util.HashSet;  // Import HashSet to store unique duplicate elements
+import java.util.Set;      // Import Set interface
+
+public class IntegerArray {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner input = new Scanner(System.in);
+
+        // The program will now accept exactly 10 integers
+        int n = 10;
+
+        // Declare an array to store 10 integers
+        int[] numbers = new int[n];
+
+        System.out.println("Please enter 10 integers:");
+
+        // Loop to accept 10 integers from the user
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter integer " + (i + 1) + ": ");
+            // Read the integer entered by the user and store it in the array
+            numbers[i] = input.nextInt();
+        }
+
+        System.out.println("\n--- Integers stored in the array ---");
+
+        // Loop through the array and display each integer in original order
+        for (int i = 0; i < n; i++) {
+            System.out.println("Integer " + (i + 1) + ": " + numbers[i]);
+        }
+
+        System.out.println("\n--- Duplicate Elements ---");
+
+        // Use a HashSet to store unique duplicate elements found
+        Set<Integer> duplicateElements = new HashSet<>();
+        boolean foundDuplicates = false;
+
+        // Iterate through the array to find duplicate elements
+        // Outer loop
+        for (int i = 0; i < n - 1; i++) {
+            // Inner loop starts from the next element to avoid comparing an element with itself
+            for (int j = i + 1; j < n; j++) {
+                // If two elements are equal, it's a duplicate
+                if (numbers[i] == numbers[j]) {
+                    duplicateElements.add(numbers[i]); // Add the duplicate to the HashSet
+                    foundDuplicates = true;
+                }
+            }
+        }
+
+        // Display the duplicate elements
+        if (foundDuplicates) {
+            System.out.println("The duplicate elements in the array are:");
+            for (Integer duplicate : duplicateElements) {
+                System.out.println(duplicate);
+            }
+        } else {
+            System.out.println("No duplicate elements found in the array.");
+        }
+
+        // Close the scanner to prevent resource leaks
+        input.close();
+    }
+}
