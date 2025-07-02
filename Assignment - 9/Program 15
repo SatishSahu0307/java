@@ -1,0 +1,67 @@
+import java.util.Scanner; // Import the Scanner class to get user input
+
+public class MatrixOperations {
+
+    public static void main(String[] args) {
+        // Declare a 3x3 integer matrix for input
+        int[][] matrix = new int[3][3];
+
+        // Create a Scanner object to read input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the elements of the 3x3 matrix:");
+
+        // Loop to get user input for each element of the matrix
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            // Inner loop for columns
+            for (int j = 0; j < 3; j++) {
+                System.out.print("Enter element at position [" + i + "][" + j + "]: ");
+                // Read the integer input from the user and assign it to the matrix
+                matrix[i][j] = scanner.nextInt();
+            }
+        }
+
+        System.out.println("\n--- The matrix you entered is: ---");
+
+        // Loop to print the elements of the matrix
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            // Inner loop for columns
+            for (int j = 0; j < 3; j++) {
+                // Print each element followed by a space
+                System.out.print(matrix[i][j] + " ");
+            }
+            // Move to the next line after printing each row
+            System.out.println();
+        }
+
+        System.out.println("\n--- Checking if the matrix is Symmetric ---");
+        boolean isSymmetric = true; // Assume it's symmetric initially
+
+        // To check for symmetry, compare matrix[i][j] with matrix[j][i]
+        // We only need to iterate through the upper or lower triangle
+        // or compare all elements. Here, we compare all relevant pairs.
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (matrix[i][j] != matrix[j][i]) {
+                    isSymmetric = false; // If any element is not equal to its transpose, it's not symmetric
+                    break; // No need to check further, it's not symmetric
+                }
+            }
+            if (!isSymmetric) {
+                break; // No need to check further, it's not symmetric
+            }
+        }
+
+        if (isSymmetric) {
+            System.out.println("The matrix is Symmetric.");
+        } else {
+            System.out.println("The matrix is NOT Symmetric.");
+        }
+
+        // Close the scanner to prevent resource leaks
+        scanner.close();
+    }
+}
+
