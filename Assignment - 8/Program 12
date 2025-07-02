@@ -1,0 +1,75 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+import java.util.HashSet;  // Import HashSet to store unique elements
+import java.util.Set;      // Import Set interface
+import java.util.Arrays;   // Import Arrays class for array manipulation
+
+public class IntegerArray {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Please enter the number of integers (n): ");
+        int n = input.nextInt(); // Read the value of 'n' from the user
+
+        // Validate if 'n' is positive
+        if (n <= 0) {
+            System.out.println("Please enter a positive number of integers.");
+            input.close();
+            return; // Exit the program if n is invalid
+        }
+
+        // Declare an array to store 'n' integers
+        int[] numbers = new int[n];
+
+        System.out.println("Please enter " + n + " integers:");
+
+        // Loop 'n' times to accept integers from the user
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter integer " + (i + 1) + ": ");
+            // Read the integer entered by the user and store it in the array
+            numbers[i] = input.nextInt();
+        }
+
+        System.out.println("\n--- Original Array Elements ---");
+
+        // Loop through the original array and display each integer
+        for (int i = 0; i < n; i++) {
+            System.out.print(numbers[i] + " ");
+        }
+        System.out.println(); // New line for better formatting
+
+        System.out.println("\n--- Removing Duplicate Elements ---");
+
+        // Use a HashSet to store unique elements.
+        // HashSet does not allow duplicate elements, so adding elements to it
+        // automatically handles the removal of duplicates.
+        Set<Integer> uniqueElements = new HashSet<>();
+        for (int number : numbers) {
+            uniqueElements.add(number);
+        }
+
+        // Convert the HashSet back to an array
+        // The size of the new array will be the number of unique elements
+        int[] arrayWithoutDuplicates = new int[uniqueElements.size()];
+        int index = 0;
+        for (int element : uniqueElements) {
+            arrayWithoutDuplicates[index++] = element;
+        }
+
+        System.out.println("--- Array after removing duplicates ---");
+
+        // Display the array after removing duplicates
+        if (arrayWithoutDuplicates.length == 0) {
+            System.out.println("The array is empty after removing duplicates (or was initially empty).");
+        } else {
+            for (int i = 0; i < arrayWithoutDuplicates.length; i++) {
+                System.out.print(arrayWithoutDuplicates[i] + " ");
+            }
+            System.out.println(); // New line for better formatting
+        }
+
+        // Close the scanner to prevent resource leaks
+        input.close();
+    }
+}
