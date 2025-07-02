@@ -1,0 +1,286 @@
+import java.util.*;
+interface Drivable {
+    /**
+     * Starts the vehicle's engine or power source.
+     * @return true if the engine starts successfully, false otherwise.
+     */
+    boolean startEngine();
+
+    /**
+     * Stops the vehicle's engine or power source.
+     * @return true if the engine stops successfully, false otherwise.
+     */
+    boolean stopEngine();
+
+    /**
+     * Accelerates the vehicle.
+     * @param speedIncrease The amount by which to increase speed.
+     */
+    void accelerate(int speedIncrease);
+
+    /**
+     * Applies brakes to the vehicle.
+     * @param speedDecrease The amount by which to decrease speed.
+     */
+    void brake(int speedDecrease);
+}
+
+/**
+ * An abstract class representing a general Vehicle.
+ * It provides common properties and some default implementations for Drivable methods,
+ * while leaving specific behaviors abstract.
+ */
+abstract class Vehicle implements Drivable {
+    // Protected fields accessible by subclasses
+    protected String make;
+    protected String model;
+    protected int currentSpeed;
+
+    /**
+     * Constructor for the Vehicle class.
+     * @param make The manufacturer of the vehicle.
+     * @param model The model of the vehicle.
+     */
+    public Vehicle(String make, String model) {
+        this.make = make;
+        this.model = model;
+        this.currentSpeed = 0; // All vehicles start at 0 speed
+        System.out.println(make + " " + model + " has been created.");
+    }
+
+    /**
+     * Concrete implementation of a Drivable method: Accelerate.
+     * All vehicles can accelerate, so a general implementation is provided.
+     * @param speedIncrease The amount by which to increase speed.
+     */
+    @Override
+    public void accelerate(int speedIncrease) {
+        if (speedIncrease > 0) {
+            currentSpeed += speedIncrease;
+            System.out.println(make + " " + model + " accelerates. Current speed: " + currentSpeed + " mph.");
+        } else {
+            System.out.println("Invalid speed increase for " + make + " " + model + ".");
+        }
+    }
+
+    /**
+     * Concrete implementation of a Drivable method: Brake.
+     * All vehicles can brake, so a general implementation is provided.
+     * @param speedDecrease The amount by which to decrease speed.
+     */
+    @Override
+    public void brake(int speedDecrease) {
+        if (speedDecrease > 0) {
+            currentSpeed = Math.max(0, currentSpeed - speedDecrease);
+            System.out.println(make + " " + model + " brakes. Current speed: " + currentSpeed + " mph.");
+        } else {
+            System.out.println("Invalid speed decrease for " + make + " " + model + ".");
+        }
+    }
+
+    /**
+     * Abstract method: Each vehicle type will have a specific way to display info.
+     * Subclasses must implement this.
+     */
+    public abstract void displayInfo();
+
+    /**
+     * Getter for current speed.
+     * @return The current speed of the vehicle.
+     */
+    public int getCurrentSpeed() {
+        return currentSpeed;
+    }
+}
+
+/**
+ * Concrete class extending Vehicle and fully implementing Drivable.
+ * Represents a Car.
+ */
+class Car extends Vehicle {
+    private int numberOfDoors;
+    private boolean engineOn;
+
+    /**
+     * Constructor for the Car class.
+     * @param make The manufacturer of the car.
+     * @param model The model of the car.
+     * @param numberOfDoors The number of doors on the car.
+     */
+    public Car(String make, String model, int numberOfDoors) {
+        super(make, model);
+        this.numberOfDoors = numberOfDoors;
+        this.engineOn = false; // Car engine starts off
+        System.out.println("A car specific for " + make + " " + model + " with " + numberOfDoors + " doors.");
+    }
+
+    /**
+     * Implementation of startEngine for Car.
+     */
+    @Override
+    public boolean startEngine() {
+        if (!engineOn) {
+            engineOn = true;
+            System.out.println(make + " " + model + "'s engine started. Vroom!");
+            return true;
+        } else {
+            System.out.println(make + " " + model + "'s engine is already on.");
+            return false;
+        }
+    }
+
+    /**
+     * Implementation of stopEngine for Car.
+     */
+    @Override
+    public boolean stopEngine() {
+        if (engineOn) {
+            engineOn = false;
+            currentSpeed = 0; // When engine stops, speed drops to 0
+            System.out.println(make + " " + model + "'s engine stopped. Speed reset to 0.");
+            return true;
+        } else {
+            System.out.println(make + " " + model + "'s engine is already off.");
+            return false;
+        }
+    }
+
+    /**
+     * Implementation of displayInfo for Car.
+     */
+    @Override
+    public void displayInfo() {
+        System.out.println("Car: " + make + " " + model + " | Doors: " + numberOfDoors +
+                           " | Speed: " + currentSpeed + " mph | Engine: " + (engineOn ? "On" : "Off"));
+    }
+
+    /**
+     * Car-specific method.
+     */
+    public void honk() {
+        System.out.println(make + " " + model + " goes Beep! Beep!");
+    }
+}
+
+/**
+ * Concrete class extending Vehicle and fully implementing Drivable.
+ * Represents a Motorcycle.
+ */
+class Motorcycle extends Vehicle {
+    private boolean hasSidecar;
+    private boolean engineOn;
+
+    /**
+     * Constructor for the Motorcycle class.
+     * @param make The manufacturer of the motorcycle.
+     * @param model The model of the motorcycle.
+     * @param hasSidecar True if the motorcycle has a sidecar, false otherwise.
+     */
+    public Motorcycle(String make, String model, boolean hasSidecar) {
+        super(make, model);
+        this.hasSidecar = hasSidecar;
+        this.engineOn = false; // Motorcycle engine starts off
+        System.out.println("A motorcycle specific for " + make + " " + model +
+                           (hasSidecar ? " with a sidecar." : " without a sidecar."));
+    }
+
+    /**
+     * Implementation of startEngine for Motorcycle.
+     */
+    @Override
+    public boolean startEngine() {
+        if (!engineOn) {
+            engineOn = true;
+            System.out.println(make + " " + model + "'s engine started. Roar!");
+            return true;
+        } else {
+            System.out.println(make + " " + model + "'s engine is already on.");
+            return false;
+        }
+    }
+
+    /**
+     * Implementation of stopEngine for Motorcycle.
+     */
+    @Override
+    public boolean stopEngine() {
+        if (engineOn) {
+            engineOn = false;
+            currentSpeed = 0; // When engine stops, speed drops to 0
+            System.out.println(make + " " + model + "'s engine stopped. Speed reset to 0.");
+            return true;
+        } else {
+            System.out.println(make + " " + model + "'s engine is already off.");
+            return false;
+        }
+    }
+
+    /**
+     * Implementation of displayInfo for Motorcycle.
+     */
+    @Override
+    public void displayInfo() {
+        System.out.println("Motorcycle: " + make + " " + model + " | Sidecar: " + (hasSidecar ? "Yes" : "No") +
+                           " | Speed: " + currentSpeed + " mph | Engine: " + (engineOn ? "On" : "Off"));
+    }
+
+    /**
+     * Motorcycle-specific method.
+     */
+    public void performWheelie() {
+        System.out.println(make + " " + model + " performs a daring wheelie!");
+    }
+}
+
+/**
+ * Main class to demonstrate the Vehicle System.
+ */
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("--- Vehicle System Demonstration ---");
+
+        // Create instances of concrete vehicle classes
+        Car myCar = new Car("Honda", "Civic", 4);
+        Motorcycle myMotorcycle = new Motorcycle("Harley-Davidson", "Iron 883", false);
+
+        System.out.println("\n--- Car Actions ---");
+        myCar.displayInfo();
+        myCar.startEngine();
+        myCar.accelerate(50);
+        myCar.honk();
+        myCar.brake(20);
+        myCar.displayInfo();
+        myCar.stopEngine();
+        myCar.displayInfo();
+
+        System.out.println("\n--- Motorcycle Actions ---");
+        myMotorcycle.displayInfo();
+        myMotorcycle.startEngine();
+        myMotorcycle.accelerate(70);
+        myMotorcycle.performWheelie();
+        myMotorcycle.brake(30);
+        myMotorcycle.displayInfo();
+        myMotorcycle.stopEngine();
+        myMotorcycle.displayInfo();
+
+        System.out.println("\n--- Demonstrating Polymorphism with Interface and Abstract Class ---");
+
+        // An array of the abstract Vehicle type can hold Car and Motorcycle objects
+        Vehicle[] vehicles = new Vehicle[2];
+        vehicles[0] = myCar;
+        vehicles[1] = myMotorcycle;
+
+        for (Vehicle v : vehicles) {
+            System.out.println("\nHandling: " + v.make + " " + v.model);
+            v.startEngine(); // Polymorphic call to Drivable interface method
+            v.accelerate(40); // Polymorphic call to Vehicle abstract class method
+            v.brake(10);      // Polymorphic call to Vehicle abstract class method
+            v.displayInfo();  // Polymorphic call to Vehicle abstract method
+            v.stopEngine();   // Polymorphic call to Drivable interface method
+        }
+
+        // You cannot instantiate an abstract class or an interface directly
+        // Vehicle genericVehicle = new Vehicle("Generic", "ModelX"); // Compile-time error
+        // Drivable testDrive = new Drivable(); // Compile-time error
+    }
+}
