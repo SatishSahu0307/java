@@ -1,0 +1,55 @@
+package utils;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ * A utility class for common data validation tasks.
+ */
+public class ValidationUtils {
+
+    // Regular expression for a simple email validation
+    private static final String EMAIL_REGEX =
+        "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+    private static final Pattern EMAIL_PATTERN = Pattern.compile(EMAIL_REGEX);
+
+    /**
+     * Checks if the given string represents a valid integer.
+     * @param str The string to validate.
+     * @return true if the string is a valid integer, false otherwise.
+     */
+    public static boolean isNumeric(String str) {
+        if (str == null || str.isEmpty()) {
+            return false;
+        }
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if the given string is a valid email address.
+     * @param email The email string to validate.
+     * @return true if the email is valid, false otherwise.
+     */
+    public static boolean isValidEmail(String email) {
+        if (email == null) {
+            return false;
+        }
+        Matcher matcher = EMAIL_PATTERN.matcher(email);
+        return matcher.matches();
+    }
+
+    /**
+     * Checks if a string is null or empty (after trimming whitespace).
+     * @param str The string to check.
+     * @return true if the string is null or empty, false otherwise.
+     */
+    public static boolean isNullOrEmpty(String str) {
+        return str == null || str.trim().isEmpty();
+    }
+}
+
