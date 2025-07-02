@@ -1,0 +1,42 @@
+import college.students.Student; // Import Student class from college.students sub-package
+import college.faculty.Faculty;   // Import Faculty class from college.faculty sub-package
+import college.admin.Admin;     // Import Admin class from college.admin sub-package
+
+/**
+ * Main driver class to demonstrate the usage of classes within the 'college'
+ * package and its sub-packages (students, faculty, admin).
+ */
+public class MainCollegeApp {
+
+    public static void main(String[] args) {
+        System.out.println("--- College System: Package Hierarchy Demonstration ---");
+
+        // Create objects from the 'students' sub-package
+        Student student1 = new Student("S001", "Alice Smith", "Computer Science");
+        Student student2 = new Student("S002", "Bob Johnson", "Biology");
+
+        // Create objects from the 'faculty' sub-package
+        Faculty faculty1 = new Faculty("F001", "Dr. Carol White", "Physics");
+        Faculty faculty2 = new Faculty("F002", "Prof. David Green", "Mathematics");
+
+        // Create objects from the 'admin' sub-package
+        Admin admin1 = new Admin("A001", "Eve Brown", "Registrar");
+        Admin admin2 = new Admin("A002", "Frank Black", "Financial Aid");
+
+        // Display details of the created objects
+        System.out.println("\n--- Student Details ---");
+        System.out.println(student1);
+        System.out.println(student2);
+
+        System.out.println("\n--- Faculty Details ---");
+        System.out.println(faculty1);
+        System.out.println(faculty2);
+
+        System.out.println("\n--- Admin Details ---");
+        System.out.println(admin1);
+        System.out.println(admin2);
+
+        System.out.println("\n--- Demonstration Complete ---");
+    }
+}
+
