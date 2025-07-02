@@ -1,0 +1,37 @@
+import java.util.*;
+public class FibonacciSeries {
+
+    public static void main(String[] args) {
+        System.out.println("Fibonacci Series up to 100:");
+
+        int a = 0; // First Fibonacci number
+        int b = 1; // Second Fibonacci number
+
+        // Print the first two numbers if they are within the limit
+        if (a <= 100) {
+            System.out.print(a + " ");
+        }
+        if (b <= 100) {
+            System.out.print(b + " ");
+        }
+
+        int nextTerm; // Variable to store the next Fibonacci number
+
+        // Loop to generate and print Fibonacci numbers
+        // Continue as long as the next term does not exceed 100
+        while (true) {
+            nextTerm = a + b; // Calculate the next term
+
+            if (nextTerm > 100) {
+                break; // Exit the loop if the next term exceeds 100
+            }
+
+            System.out.print(nextTerm + " "); // Print the next term
+
+            // Update 'a' and 'b' for the next iteration
+            a = b;
+            b = nextTerm;
+        }
+        System.out.println(); // Print a new line at the end for better formatting
+    }
+}
