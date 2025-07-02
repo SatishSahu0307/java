@@ -1,0 +1,127 @@
+import java.util.*;
+class Animal {
+    String name;
+
+    // Constructor for the Animal class
+    public Animal(String name) {
+        this.name = name;
+        System.out.println("Animal constructor called for: " + name);
+    }
+
+    // Method to make a generic sound - this will be overridden by subclasses
+    public void makeSound() {
+        System.out.println(name + " makes a generic animal sound.");
+    }
+
+    // Method to display basic animal details
+    public void displayInfo() {
+        System.out.println("--- Animal Info ---");
+        System.out.println("Name: " + name);
+    }
+}
+
+// Dog.java - Derived Class from Animal (Child 1)
+class Dog extends Animal {
+    String breed;
+
+    // Constructor for the Dog class
+    public Dog(String name, String breed) {
+        super(name); // Call to Animal's constructor
+        this.breed = breed;
+        System.out.println("Dog constructor called for: " + name);
+    }
+
+    // Overriding the makeSound method to provide a Dog-specific sound
+    @Override // Annotation to indicate that this method overrides a superclass method
+    public void makeSound() {
+        System.out.println(name + " barks: Woof! Woof!");
+    }
+
+    // Method to display dog-specific information, reusing parent's method
+    public void displayDogInfo() {
+        super.displayInfo(); // Call to Animal's displayInfo method
+        System.out.println("Breed: " + breed);
+        System.out.println("--------------------");
+    }
+
+    // New method specific to the Dog class
+    public void fetch() {
+        System.out.println(name + " fetches the ball.");
+    }
+}
+
+// Cat.java - Derived Class from Animal (Child 2)
+class Cat extends Animal {
+    String color;
+
+    // Constructor for the Cat class
+    public Cat(String name, String color) {
+        super(name); // Call to Animal's constructor
+        this.color = color;
+        System.out.println("Cat constructor called for: " + name);
+    }
+
+    // Overriding the makeSound method to provide a Cat-specific sound
+    @Override
+    public void makeSound() {
+        System.out.println(name + " meows: Meow!");
+    }
+
+    // Method to display cat-specific information, reusing parent's method
+    public void displayCatInfo() {
+        super.displayInfo(); // Call to Animal's displayInfo method
+        System.out.println("Color: " + color);
+        System.out.println("--------------------");
+    }
+
+    // New method specific to the Cat class
+    public void purr() {
+        System.out.println(name + " purrs contentedly.");
+    }
+}
+
+// Main class to test Method Overriding
+public class AnimalSoundSystem {
+    public static void main(String[] args) {
+        System.out.println("--- Demonstrating Method Overriding with Inheritance ---");
+
+        // 1. Create an Animal object
+        System.out.println("\nCreating a generic Animal object:");
+        Animal genericAnimal = new Animal("Generic Beast");
+        genericAnimal.displayInfo();
+        genericAnimal.makeSound(); // Calls Animal's makeSound
+        System.out.println("--------------------");
+
+        // 2. Create a Dog object
+        System.out.println("\nCreating a Dog object:");
+        Dog myDog = new Dog("Buddy", "Golden Retriever");
+        myDog.displayDogInfo(); // Calls Dog's specific display which includes parent's
+        myDog.makeSound();      // Calls Dog's overridden makeSound
+        myDog.fetch();          // Calls Dog's specific method
+        System.out.println("--------------------");
+
+        // 3. Create a Cat object
+        System.out.println("\nCreating a Cat object:");
+        Cat myCat = new Cat("Whiskers", "Calico");
+        myCat.displayCatInfo(); // Calls Cat's specific display which includes parent's
+        myCat.makeSound();      // Calls Cat's overridden makeSound
+        myCat.purr();           // Calls Cat's specific method
+        System.out.println("--------------------");
+
+        // Demonstrating Polymorphism (important for method overriding)
+        // An Animal reference variable can hold a Dog or Cat object
+        System.out.println("\nDemonstrating Polymorphism (Runtime Polymorphism):");
+
+        Animal animal1 = new Dog("Max", "German Shepherd");
+        System.out.println("\nDog (via Animal reference):");
+        animal1.displayInfo(); // Calls Animal's displayInfo
+        animal1.makeSound();   // Calls Dog's overridden makeSound (runtime polymorphism)
+
+        Animal animal2 = new Cat("Luna", "Black");
+        System.out.println("\nCat (via Animal reference):");
+        animal2.displayInfo(); // Calls Animal's displayInfo
+        animal2.makeSound();   // Calls Cat's overridden makeSound (runtime polymorphism)
+        System.out.println("------------------------------------------");
+    }
+}
+
