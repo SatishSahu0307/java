@@ -1,0 +1,45 @@
+import java.util.Scanner; // Import the Scanner class to get user input
+
+public class VowelStartingWordFinder { // Renamed to StringCharacterStats for clarity, though ID remains
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a string: ");
+        String inputString = scanner.nextLine(); // Read the entire line of input from the user
+
+        // Initialize counters for different character types
+        int upperCaseCount = 0;
+        int lowerCaseCount = 0;
+        int digitCount = 0;
+        int spaceCount = 0;
+
+        // Iterate through each character of the input string
+        for (int i = 0; i < inputString.length(); i++) {
+            char ch = inputString.charAt(i); // Get the character at the current index
+
+            // Check the type of the character and increment the corresponding counter
+            if (Character.isUpperCase(ch)) {
+                upperCaseCount++;
+            } else if (Character.isLowerCase(ch)) {
+                lowerCaseCount++;
+            } else if (Character.isDigit(ch)) {
+                digitCount++;
+            } else if (Character.isSpaceChar(ch)) { // isSpaceChar() checks for any Unicode space character
+                spaceCount++;
+            }
+            // You can add more conditions here for other character types like special characters
+        }
+
+        System.out.println("\n--- String Statistics ---");
+        System.out.println("Original String: \"" + inputString + "\"");
+        System.out.println("Uppercase Characters: " + upperCaseCount);
+        System.out.println("Lowercase Characters: " + lowerCaseCount);
+        System.out.println("Digits: " + digitCount);
+        System.out.println("Spaces: " + spaceCount);
+
+        // Close the scanner to prevent resource leaks
+        scanner.close();
+    }
+}
