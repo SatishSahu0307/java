@@ -1,0 +1,17 @@
+import java.util.*;
+public class OddNumbersPattern {
+
+    public static void main(String[] args) {
+        System.out.println("Printing odd numbers from 1 to 100:");
+
+        // Loop from 1 to 100
+        for (int i = 1; i <= 100; i++) {
+            // Check if the current number is odd
+            if (i % 2 != 0) {
+                // If it's odd, print the number followed by a space
+                System.out.print(i + " ");
+            }
+        }
+        System.out.println(); // Print a new line at the end for better formatting
+    }
+}
