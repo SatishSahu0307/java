@@ -1,0 +1,60 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class IntegerArray {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner input = new Scanner(System.in);
+
+        // The program will now accept exactly 7 integers
+        int n = 7;
+
+        // Declare an array to store 7 integers
+        int[] numbers = new int[n];
+
+        System.out.println("Please enter 7 integers:");
+
+        // Loop to accept 7 integers from the user
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter integer " + (i + 1) + ": ");
+            // Read the integer entered by the user and store it in the array
+            numbers[i] = input.nextInt();
+        }
+
+        System.out.println("\n--- Integers stored in the array (original order) ---");
+
+        // Loop through the array and display each integer in original order
+        for (int i = 0; i < n; i++) {
+            System.out.print(numbers[i] + " ");
+        }
+        System.out.println(); // New line for better formatting
+
+        System.out.println("\n--- Sorting Array in Ascending Order (Bubble Sort) ---");
+
+        // Perform Bubble Sort to sort the array in ascending order
+        // Outer loop for passes
+        for (int i = 0; i < n - 1; i++) {
+            // Inner loop for comparisons and swaps
+            for (int j = 0; j < n - 1 - i; j++) {
+                // If the current element is greater than the next element, swap them
+                if (numbers[j] > numbers[j + 1]) {
+                    // Swap elements
+                    int temp = numbers[j];
+                    numbers[j] = numbers[j + 1];
+                    numbers[j + 1] = temp;
+                }
+            }
+        }
+
+        System.out.println("--- Sorted Array (Ascending Order) ---");
+
+        // Loop through the sorted array and display each integer
+        for (int i = 0; i < n; i++) {
+            System.out.print(numbers[i] + " ");
+        }
+        System.out.println(); // New line for better formatting
+
+        // Close the scanner to prevent resource leaks
+        input.close();
+    }
+}
