@@ -1,0 +1,36 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class FactorialCalculator {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to get input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a non-negative integer to find its factorial: ");
+
+        // Read the integer input from the user
+        int number = scanner.nextInt();
+
+        // Check if the number is negative
+        if (number < 0) {
+            System.out.println("Error: Factorial is not defined for negative numbers.");
+        } else {
+            // Initialize factorial to 1.
+            // Use 'long' data type to accommodate larger factorial values,
+            // as factorials grow very rapidly.
+            long factorial = 1;
+
+            // Calculate factorial using a for loop (iterative approach)
+            // The loop runs from 1 up to the given number.
+            for (int i = 1; i <= number; i++) {
+                factorial *= i; // Multiply factorial by the current number (i)
+            }
+
+            // Print the result
+            System.out.println("The factorial of " + number + " is: " + factorial);
+        }
+
+        // Close the scanner to prevent resource leaks
+        scanner.close();
+    }
+}
