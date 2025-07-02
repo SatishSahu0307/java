@@ -1,0 +1,47 @@
+import java.util.Scanner; // Import the Scanner class to get user input
+
+public class VowelStartingWordFinder {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a sentence: ");
+        String sentence = scanner.nextLine(); // Read the entire line of input (the sentence)
+
+        // Split the sentence into words.
+        // \\s+ matches one or more whitespace characters (space, tab, etc.)
+        // This handles multiple spaces between words and leading/trailing spaces.
+        String[] words = sentence.split("\\s+");
+
+        System.out.println("\nWords in the sentence starting with a vowel:");
+
+        boolean foundVowelWord = false; // Flag to check if any vowel-starting word is found
+
+        // Iterate through each word to check if it starts with a vowel
+        for (String word : words) {
+            // Trim any leading/trailing spaces from the word (though split should handle most)
+            // and convert to lowercase for case-insensitive checking.
+            String cleanedWord = word.trim().toLowerCase();
+
+            // Check if the cleanedWord is not empty and starts with a vowel
+            if (!cleanedWord.isEmpty()) {
+                char firstChar = cleanedWord.charAt(0); // Get the first character
+
+                // Check if the first character is one of the vowels
+                if (firstChar == 'a' || firstChar == 'e' || firstChar == 'i' ||
+                    firstChar == 'o' || firstChar == 'u') {
+                    System.out.println(word); // Print the original word
+                    foundVowelWord = true;
+                }
+            }
+        }
+
+        if (!foundVowelWord) {
+            System.out.println("No words found starting with a vowel.");
+        }
+
+        // Close the scanner to prevent resource leaks
+        scanner.close();
+    }
+}
