@@ -1,0 +1,32 @@
+package college.admin;
+
+/**
+ * Represents an administrative staff member in the college system.
+ */
+public class Admin {
+    private String adminId;
+    private String name;
+    private String role;
+
+    /**
+     * Constructs an Admin object.
+     * @param adminId The unique ID of the admin staff.
+     * @param name The name of the admin staff.
+     * @param role The role of the admin staff (e.g., "Registrar", "Accountant").
+     */
+    public Admin(String adminId, String name, String role) {
+        this.adminId = adminId;
+        this.name = name;
+        this.role = role;
+    }
+
+    /**
+     * Returns a string representation of the Admin object.
+     * @return A formatted string with admin details.
+     */
+    @Override
+    public String toString() {
+        return "Admin [ID: " + adminId + ", Name: " + name + ", Role: " + role + "]";
+    }
+}
+
