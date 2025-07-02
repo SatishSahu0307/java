@@ -1,0 +1,79 @@
+import java.util.Scanner; // Required for reading user input
+
+/**
+ * This Java program demonstrates the use of nested try-catch blocks
+ * to handle different types of exceptions, specifically:
+ * 1. ArithmeticException (e.g., division by zero)
+ * 2. NullPointerException (e.g., trying to access members of a null object)
+ */
+public class NestedTryDemo {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in); // Scanner to read user input
+
+        // --- Outer Try Block ---
+        // This block encloses operations that might lead to a variety of exceptions.
+        try {
+            System.out.println("Outer try block: Starting operations.");
+
+            // --- Inner Try Block 1: Demonstrating ArithmeticException ---
+            try {
+                System.out.println("\nInner try block 1: Performing division.");
+                System.out.print("Enter a numerator (integer): ");
+                int numerator = scanner.nextInt();
+                System.out.print("Enter a denominator (integer, try 0 for exception): ");
+                int denominator = scanner.nextInt();
+
+                int result = numerator / denominator; // This line can throw ArithmeticException
+                System.out.println("Division result: " + numerator + " / " + denominator + " = " + result);
+
+            } catch (ArithmeticException e) {
+                // Catch block for ArithmeticException (e.g., division by zero)
+                System.out.println("Inner catch block 1: Caught an ArithmeticException!");
+                System.out.println("Error details: " + e.getMessage());
+            }
+
+            // Consume the rest of the line after reading integers to prevent issues
+            // with nextLine() later if not handled.
+            scanner.nextLine();
+
+            // --- Inner Try Block 2: Demonstrating NullPointerException ---
+            try {
+                System.out.println("\nInner try block 2: Accessing a potentially null object.");
+                String text = null; // Deliberately set to null to cause NullPointerException
+                System.out.print("Do you want to cause a NullPointerException? (yes/no): ");
+                String choice = scanner.nextLine();
+
+                if (choice.equalsIgnoreCase("yes")) {
+                    System.out.println("Attempting to get length of a null string...");
+                    // This line will throw NullPointerException if 'text' is null
+                    System.out.println("Length of text: " + text.length());
+                } else {
+                    text = "Hello Java"; // Initialize if user chooses not to cause NPE
+                    System.out.println("Length of text: " + text.length());
+                }
+
+            } catch (NullPointerException e) {
+                // Catch block for NullPointerException
+                System.out.println("Inner catch block 2: Caught a NullPointerException!");
+                System.out.println("Error details: " + e.getMessage());
+                System.out.println("Tip: A NullPointerException occurs when you try to use a reference variable that currently points to nothing (null).");
+            }
+
+            System.out.println("\nOuter try block: All inner operations attempted.");
+
+        } catch (Exception e) {
+            // General catch block for the outer try, catching any other unexpected exceptions
+            // that might propagate from inner blocks if not caught there, or from outer operations.
+            System.out.println("\nOuter catch block: Caught an unexpected general Exception!");
+            System.out.println("Error details: " + e.getMessage());
+        } finally {
+            // The finally block executes regardless of whether any exception occurred
+            // in the outer or inner try blocks, or if it was caught.
+            // It's essential for cleaning up resources.
+            scanner.close();
+            System.out.println("\nFinally block: Scanner closed and program execution finished.");
+        }
+    }
+}
+
