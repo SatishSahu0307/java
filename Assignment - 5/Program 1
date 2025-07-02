@@ -1,0 +1,205 @@
+import java.util.*;
+public class Calculator {
+
+    /**
+     * Overloaded add method: Adds two integers.
+     * @param a The first integer.
+     * @param b The second integer.
+     * @return The sum of the two integers.
+     */
+    public int add(int a, int b) {
+        System.out.println("Adding two integers: " + a + " + " + b + " = " + (a + b));
+        System.out.println("--------------------");
+        return a + b;
+    }
+
+    /**
+     * Overloaded add method: Adds two doubles.
+     * @param a The first double.
+     * @param b The second double.
+     * @return The sum of the two doubles.
+     */
+    public double add(double a, double b) {
+        System.out.println("Adding two doubles: " + a + " + " + b + " = " + (a + b));
+        System.out.println("--------------------");
+        return a + b;
+    }
+
+    /**
+     * Overloaded add method: Adds three integers.
+     * @param a The first integer.
+     * @param b The second integer.
+     * @param c The third integer.
+     * @return The sum of the three integers.
+     */
+    public int add(int a, int b, int c) {
+        System.out.println("Adding three integers: " + a + " + " + b + " + " + c + " = " + (a + b + c));
+        System.out.println("--------------------");
+        return a + b + c;
+    }
+
+    /**
+     * Overloaded subtract method: Subtracts two integers.
+     * @param a The first integer.
+     * @param b The second integer.
+     * @return The difference of the two integers.
+     */
+    public int subtract(int a, int b) {
+        System.out.println("Subtracting two integers: " + a + " - " + b + " = " + (a - b));
+        System.out.println("--------------------");
+        return a - b;
+    }
+
+    /**
+     * Overloaded subtract method: Subtracts two doubles.
+     * @param a The first double.
+     * @param b The second double.
+     * @return The difference of the two doubles.
+     */
+    public double subtract(double a, double b) {
+        System.out.println("Subtracting two doubles: " + a + " - " + b + " = " + (a - b));
+        System.out.println("--------------------");
+        return a - b;
+    }
+
+    /**
+     * Overloaded subtract method: Subtracts three integers (a - b - c).
+     * @param a The first integer.
+     * @param b The second integer.
+     * @param c The third integer.
+     * @return The result of subtracting the second and third integers from the first.
+     */
+    public int subtract(int a, int b, int c) {
+        System.out.println("Subtracting three integers: " + a + " - " + b + " - " + c + " = " + (a - b - c));
+        System.out.println("--------------------");
+        return a - b - c;
+    }
+
+    /**
+     * Overloaded multiply method: Multiplies two integers.
+     * @param a The first integer.
+     * @param b The second integer.
+     * @return The product of the two integers.
+     */
+    public int multiply(int a, int b) {
+        System.out.println("Multiplying two integers: " + a + " * " + b + " = " + (a * b));
+        System.out.println("--------------------");
+        return a * b;
+    }
+
+    /**
+     * Overloaded multiply method: Multiplies two doubles.
+     * @param a The first double.
+     * @param b The second double.
+     * @return The product of the two doubles.
+     */
+    public double multiply(double a, double b) {
+        System.out.println("Multiplying two doubles: " + a + " * " + b + " = " + (a * b));
+        System.out.println("--------------------");
+        return a * b;
+    }
+
+    /**
+     * Overloaded multiply method: Multiplies three integers.
+     * @param a The first integer.
+     * @param b The second integer.
+     * @param c The third integer.
+     * @return The product of the three integers.
+     */
+    public int multiply(int a, int b, int c) {
+        System.out.println("Multiplying three integers: " + a + " * " + b + " * " + c + " = " + (a * b * c));
+        System.out.println("--------------------");
+        return a * b * c;
+    }
+
+    /**
+     * Overloaded divide method: Divides two integers.
+     * Handles division by zero.
+     * @param a The numerator (integer).
+     * @param b The denominator (integer).
+     * @return The quotient as a double, or Double.NaN if division by zero occurs.
+     */
+    public double divide(int a, int b) {
+        if (b == 0) {
+            System.out.println("Error: Division by zero is not allowed for integers.");
+            System.out.println("--------------------");
+            return Double.NaN; // Not a Number
+        }
+        System.out.println("Dividing two integers: " + a + " / " + b + " = " + ((double) a / b));
+        System.out.println("--------------------");
+        return (double) a / b;
+    }
+
+    /**
+     * Overloaded divide method: Divides two doubles.
+     * Handles division by zero.
+     * @param a The numerator (double).
+     * @param b The denominator (double).
+     * @return The quotient as a double, or Double.NaN if division by zero occurs.
+     */
+    public double divide(double a, double b) {
+        if (b == 0.0) {
+            System.out.println("Error: Division by zero is not allowed for doubles.");
+            System.out.println("--------------------");
+            return Double.NaN; // Not a Number
+        }
+        System.out.println("Dividing two doubles: " + a + " / " + b + " = " + (a / b));
+        System.out.println("--------------------");
+        return a / b;
+    }
+
+    /**
+     * Overloaded divide method: Divides three integers (a / b / c).
+     * Handles division by zero.
+     * @param a The first integer.
+     * @param b The second integer.
+     * @param c The third integer.
+     * @return The quotient as a double, or Double.NaN if division by zero occurs.
+     */
+    public double divide(int a, int b, int c) {
+        if (b == 0 || c == 0) {
+            System.out.println("Error: Division by zero is not allowed for three integers.");
+            System.out.println("--------------------");
+            return Double.NaN; // Not a Number
+        }
+        System.out.println("Dividing three integers: " + a + " / " + b + " / " + c + " = " + ((double) a / b / c));
+        System.out.println("--------------------");
+        return (double) a / b / c;
+    }
+
+    /**
+     * Main method to demonstrate the overloaded Calculator methods.
+     */
+    public static void main(String[] args) {
+        System.out.println("Demonstrating Calculator Class Overloaded Methods:\n");
+
+        Calculator calc = new Calculator();
+
+        // --- Testing Addition ---
+        System.out.println("--- Testing Addition ---");
+        calc.add(10, 5);          // Two integers
+        calc.add(10.5, 2.5);      // Two doubles
+        calc.add(1, 2, 3);        // Three integers
+
+        // --- Testing Subtraction ---
+        System.out.println("\n--- Testing Subtraction ---");
+        calc.subtract(20, 7);     // Two integers
+        calc.subtract(15.0, 3.5); // Two doubles
+        calc.subtract(100, 10, 5);// Three integers
+
+        // --- Testing Multiplication ---
+        System.out.println("\n--- Testing Multiplication ---");
+        calc.multiply(4, 6);      // Two integers
+        calc.multiply(3.0, 2.5);  // Two doubles
+        calc.multiply(2, 3, 4);   // Three integers
+
+        // --- Testing Division ---
+        System.out.println("\n--- Testing Division ---");
+        calc.divide(10, 2);       // Two integers
+        calc.divide(10.0, 2.0);   // Two doubles
+        calc.divide(20, 2, 5);    // Three integers (20 / 2 / 5 = 2.0)
+        calc.divide(10, 0);       // Division by zero (integers)
+        calc.divide(10.0, 0.0);   // Division by zero (doubles)
+        calc.divide(20, 0, 5);    // Division by zero (three integers)
+    }
+}
