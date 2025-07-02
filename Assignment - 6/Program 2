@@ -1,0 +1,128 @@
+import java.util.*;
+class Employee {
+    String name;
+    String employeeId;
+    double baseSalary;
+
+    // Constructor for Employee
+    public Employee(String name, String employeeId, double baseSalary) {
+        this.name = name;
+        this.employeeId = employeeId;
+        this.baseSalary = baseSalary;
+        System.out.println("Employee constructor called for: " + name);
+    }
+
+    // Method to display basic employee details
+    public void displayEmployeeDetails() {
+        System.out.println("--- Employee Details ---");
+        System.out.println("Name: " + name);
+        System.out.println("Employee ID: " + employeeId);
+        System.out.println("Base Salary: $" + String.format("%.2f", baseSalary));
+    }
+
+    // Method to calculate base salary
+    public double calculateSalary() {
+        return baseSalary;
+    }
+}
+
+// Manager.java - Derived Class from Employee (Level 2)
+class Manager extends Employee {
+    String department;
+    double bonusPercentage; // Bonus as a percentage of base salary
+
+    // Constructor for Manager
+    public Manager(String name, String employeeId, double baseSalary, String department, double bonusPercentage) {
+        super(name, employeeId, baseSalary); // Call to Employee's constructor
+        this.department = department;
+        this.bonusPercentage = bonusPercentage;
+        System.out.println("Manager constructor called for: " + name);
+    }
+
+    // Method to display manager-specific details
+    public void displayManagerDetails() {
+        displayEmployeeDetails(); // Reuse Employee's display method
+        System.out.println("Department: " + department);
+        System.out.println("Bonus Percentage: " + String.format("%.2f", bonusPercentage) + "%");
+    }
+
+    // Overriding the calculateSalary method to include bonus
+    @Override
+    public double calculateSalary() {
+        double totalSalary = super.calculateSalary(); // Get base salary from Employee
+        double bonusAmount = totalSalary * (bonusPercentage / 100);
+        return totalSalary + bonusAmount;
+    }
+}
+
+// Director.java - Derived Class from Manager (Level 3)
+class Director extends Manager {
+    double stockOptionsValue; // Additional compensation for Director
+
+    // Constructor for Director
+    public Director(String name, String employeeId, double baseSalary, String department, double bonusPercentage, double stockOptionsValue) {
+        super(name, employeeId, baseSalary, department, bonusPercentage); // Call to Manager's constructor
+        this.stockOptionsValue = stockOptionsValue;
+        System.out.println("Director constructor called for: " + name);
+    }
+
+    // Method to display director-specific details
+    public void displayDirectorDetails() {
+        displayManagerDetails(); // Reuse Manager's display method
+        System.out.println("Stock Options Value: $" + String.format("%.2f", stockOptionsValue));
+        System.out.println("-------------------------");
+    }
+
+    // Overriding the calculateSalary method to include stock options
+    @Override
+    public double calculateSalary() {
+        // Get salary from Manager (which includes base + bonus)
+        return super.calculateSalary() + stockOptionsValue;
+    }
+}
+
+// Main class to test the Multilevel Inheritance
+public class EmployeeSalaryCalculation {
+    public static void main(String[] args) {
+        System.out.println("--- Demonstrating Multilevel Inheritance ---");
+
+        // 1. Create an Employee object
+        System.out.println("\nCreating an Employee object:");
+        Employee emp = new Employee("Alice Wonderland", "EMP001", 50000.00);
+        emp.displayEmployeeDetails();
+        System.out.println("Calculated Salary for Employee: $" + String.format("%.2f", emp.calculateSalary()));
+        System.out.println("-------------------------");
+
+        // 2. Create a Manager object
+        System.out.println("\nCreating a Manager object:");
+        Manager mgr = new Manager("Bob The Builder", "MGR001", 75000.00, "Engineering", 10.0);
+        mgr.displayManagerDetails();
+        System.out.println("Calculated Salary for Manager: $" + String.format("%.2f", mgr.calculateSalary()));
+        System.out.println("-------------------------");
+
+        // 3. Create a Director object
+        System.out.println("\nCreating a Director object:");
+        Director dir = new Director("Charlie Chaplin", "DIR001", 120000.00, "Executive", 20.0, 50000.00);
+        dir.displayDirectorDetails();
+        System.out.println("Calculated Salary for Director: $" + String.format("%.2f", dir.calculateSalary()));
+        System.out.println("-------------------------");
+
+        // Demonstrating inherited methods and polymorphism
+        System.out.println("\nDemonstrating Inheritance and Polymorphism:");
+
+        Employee employeeRef1 = new Manager("Diana Prince", "MGR002", 80000.00, "Marketing", 12.0);
+        System.out.println("\nManager (via Employee reference):");
+        employeeRef1.displayEmployeeDetails(); // Calls Employee's display
+        System.out.println("Calculated Salary: $" + String.format("%.2f", employeeRef1.calculateSalary())); // Calls Manager's calculateSalary
+
+        Employee employeeRef2 = new Director("Eve Harrington", "DIR002", 150000.00, "Operations", 25.0, 75000.00);
+        System.out.println("\nDirector (via Employee reference):");
+        employeeRef2.displayEmployeeDetails(); // Calls Employee's display
+        System.out.println("Calculated Salary: $" + String.format("%.2f", employeeRef2.calculateSalary())); // Calls Director's calculateSalary
+
+        Manager managerRef = new Director("Frank Underwood", "DIR003", 130000.00, "Politics", 18.0, 60000.00);
+        System.out.println("\nDirector (via Manager reference):");
+        managerRef.displayManagerDetails(); // Calls Manager's display (which includes Employee's)
+        System.out.println("Calculated Salary: $" + String.format("%.2f", managerRef.calculateSalary())); // Calls Director's calculateSalary
+    }
+}
