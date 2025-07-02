@@ -1,0 +1,79 @@
+-- Database Name: BDS (Bug tracking system)
+-- Use this script to create the database and tables for the Bug Tracking System.
+
+-- Create the database if it doesn't exist
+CREATE DATABASE IF NOT EXISTS BDS;
+
+-- Use the newly created database
+USE BDS;
+
+-- Table Name: Employee
+-- Stores information about all users (Managers, Developers, Testers, Admins)
+CREATE TABLE IF NOT EXISTS Employee (
+    empCode INT PRIMARY KEY,        -- Employee Code (used as username for login)
+    empName VARCHAR(30) NOT NULL,
+    empEmail VARCHAR(40) UNIQUE NOT NULL,
+    empPassword VARCHAR(20) NOT NULL,
+    gender VARCHAR(10),
+    DOB VARCHAR(20),                -- Date of Birth (stored as string for simplicity)
+    mobileNo BIGINT,
+    Role VARCHAR(20) NOT NULL       -- Role: manager, developer, tester, admin
+);
+
+-- Table Name: Project
+-- Stores details about each software project
+CREATE TABLE IF NOT EXISTS Project (
+    projectID INT PRIMARY KEY AUTO_INCREMENT, -- Auto-incrementing primary key
+    projectName VARCHAR(30) NOT NULL,
+    SDate VARCHAR(30),                        -- Start Date (stored as string)
+    EDate VARCHAR(30),                        -- End Date (stored as string)
+    projectDec VARCHAR(200)                   -- Project Description
+);
+
+-- Table Name: BugType
+-- Stores predefined categories and severities for bugs
+CREATE TABLE IF NOT EXISTS BugType (
+    bugCode INT PRIMARY KEY AUTO_INCREMENT,   -- Unique code for each bug type
+    bugCategory VARCHAR(30) NOT NULL,         -- e.g., Functional Errors, Compilation Errors
+    bugSeverity VARCHAR(20) NOT NULL          -- e.g., Critical, Major, Medium, Low
+);
+
+-- Initial data for BugType table (as per requirements)
+INSERT INTO BugType (bugCategory, bugSeverity) VALUES
+('Functional Errors', 'Critical'),
+('Compilation Errors', 'Major'),
+('Missing commands', 'Medium'),
+('Run time Errors', 'Critical'),
+('Communication problems', 'Major'),
+('Logical errors', 'Critical'),
+('Inappropriate error handling', 'Medium'),
+('Calculation issues', 'Major');
+
+
+-- Table Name: BugReport
+-- Stores details of each reported bug
+CREATE TABLE IF NOT EXISTS BugReport (
+    bugNo INT PRIMARY KEY AUTO_INCREMENT,   -- Unique bug number
+    bugCode INT,                            -- FK to BugType (type of bug)
+    projectID INT,                          -- FK to Project (project bug belongs to)
+    TCode INT,                              -- FK to Employee (Tester who reported the bug)
+    ECode INT,                              -- FK to Employee (Developer assigned to the bug)
+    status VARCHAR(20) NOT NULL,            -- Bug status: pending, resolved
+    bugDes VARCHAR(200) NOT NULL,           -- Bug description
+
+    FOREIGN KEY (bugCode) REFERENCES BugType(bugCode),
+    FOREIGN KEY (projectID) REFERENCES Project(projectID),
+    FOREIGN KEY (TCode) REFERENCES Employee(empCode),
+    FOREIGN KEY (ECode) REFERENCES Employee(empCode)
+);
+
+-- Table Name: AssignProject
+-- Links employees (managers/developers/testers) to projects
+CREATE TABLE IF NOT EXISTS AssignProject (
+    projectID INT,                          -- FK to Project
+    empCode INT,                            -- FK to Employee
+
+    PRIMARY KEY (projectID, empCode),       -- Composite primary key
+    FOREIGN KEY (projectID) REFERENCES Project(projectID),
+    FOREIGN KEY (empCode) REFERENCES Employee(empCode)
+);
