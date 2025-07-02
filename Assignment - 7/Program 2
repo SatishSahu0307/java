@@ -1,0 +1,213 @@
+import java.util.*;
+interface PaymentGateway {
+    /**
+     * Processes a payment transaction.
+     *
+     * @param amount The amount of money to be paid.
+     * @param currency The currency in which the payment is made (e.g., "USD", "EUR").
+     * @param transactionId A unique identifier for the transaction.
+     * @return true if the payment was successful, false otherwise.
+     */
+    boolean processPayment(double amount, String currency, String transactionId);
+
+    /**
+     * Refunds a previously processed payment.
+     *
+     * @param transactionId The ID of the transaction to be refunded.
+     * @param refundAmount The amount to refund.
+     * @return true if the refund was successful, false otherwise.
+     */
+    boolean refundPayment(String transactionId, double refundAmount);
+
+    /**
+     * Checks the status of a payment transaction.
+     *
+     * @param transactionId The ID of the transaction to check.
+     * @return A string indicating the status (e.g., "SUCCESS", "PENDING", "FAILED").
+     */
+    String getTransactionStatus(String transactionId);
+}
+
+/**
+ * Concrete implementation of PaymentGateway for Credit Card payments.
+ */
+class CreditCardPayment implements PaymentGateway {
+    private String cardNumber;
+    private String cardHolderName;
+    private String expiryDate; // MM/YY format
+    private String cvv;
+
+    /**
+     * Constructor for CreditCardPayment.
+     * @param cardNumber The credit card number.
+     * @param cardHolderName The name of the card holder.
+     * @param expiryDate The expiry date of the card.
+     * @param cvv The CVV of the card.
+     */
+    public CreditCardPayment(String cardNumber, String cardHolderName, String expiryDate, String cvv) {
+        this.cardNumber = cardNumber;
+        this.cardHolderName = cardHolderName;
+        this.expiryDate = expiryDate;
+        this.cvv = cvv;
+        System.out.println("Credit Card payment initialized.");
+    }
+
+    /**
+     * Simulates processing a credit card payment.
+     * @param amount The amount of money to be paid.
+     * @param currency The currency.
+     * @param transactionId A unique identifier for the transaction.
+     * @return true if payment is "successful".
+     */
+    @Override
+    public boolean processPayment(double amount, String currency, String transactionId) {
+        System.out.println("Processing Credit Card payment for " + amount + " " + currency +
+                           " with transaction ID: " + transactionId);
+        // Simulate real payment logic (e.g., API call to a credit card processor)
+        if (amount > 0 && !cardNumber.isEmpty() && !cardHolderName.isEmpty()) {
+            System.out.println("Credit Card payment successful for " + cardHolderName + ".");
+            return true;
+        } else {
+            System.out.println("Credit Card payment failed.");
+            return false;
+        }
+    }
+
+    /**
+     * Simulates refunding a credit card payment.
+     * @param transactionId The ID of the transaction to be refunded.
+     * @param refundAmount The amount to refund.
+     * @return true if refund is "successful".
+     */
+    @Override
+    public boolean refundPayment(String transactionId, double refundAmount) {
+        System.out.println("Attempting Credit Card refund for transaction ID: " + transactionId +
+                           ", amount: " + refundAmount);
+        // Simulate refund logic
+        if (refundAmount > 0) {
+            System.out.println("Credit Card refund successful for transaction ID: " + transactionId + ".");
+            return true;
+        } else {
+            System.out.println("Credit Card refund failed or amount invalid.");
+            return false;
+        }
+    }
+
+    /**
+     * Simulates getting the status of a credit card transaction.
+     * @param transactionId The ID of the transaction to check.
+     * @return "SUCCESS" for simplicity.
+     */
+    @Override
+    public String getTransactionStatus(String transactionId) {
+        System.out.println("Checking status for Credit Card transaction ID: " + transactionId);
+        // Simulate status check (e.g., querying a payment processor's API)
+        return "SUCCESS"; // For demonstration, assume success
+    }
+}
+
+/**
+ * Concrete implementation of PaymentGateway for PayPal payments.
+ */
+class PayPalPayment implements PaymentGateway {
+    private String email;
+    private String password; // In a real app, this would be handled securely (e.g., OAuth tokens)
+
+    /**
+     * Constructor for PayPalPayment.
+     * @param email The PayPal account email.
+     * @param password The PayPal account password.
+     */
+    public PayPalPayment(String email, String password) {
+        this.email = email;
+        this.password = password;
+        System.out.println("PayPal payment initialized.");
+    }
+
+    /**
+     * Simulates processing a PayPal payment.
+     * @param amount The amount of money to be paid.
+     * @param currency The currency.
+     * @param transactionId A unique identifier for the transaction.
+     * @return true if payment is "successful".
+     */
+    @Override
+    public boolean processPayment(double amount, String currency, String transactionId) {
+        System.out.println("Processing PayPal payment for " + amount + " " + currency +
+                           " with transaction ID: " + transactionId + " for email: " + email);
+        // Simulate real payment logic (e.g., API call to PayPal)
+        if (amount > 0 && email.contains("@") && password.length() > 0) {
+            System.out.println("PayPal payment successful.");
+            return true;
+        } else {
+            System.out.println("PayPal payment failed.");
+            return false;
+        }
+    }
+
+    /**
+     * Simulates refunding a PayPal payment.
+     * @param transactionId The ID of the transaction to be refunded.
+     * @param refundAmount The amount to refund.
+     * @return true if refund is "successful".
+     */
+    @Override
+    public boolean refundPayment(String transactionId, double refundAmount) {
+        System.out.println("Attempting PayPal refund for transaction ID: " + transactionId +
+                           ", amount: " + refundAmount);
+        // Simulate refund logic
+        if (refundAmount > 0) {
+            System.out.println("PayPal refund successful for transaction ID: " + transactionId + ".");
+            return true;
+        } else {
+            System.out.println("PayPal refund failed or amount invalid.");
+            return false;
+        }
+    }
+
+    /**
+     * Simulates getting the status of a PayPal transaction.
+     * @param transactionId The ID of the transaction to check.
+     * @return "SUCCESS" for simplicity.
+     */
+    @Override
+    public String getTransactionStatus(String transactionId) {
+        System.out.println("Checking status for PayPal transaction ID: " + transactionId);
+        // Simulate status check
+        return "PENDING"; // For demonstration, let's say PayPal payments can be pending
+    }
+}
+
+// Main class to demonstrate the Payment Gateway
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("--- Payment Gateway Demonstration ---");
+
+        // Create instances of different payment methods
+        PaymentGateway creditCardProcessor = new CreditCardPayment("1234-5678-9012-3456", "John Doe", "12/25", "123");
+        PaymentGateway payPalProcessor = new PayPalPayment("john.doe@example.com", "securePassword123");
+
+        // --- Demonstrate Credit Card Payment ---
+        System.out.println("\n--- Credit Card Transaction ---");
+        String ccTransactionId = "CC-TRN-12345";
+        boolean ccSuccess = creditCardProcessor.processPayment(100.50, "USD", ccTransactionId);
+        System.out.println("Credit Card Payment Status: " + (ccSuccess ? "SUCCESS" : "FAILED"));
+        System.out.println("Transaction Status: " + creditCardProcessor.getTransactionStatus(ccTransactionId));
+        creditCardProcessor.refundPayment(ccTransactionId, 50.00);
+
+
+        // --- Demonstrate PayPal Payment ---
+        System.out.println("\n--- PayPal Transaction ---");
+        String ppTransactionId = "PP-TRN-67890";
+        boolean ppSuccess = payPalProcessor.processPayment(75.25, "EUR", ppTransactionId);
+        System.out.println("PayPal Payment Status: " + (ppSuccess ? "SUCCESS" : "FAILED"));
+        System.out.println("Transaction Status: " + payPalProcessor.getTransactionStatus(ppTransactionId));
+        payPalProcessor.refundPayment(ppTransactionId, 25.00);
+
+        // Demonstrate a failed payment attempt
+        System.out.println("\n--- Failed Payment Attempt (Credit Card) ---");
+        String failedCcTransactionId = "CC-FAIL-001";
+        boolean failedCcSuccess = creditCardProcessor.processPayment(-10.00, "USD", failedCcTransactionId);
+        System.out.println("Failed Credit Card Payment Status: " + (failedCcSuccess ? "SUCCESS" : "FAILED"));
+    }
+}
