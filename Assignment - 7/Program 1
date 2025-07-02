@@ -1,0 +1,204 @@
+import java.util.*;
+abstract class Animal {
+    // Protected fields accessible by subclasses
+    protected String name;
+    protected int age;
+
+    /**
+     * Constructor for the Animal class.
+     * @param name The name of the animal.
+     * @param age The age of the animal.
+     */
+    public Animal(String name, int age) {
+        this.name = name;
+        this.age = age;
+        System.out.println(name + " has joined the animal kingdom!");
+    }
+
+    /**
+     * Concrete method: All animals eat.
+     */
+    public void eat() {
+        System.out.println(name + " is eating.");
+    }
+
+    /**
+     * Abstract method: Animals make different sounds.
+     * Subclasses must implement this method.
+     */
+    public abstract void makeSound();
+
+    /**
+     * Abstract method: Animals move in different ways.
+     * Subclasses must implement this method.
+     */
+    public abstract void move();
+
+    /**
+     * Concrete method: Provides a general description.
+     */
+    public void describe() {
+        System.out.println("This is " + name + ", an animal aged " + age + ".");
+    }
+}
+
+// Concrete class extending Animal: Dog
+class Dog extends Animal {
+    /**
+     * Constructor for the Dog class.
+     * @param name The name of the dog.
+     * @param age The age of the dog.
+     */
+    public Dog(String name, int age) {
+        super(name, age); // Call the constructor of the superclass (Animal)
+    }
+
+    /**
+     * Implementation of the abstract makeSound method for Dog.
+     */
+    @Override
+    public void makeSound() {
+        System.out.println(name + " barks: Woof! Woof!");
+    }
+
+    /**
+     * Implementation of the abstract move method for Dog.
+     */
+    @Override
+    public void move() {
+        System.out.println(name + " runs on four legs.");
+    }
+
+    /**
+     * Dog-specific method.
+     */
+    public void fetch() {
+        System.out.println(name + " is fetching a ball.");
+    }
+}
+
+// Concrete class extending Animal: Cat
+class Cat extends Animal {
+    /**
+     * Constructor for the Cat class.
+     * @param name The name of the cat.
+     * @param age The age of the cat.
+     */
+    public Cat(String name, int age) {
+        super(name, age); // Call the constructor of the superclass (Animal)
+    }
+
+    /**
+     * Implementation of the abstract makeSound method for Cat.
+     */
+    @Override
+    public void makeSound() {
+        System.out.println(name + " meows: Meow!");
+    }
+
+    /**
+     * Implementation of the abstract move method for Cat.
+     */
+    @Override
+    public void move() {
+        System.out.println(name + " gracefully walks and jumps.");
+    }
+
+    /**
+     * Cat-specific method.
+     */
+    public void scratchPost() {
+        System.out.println(name + " is scratching the post.");
+    }
+}
+
+// Concrete class extending Animal: Bird
+class Bird extends Animal {
+    /**
+     * Constructor for the Bird class.
+     * @param name The name of the bird.
+     * @param age The age of the bird.
+     */
+    public Bird(String name, int age) {
+        super(name, age); // Call the constructor of the superclass (Animal)
+    }
+
+    /**
+     * Implementation of the abstract makeSound method for Bird.
+     */
+    @Override
+    public void makeSound() {
+        System.out.println(name + " chirps: Tweet! Tweet!");
+    }
+
+    /**
+     * Implementation of the abstract move method for Bird.
+     */
+    @Override
+    public void move() {
+        System.out.println(name + " flies through the air.");
+    }
+
+    /**
+     * Bird-specific method.
+     */
+    public void buildNest() {
+        System.out.println(name + " is building a nest.");
+    }
+}
+
+// Main class to demonstrate the Animal Kingdom
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("--- Welcome to the Animal Kingdom! ---");
+
+        // Create instances of concrete animal classes
+        Dog myDog = new Dog("Buddy", 3);
+        Cat myCat = new Cat("Whiskers", 5);
+        Bird myBird = new Bird("Chirpy", 1);
+
+        System.out.println("\n--- Demonstrating Animal Behaviors ---");
+
+        // Call methods on Dog object
+        myDog.describe();
+        myDog.eat();
+        myDog.makeSound(); // Abstract method implemented by Dog
+        myDog.move();      // Abstract method implemented by Dog
+        myDog.fetch();     // Dog-specific method
+        System.out.println("--------------------");
+
+        // Call methods on Cat object
+        myCat.describe();
+        myCat.eat();
+        myCat.makeSound(); // Abstract method implemented by Cat
+        myCat.move();      // Abstract method implemented by Cat
+        myCat.scratchPost(); // Cat-specific method
+        System.out.println("--------------------");
+
+        // Call methods on Bird object
+        myBird.describe();
+        myBird.eat();
+        myBird.makeSound(); // Abstract method implemented by Bird
+        myBird.move();      // Abstract method implemented by Bird
+        myBird.buildNest();  // Bird-specific method
+        System.out.println("--------------------");
+
+        System.out.println("\n--- Demonstrating Polymorphism ---");
+        // An array of Animal type can hold objects of any concrete subclass
+        Animal[] kingdomAnimals = new Animal[3];
+        kingdomAnimals[0] = myDog;
+        kingdomAnimals[1] = myCat;
+        kingdomAnimals[2] = myBird;
+
+        for (Animal animal : kingdomAnimals) {
+            System.out.println("\nProcessing " + animal.name + ":");
+            animal.eat();
+            animal.makeSound(); // Polymorphic call: calls the correct makeSound based on the actual object type
+            animal.move();      // Polymorphic call: calls the correct move based on the actual object type
+        }
+
+        // Uncommenting the line below would cause a compile-time error
+        // because Animal is an abstract class and cannot be instantiated directly.
+        // Animal genericAnimal = new Animal("Generic", 2);
+    }
+}
