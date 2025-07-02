@@ -1,0 +1,46 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class IntegerArray {
+
+    public static void main(String[] args) {
+        // Declare an array to store 8 integers
+        // The 'new int[8]' part creates an array that can hold 8 integer values.
+        int[] numbers = new int[8];
+
+        // Create a Scanner object to read input from the console
+        Scanner input = new Scanner(System.in);
+
+        // Initialize sum and average variables
+        int sum = 0;
+        double average = 0.0; // Use double for average to ensure floating-point precision
+
+        System.out.println("Please enter 8 integers:");
+
+        // Loop 8 times to accept 8 integers from the user and calculate their sum
+        for (int i = 0; i < 8; i++) {
+            System.out.print("Enter integer " + (i + 1) + ": ");
+            // Read the integer entered by the user and store it in the array
+            numbers[i] = input.nextInt();
+            // Add the current integer to the sum
+            sum += numbers[i];
+        }
+
+        System.out.println("\n--- Integers stored in the array ---");
+
+        // Loop through the array and display each integer
+        for (int i = 0; i < 8; i++) {
+            System.out.println("Integer " + (i + 1) + ": " + numbers[i]);
+        }
+
+        // Calculate the average
+        // Cast sum to double before division to ensure floating-point division
+        average = (double) sum / numbers.length;
+
+        System.out.println("\n--- Calculation Results ---");
+        System.out.println("Sum of all integers: " + sum);
+        System.out.println("Average of all integers: " + average);
+
+        // Close the scanner to prevent resource leaks
+        input.close();
+    }
+}
