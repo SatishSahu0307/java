@@ -1,0 +1,378 @@
+import java.util.*;
+interface Switchable {
+    /**
+     * Turns the device on.
+     */
+    void turnOn();
+
+    /**
+     * Turns the device off.
+     */
+    void turnOff();
+
+    /**
+     * Checks if the device is currently on.
+     * @return true if the device is on, false otherwise.
+     */
+    boolean isOn();
+}
+
+/**
+ * Interface for devices whose brightness or intensity can be adjusted.
+ */
+interface Dimmable {
+    /**
+     * Sets the brightness level of the device.
+     * @param level The brightness level, typically from 0 to 100.
+     */
+    void setBrightness(int level);
+
+    /**
+     * Gets the current brightness level of the device.
+     * @return The current brightness level.
+     */
+    int getBrightness();
+}
+
+/**
+ * Interface for devices that can connect to a network.
+ */
+interface Connectable {
+    /**
+     * Connects the device to a specified network.
+     * @param networkName The name of the network to connect to.
+     * @param password The password for the network.
+     * @return true if connection is successful, false otherwise.
+     */
+    boolean connectToNetwork(String networkName, String password);
+
+    /**
+     * Disconnects the device from the network.
+     */
+    void disconnectNetwork();
+
+    /**
+     * Gets the current connection status.
+     * @return A string indicating the connection status (e.g., "Connected", "Disconnected", "Connecting").
+     */
+    String getConnectionStatus();
+}
+
+/**
+ * Represents a Smart Light Bulb, which is Switchable and Dimmable.
+ */
+class SmartLightBulb implements Switchable, Dimmable {
+    private boolean on;
+    private int brightness; // 0-100
+
+    /**
+     * Constructor for SmartLightBulb.
+     */
+    public SmartLightBulb() {
+        this.on = false;
+        this.brightness = 0;
+        System.out.println("Smart Light Bulb initialized.");
+    }
+
+    @Override
+    public void turnOn() {
+        if (!on) {
+            on = true;
+            System.out.println("Light Bulb turned ON.");
+            if (brightness == 0) { // Default to 50% brightness if turning on from off and 0 brightness
+                brightness = 50;
+                System.out.println("Defaulting brightness to 50%.");
+            }
+        } else {
+            System.out.println("Light Bulb is already ON.");
+        }
+    }
+
+    @Override
+    public void turnOff() {
+        if (on) {
+            on = false;
+            brightness = 0; // Brightness is 0 when off
+            System.out.println("Light Bulb turned OFF.");
+        } else {
+            System.out.println("Light Bulb is already OFF.");
+        }
+    }
+
+    @Override
+    public boolean isOn() {
+        return on;
+    }
+
+    @Override
+    public void setBrightness(int level) {
+        if (level >= 0 && level <= 100) {
+            this.brightness = level;
+            System.out.println("Light Bulb brightness set to " + level + "%.");
+            if (level > 0 && !on) { // If setting brightness > 0, implicitly turn on
+                turnOn();
+            } else if (level == 0 && on) { // If setting brightness to 0, implicitly turn off
+                turnOff();
+            }
+        } else {
+            System.out.println("Invalid brightness level. Must be between 0 and 100.");
+        }
+    }
+
+    @Override
+    public int getBrightness() {
+        return brightness;
+    }
+
+    public void displayStatus() {
+        System.out.println("Smart Light Bulb Status: " + (isOn() ? "ON" : "OFF") +
+                           ", Brightness: " + getBrightness() + "%");
+    }
+}
+
+/**
+ * Represents a Smart Thermostat, which is Switchable and Connectable.
+ */
+class SmartThermostat implements Switchable, Connectable {
+    private boolean on;
+    private String networkStatus;
+    private String connectedNetwork;
+    private double currentTemperature;
+
+    /**
+     * Constructor for SmartThermostat.
+     */
+    public SmartThermostat() {
+        this.on = false;
+        this.networkStatus = "Disconnected";
+        this.connectedNetwork = "None";
+        this.currentTemperature = 72.0; // Default temperature
+        System.out.println("Smart Thermostat initialized.");
+    }
+
+    @Override
+    public void turnOn() {
+        if (!on) {
+            on = true;
+            System.out.println("Thermostat turned ON.");
+        } else {
+            System.out.println("Thermostat is already ON.");
+        }
+    }
+
+    @Override
+    public void turnOff() {
+        if (on) {
+            on = false;
+            System.out.println("Thermostat turned OFF.");
+        } else {
+            System.out.println("Thermostat is already OFF.");
+        }
+    }
+
+    @Override
+    public boolean isOn() {
+        return on;
+    }
+
+    @Override
+    public boolean connectToNetwork(String networkName, String password) {
+        System.out.println("Attempting to connect to " + networkName + "...");
+        // Simulate connection logic
+        if (networkName != null && !networkName.isEmpty() && password.length() >= 6) {
+            networkStatus = "Connected";
+            connectedNetwork = networkName;
+            System.out.println("Thermostat connected to " + networkName + ".");
+            return true;
+        } else {
+            networkStatus = "Failed to connect";
+            connectedNetwork = "None";
+            System.out.println("Thermostat failed to connect to " + networkName + ".");
+            return false;
+        }
+    }
+
+    @Override
+    public void disconnectNetwork() {
+        if (networkStatus.equals("Connected")) {
+            networkStatus = "Disconnected";
+            connectedNetwork = "None";
+            System.out.println("Thermostat disconnected from network.");
+        } else {
+            System.out.println("Thermostat is not connected to any network.");
+        }
+    }
+
+    @Override
+    public String getConnectionStatus() {
+        return networkStatus + (networkStatus.equals("Connected") ? " (" + connectedNetwork + ")" : "");
+    }
+
+    /**
+     * Thermostat specific method to set target temperature.
+     * @param targetTemp The desired temperature.
+     */
+    public void setTargetTemperature(double targetTemp) {
+        if (on) {
+            System.out.println("Thermostat target temperature set to " + targetTemp + "°F.");
+            this.currentTemperature = targetTemp; // In a real system, this would control actual temperature
+        } else {
+            System.out.println("Thermostat is OFF. Cannot set temperature.");
+        }
+    }
+
+    public void displayStatus() {
+        System.out.println("Smart Thermostat Status: " + (isOn() ? "ON" : "OFF") +
+                           ", Current Temp: " + currentTemperature + "°F" +
+                           ", Network: " + getConnectionStatus());
+    }
+}
+
+/**
+ * Represents a Smart Security Camera, which is Connectable.
+ */
+class SmartCamera implements Connectable {
+    private String networkStatus;
+    private String connectedNetwork;
+    private boolean recording;
+
+    /**
+     * Constructor for SmartCamera.
+     */
+    public SmartCamera() {
+        this.networkStatus = "Disconnected";
+        this.connectedNetwork = "None";
+        this.recording = false;
+        System.out.println("Smart Security Camera initialized.");
+    }
+
+    @Override
+    public boolean connectToNetwork(String networkName, String password) {
+        System.out.println("Attempting to connect Smart Camera to " + networkName + "...");
+        // Simulate connection logic
+        if (networkName != null && !networkName.isEmpty() && password.length() >= 6) {
+            networkStatus = "Connected";
+            connectedNetwork = networkName;
+            System.out.println("Smart Camera connected to " + networkName + ".");
+            return true;
+        } else {
+            networkStatus = "Failed to connect";
+            connectedNetwork = "None";
+            System.out.println("Smart Camera failed to connect to " + networkName + ".");
+            return false;
+        }
+    }
+
+    @Override
+    public void disconnectNetwork() {
+        if (networkStatus.equals("Connected")) {
+            networkStatus = "Disconnected";
+            connectedNetwork = "None";
+            System.out.println("Smart Camera disconnected from network.");
+            stopRecording(); // Stop recording if disconnected
+        } else {
+            System.out.println("Smart Camera is not connected to any network.");
+        }
+    }
+
+    @Override
+    public String getConnectionStatus() {
+        return networkStatus + (networkStatus.equals("Connected") ? " (" + connectedNetwork + ")" : "");
+    }
+
+    /**
+     * Camera-specific method to start recording.
+     */
+    public void startRecording() {
+        if (networkStatus.equals("Connected")) {
+            recording = true;
+            System.out.println("Smart Camera started recording.");
+        } else {
+            System.out.println("Smart Camera cannot record without a network connection.");
+        }
+    }
+
+    /**
+     * Camera-specific method to stop recording.
+     */
+    public void stopRecording() {
+        if (recording) {
+            recording = false;
+            System.out.println("Smart Camera stopped recording.");
+        } else {
+            System.out.println("Smart Camera is not currently recording.");
+        }
+    }
+
+    public void displayStatus() {
+        System.out.println("Smart Camera Status: Recording: " + (recording ? "YES" : "NO") +
+                           ", Network: " + getConnectionStatus());
+    }
+}
+
+
+// Main class to demonstrate the Smart Home System
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("--- Smart Home Devices Demonstration ---");
+
+        // Create different smart devices
+        SmartLightBulb livingRoomLight = new SmartLightBulb();
+        SmartThermostat hallwayThermostat = new SmartThermostat();
+        SmartCamera frontDoorCamera = new SmartCamera();
+
+        System.out.println("\n--- Smart Light Bulb Actions ---");
+        livingRoomLight.displayStatus();
+        livingRoomLight.turnOn();
+        livingRoomLight.setBrightness(75);
+        livingRoomLight.displayStatus();
+        livingRoomLight.setBrightness(10);
+        livingRoomLight.turnOff();
+        livingRoomLight.displayStatus();
+
+        System.out.println("\n--- Smart Thermostat Actions ---");
+        hallwayThermostat.displayStatus();
+        hallwayThermostat.turnOn();
+        hallwayThermostat.connectToNetwork("HomeNet", "MySecurePass");
+        hallwayThermostat.setTargetTemperature(70.5);
+        hallwayThermostat.displayStatus();
+        hallwayThermostat.disconnectNetwork();
+        hallwayThermostat.displayStatus();
+
+        System.out.println("\n--- Smart Security Camera Actions ---");
+        frontDoorCamera.displayStatus();
+        frontDoorCamera.connectToNetwork("HomeNet", "MySecurePass");
+        frontDoorCamera.startRecording();
+        frontDoorCamera.displayStatus();
+        frontDoorCamera.stopRecording();
+        frontDoorCamera.disconnectNetwork();
+        frontDoorCamera.displayStatus();
+        frontDoorCamera.startRecording(); // Should fail without connection
+
+        System.out.println("\n--- Demonstrating Polymorphism with Multiple Interfaces ---");
+
+        // An array of Switchable devices
+        System.out.println("\n--- Switchable Devices ---");
+        Switchable[] switchables = new Switchable[]{livingRoomLight, hallwayThermostat};
+        for (Switchable device : switchables) {
+            System.out.println("\nProcessing a switchable device...");
+            device.turnOn();
+            System.out.println("Is device on? " + device.isOn());
+            device.turnOff();
+        }
+
+        // An array of Connectable devices
+        System.out.println("\n--- Connectable Devices ---");
+        Connectable[] connectables = new Connectable[]{hallwayThermostat, frontDoorCamera};
+        for (Connectable device : connectables) {
+            System.out.println("\nProcessing a connectable device...");
+            device.connectToNetwork("GuestNet", "SimplePassword");
+            System.out.println("Connection Status: " + device.getConnectionStatus());
+            device.disconnectNetwork();
+        }
+
+        // Note: You can't create an array of Dimmable that includes Thermostat or Camera,
+        // as they don't implement the Dimmable interface.
+        // Dimmable[] dimmables = new Dimmable[]{livingRoomLight, hallwayThermostat}; // Compile-time error for Thermostat
+    }
+}
