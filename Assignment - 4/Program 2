@@ -1,0 +1,99 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+/**
+ * The Employee class represents an employee with their ID, name, department ID,
+ * blood group, and salary.
+ */
+class Employee {
+    // Data Members (Attributes)
+    String empID;
+    String empName;
+    String deptID;
+    String bloodGroup;
+    double salary;
+
+    /**
+     * Constructor for the Employee class.
+     * Initializes the data members to default values.
+     */
+    public Employee() {
+        this.empID = "";
+        this.empName = "";
+        this.deptID = "";
+        this.bloodGroup = "";
+        this.salary = 0.0;
+    }
+
+    /**
+     * setEmployeeDetails() method:
+     * Prompts the user to enter the employee's details including ID, name,
+     * department ID, blood group, and salary.
+     * It uses a Scanner object to read input from the console.
+     */
+    public void setEmployeeDetails() {
+        Scanner scanner = new Scanner(System.in); // Create a Scanner object for input
+
+        System.out.print("Enter Employee ID: ");
+        this.empID = scanner.nextLine(); // Read employee ID
+
+        System.out.print("Enter Employee Name: ");
+        this.empName = scanner.nextLine(); // Read employee name
+
+        System.out.print("Enter Department ID: ");
+        this.deptID = scanner.nextLine(); // Read department ID
+
+        System.out.print("Enter Blood Group: ");
+        this.bloodGroup = scanner.nextLine(); // Read blood group
+
+        System.out.print("Enter Salary: ");
+        this.salary = scanner.nextDouble(); // Read salary
+
+        // Consume the remaining newline character after reading the last double
+        // This is important to prevent issues with subsequent nextLine() calls
+        scanner.nextLine();
+
+        // Note: The scanner object is not closed here because it might be needed for
+        // subsequent calls to setEmployeeDetails() for other employee objects within the same program run.
+        // It's better to close it in the main method when all input is done.
+    }
+
+    /**
+     * printEmployeeDetails() method:
+     * Prints all the employee's details to the console in a formatted manner.
+     */
+    public void printEmployeeDetails() {
+        System.out.println("\n--- Employee Details ---");
+        System.out.println("Employee ID: " + this.empID);
+        System.out.println("Employee Name: " + this.empName);
+        System.out.println("Department ID: " + this.deptID);
+        System.out.println("Blood Group: " + this.bloodGroup);
+        System.out.printf("Salary: %.2f%n", this.salary); // Format salary to 2 decimal places
+    }
+}
+
+/**
+ * The MainEmployee class contains the main method to run the Employee program.
+ * It demonstrates how to create Employee objects and use their methods.
+ */
+public class MainEmployee {
+    public static void main(String[] args) {
+        // Create the first Employee object
+        System.out.println("--- Enter details for Employee 1 ---");
+        Employee employee1 = new Employee(); // Create an instance of the Employee class
+        employee1.setEmployeeDetails();     // Call setEmployeeDetails to populate employee1's details
+        employee1.printEmployeeDetails();   // Call printEmployeeDetails to show employee1's details
+
+        System.out.println("\n------------------------------------");
+
+        // Create the second Employee object
+        System.out.println("--- Enter details for Employee 2 ---");
+        Employee employee2 = new Employee(); // Create another instance
+        employee2.setEmployeeDetails();     // Populate employee2's details
+        employee2.printEmployeeDetails();   // Show employee2's details
+
+        // In a real application, you might want to manage the Scanner object
+        // more centrally or pass it to methods. For this simple example,
+        // creating a new Scanner in setEmployeeDetails() is acceptable,
+        // but remember to handle resource closing in larger applications.
+    }
+}
