@@ -1,0 +1,95 @@
+import java.util.*;
+public class Student {
+    // Instance variables (fields) to store student information
+    private String name;
+    private String studentId;
+    private int age;
+
+    /**
+     * Constructor 1: No arguments
+     * Initializes a Student object with default values.
+     */
+    public Student() {
+        this.name = "Unknown";
+        this.studentId = "N/A";
+        this.age = 0;
+        System.out.println("Student created with no arguments (Default values).");
+        displayStudentInfo();
+    }
+
+    /**
+     * Constructor 2: One argument (name)
+     * Initializes a Student object with a specified name and default values for others.
+     * @param name The name of the student.
+     */
+    public Student(String name) {
+        this.name = name;
+        this.studentId = "N/A";
+        this.age = 0;
+        System.out.println("Student created with one argument (Name).");
+        displayStudentInfo();
+    }
+
+    /**
+     * Constructor 3: Two arguments (name, studentId)
+     * Initializes a Student object with a specified name and student ID, and default age.
+     * @param name The name of the student.
+     * @param studentId The unique ID of the student.
+     */
+    public Student(String name, String studentId) {
+        this.name = name;
+        this.studentId = studentId;
+        this.age = 0;
+        System.out.println("Student created with two arguments (Name, ID).");
+        displayStudentInfo();
+    }
+
+    /**
+     * Constructor 4: Three arguments (name, studentId, age)
+     * Initializes a Student object with all specified details.
+     * @param name The name of the student.
+     * @param studentId The unique ID of the student.
+     * @param age The age of the student.
+     */
+    public Student(String name, String studentId, int age) {
+        this.name = name;
+        this.studentId = studentId;
+        this.age = age;
+        System.out.println("Student created with three arguments (Name, ID, Age).");
+        displayStudentInfo();
+    }
+
+    /**
+     * A method to display the student's information.
+     */
+    public void displayStudentInfo() {
+        System.out.println("  Name: " + this.name);
+        System.out.println("  ID: " + this.studentId);
+        System.out.println("  Age: " + this.age);
+        System.out.println("--------------------");
+    }
+
+    /**
+     * Main method to demonstrate the overloaded constructors.
+     */
+    public static void main(String[] args) {
+        System.out.println("Demonstrating Student Class Overloaded Constructors:\n");
+
+        // Using the no-argument constructor
+        Student student1 = new Student();
+
+        // Using the one-argument constructor (name)
+        Student student2 = new Student("Alice Smith");
+
+        // Using the two-argument constructor (name, studentId)
+        Student student3 = new Student("Bob Johnson", "S101");
+
+        // Using the three-argument constructor (name, studentId, age)
+        Student student4 = new Student("Charlie Brown", "S102", 16);
+
+        // You can also call displayStudentInfo explicitly if needed,
+        // but it's already called within each constructor for demonstration.
+        // student1.displayStudentInfo();
+    }
+}
+
