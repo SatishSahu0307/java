@@ -1,0 +1,84 @@
+import java.util.InputMismatchException; // Required for handling non-numeric input
+import java.util.Scanner; // Required for reading user input
+
+/**
+ * Custom exception class for handling invalid age scenarios,
+ * specifically when an age is below the voting eligibility threshold.
+ */
+class InvalidAgeException extends Exception {
+    /**
+     * Constructs an InvalidAgeException with the specified detail message.
+     * @param message The detail message (which is saved for later retrieval by the getMessage() method).
+     */
+    public InvalidAgeException(String message) {
+        super(message); // Call the constructor of the parent Exception class
+    }
+}
+
+/**
+ * This Java program checks if a person is eligible to vote based on their age.
+ * It demonstrates the use of a custom exception (InvalidAgeException)
+ * and standard exception handling (try-catch-finally) for user input.
+ * A person is eligible to vote if their age is 18 or greater.
+ */
+public class VotingEligibilityChecker {
+
+    // Define the minimum voting age as a constant for easy modification
+    private static final int MIN_VOTING_AGE = 18;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in); // Create a Scanner object to read user input
+        int age = 0; // Initialize age
+        boolean validInput = false; // Flag to control input loop
+
+        // --- Get Age Input ---
+        while (!validInput) {
+            System.out.print("Enter your age: ");
+            try {
+                age = scanner.nextInt(); // Attempt to read an integer
+                validInput = true; // Input was valid, exit loop
+
+                // Check for negative age, which is also invalid input logic
+                if (age < 0) {
+                    System.out.println("Age cannot be negative. Please enter a valid age.");
+                    validInput = false; // Stay in the loop to re-prompt
+                    scanner.nextLine(); // Consume the invalid input line
+                }
+
+            } catch (InputMismatchException e) {
+                // Catch block for non-numeric input (e.g., user types "twenty")
+                System.out.println("Invalid input. Please enter a whole number for your age.");
+                scanner.next(); // Consume the invalid input to prevent an infinite loop
+            }
+        }
+
+        // --- Check Eligibility and Handle Custom Exception ---
+        try {
+            checkVotingEligibility(age); // Call the method to check eligibility
+            System.out.println("Congratulations! You are eligible to vote.");
+        } catch (InvalidAgeException e) {
+            // Catch block for our custom InvalidAgeException
+            System.out.println("Voting Eligibility Check Failed: " + e.getMessage());
+        } finally {
+            // The finally block ensures the scanner is closed regardless of exceptions
+            scanner.close();
+            System.out.println("Program finished. Scanner closed.");
+        }
+    }
+
+    /**
+     * Checks if the given age is eligible for voting.
+     * Throws an InvalidAgeException if the age is below the minimum voting age.
+     *
+     * @param age The age of the person to check.
+     * @throws InvalidAgeException If the age is less than MIN_VOTING_AGE.
+     */
+    public static void checkVotingEligibility(int age) throws InvalidAgeException {
+        if (age < MIN_VOTING_AGE) {
+            // Throw our custom exception with a descriptive message
+            throw new InvalidAgeException("Age " + age + " is too young. You must be at least " + MIN_VOTING_AGE + " years old to vote.");
+        }
+        // No else block needed; if the condition above is false, no exception is thrown
+    }
+}
+
