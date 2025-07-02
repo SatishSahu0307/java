@@ -1,0 +1,81 @@
+import java.util.*;
+public class Area {
+
+    /**
+     * Calculates the area of a circle.
+     * Formula: Area = PI * radius * radius
+     * @param radius The radius of the circle.
+     * @return The area of the circle.
+     */
+    public double calculate(double radius) {
+        double circleArea = Math.PI * radius * radius;
+        System.out.println("Calculating Area of Circle:");
+        System.out.println("  Radius: " + radius);
+        System.out.println("  Area: " + String.format("%.2f", circleArea)); // Format to 2 decimal places
+        System.out.println("--------------------");
+        return circleArea;
+    }
+
+    /**
+     * Calculates the area of a rectangle.
+     * Formula: Area = length * width
+     * @param length The length of the rectangle.
+     * @param width The width of the rectangle.
+     * @return The area of the rectangle.
+     */
+    public double calculate(double length, double width) {
+        double rectangleArea = length * width;
+        System.out.println("Calculating Area of Rectangle:");
+        System.out.println("  Length: " + length);
+        System.out.println("  Width: " + width);
+        System.out.println("  Area: " + String.format("%.2f", rectangleArea)); // Format to 2 decimal places
+        System.out.println("--------------------");
+        return rectangleArea;
+    }
+
+    /**
+     * Calculates the area of a triangle.
+     * Formula: Area = 0.5 * base * height
+     * This method includes a boolean flag to differentiate it from the rectangle method,
+     * as both would otherwise take two double arguments.
+     * @param base The base of the triangle.
+     * @param height The height of the triangle.
+     * @param isTriangle A boolean flag (true for triangle, false for other use cases if any).
+     * @return The area of the triangle.
+     */
+    public double calculate(double base, double height, boolean isTriangle) {
+        if (isTriangle) {
+            double triangleArea = 0.5 * base * height;
+            System.out.println("Calculating Area of Triangle:");
+            System.out.println("  Base: " + base);
+            System.out.println("  Height: " + height);
+            System.out.println("  Area: " + String.format("%.2f", triangleArea)); // Format to 2 decimal places
+            System.out.println("--------------------");
+            return triangleArea;
+        } else {
+            System.out.println("Invalid call for triangle area calculation. 'isTriangle' must be true.");
+            return -1.0; // Indicate an error or invalid input
+        }
+    }
+
+    /**
+     * Main method to demonstrate the overloaded calculate methods.
+     */
+    public static void main(String[] args) {
+        System.out.println("Demonstrating Area Class Overloaded Methods:\n");
+
+        Area calculator = new Area();
+
+        // Calculate area of a circle
+        calculator.calculate(5.0); // Radius = 5.0
+
+        // Calculate area of a rectangle
+        calculator.calculate(10.0, 4.0); // Length = 10.0, Width = 4.0
+
+        // Calculate area of a triangle
+        calculator.calculate(8.0, 6.0, true); // Base = 8.0, Height = 6.0, isTriangle = true
+
+        // Example of an invalid call (passing false for isTriangle)
+        calculator.calculate(7.0, 3.0, false);
+    }
+}
