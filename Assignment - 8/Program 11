@@ -1,0 +1,78 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+import java.util.Arrays;   // Import Arrays class for sorting (alternative approach)
+
+public class IntegerArray {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Please enter the number of integers (n): ");
+        int n = input.nextInt(); // Read the value of 'n' from the user
+
+        // Validate if 'n' is at least 2 for finding a second largest element
+        if (n < 2) {
+            System.out.println("Please enter at least 2 integers to find the second largest element.");
+            input.close();
+            return; // Exit the program if n is too small
+        }
+
+        // Declare an array to store 'n' integers
+        int[] numbers = new int[n];
+
+        System.out.println("Please enter " + n + " integers:");
+
+        // Loop 'n' times to accept integers from the user
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter integer " + (i + 1) + ": ");
+            // Read the integer entered by the user and store it in the array
+            numbers[i] = input.nextInt();
+        }
+
+        System.out.println("\n--- Integers stored in the array ---");
+
+        // Loop through the array and display each integer
+        for (int i = 0; i < n; i++) {
+            System.out.print(numbers[i] + " ");
+        }
+        System.out.println(); // New line for better formatting
+
+        System.out.println("\n--- Finding the Second Largest Element ---");
+
+        // Initialize largest and secondLargest elements
+        // It's good practice to initialize them with the smallest possible integer value
+        // to correctly handle negative numbers in the array.
+        int largest = Integer.MIN_VALUE;
+        int secondLargest = Integer.MIN_VALUE;
+
+        // Iterate through the array to find the largest and second largest elements
+        for (int i = 0; i < n; i++) {
+            if (numbers[i] > largest) {
+                // If current number is greater than largest,
+                // then current largest becomes second largest
+                // and current number becomes largest.
+                secondLargest = largest;
+                largest = numbers[i];
+            } else if (numbers[i] > secondLargest && numbers[i] != largest) {
+                // If current number is not largest, but is greater than secondLargest,
+                // then it becomes the new secondLargest.
+                // The condition numbers[i] != largest ensures we don't pick the same value again
+                // if there are multiple occurrences of the largest number.
+                secondLargest = numbers[i];
+            }
+        }
+
+        // Display the second largest element
+        if (secondLargest == Integer.MIN_VALUE) {
+            // This case occurs if all elements are the same or if n was 1 (though handled above)
+            System.out.println("Could not find a distinct second largest element (all elements might be same or too few).");
+        } else {
+            System.out.println("The largest element is: " + largest);
+            System.out.println("The second largest element is: " + secondLargest);
+        }
+
+        // Close the scanner to prevent resource leaks
+        input.close();
+    }
+}
+
