@@ -1,0 +1,78 @@
+import java.util.*;
+public class Book {
+    // Instance variables (fields) to store book information
+    private String title;
+    private String author;
+    private double price;
+
+    /**
+     * Constructor 1: Initializes a Book object with only the title.
+     * Author and price are set to default values.
+     * @param title The title of the book.
+     */
+    public Book(String title) {
+        this.title = title;
+        this.author = "Unknown";
+        this.price = 0.0; // Default price
+        System.out.println("Book created with title only.");
+        displayBookInfo();
+    }
+
+    /**
+     * Constructor 2: Initializes a Book object with title and author.
+     * Price is set to a default value.
+     * @param title The title of the book.
+     * @param author The author of the book.
+     */
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+        this.price = 0.0; // Default price
+        System.out.println("Book created with title and author.");
+        displayBookInfo();
+    }
+
+    /**
+     * Constructor 3: Initializes a Book object with title, author, and price.
+     * @param title The title of the book.
+     * @param author The author of the book.
+     * @param price The price of the book.
+     */
+    public Book(String title, String author, double price) {
+        this.title = title;
+        this.author = author;
+        this.price = price;
+        System.out.println("Book created with title, author, and price.");
+        displayBookInfo();
+    }
+
+    /**
+     * A method to display the book's information.
+     */
+    public void displayBookInfo() {
+        System.out.println("  Title: " + this.title);
+        System.out.println("  Author: " + this.author);
+        System.out.println("  Price: $" + String.format("%.2f", this.price)); // Format price to 2 decimal places
+        System.out.println("--------------------");
+    }
+
+    /**
+     * Main method to demonstrate the overloaded constructors.
+     */
+    public static void main(String[] args) {
+        System.out.println("Demonstrating Book Class Overloaded Constructors:\n");
+
+        // Using the constructor with title only
+        Book book1 = new Book("The Great Gatsby");
+
+        // Using the constructor with title and author
+        Book book2 = new Book("To Kill a Mockingbird", "Harper Lee");
+
+        // Using the constructor with title, author, and price
+        Book book3 = new Book("1984", "George Orwell", 12.99);
+
+        // You can also call displayBookInfo explicitly if needed,
+        // but it's already called within each constructor for demonstration.
+        // book1.displayBookInfo();
+    }
+}
