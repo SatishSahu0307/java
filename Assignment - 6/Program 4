@@ -1,0 +1,132 @@
+import java.util.*;
+class Customer {
+    String customerName;
+    String customerId;
+    double billAmount; // Initial bill amount before any discounts
+
+    // Constructor for Customer class
+    public Customer(String customerName, String customerId, double billAmount) {
+        this.customerName = customerName;
+        this.customerId = customerId;
+        this.billAmount = billAmount;
+        System.out.println("Customer constructor called for: " + customerName);
+    }
+
+    // Method to display basic customer details
+    public void displayCustomerDetails() {
+        System.out.println("--- Customer Details ---");
+        System.out.println("Name: " + customerName);
+        System.out.println("ID: " + customerId);
+        System.out.println("Initial Bill Amount: $" + String.format("%.2f", billAmount));
+    }
+
+    // Method to calculate the final bill (base implementation)
+    public double calculateFinalBill() {
+        return billAmount;
+    }
+}
+
+// PreferredCustomer.java - Derived Class from Customer (Level 2)
+class PreferredCustomer extends Customer {
+    double discountPercentage; // Discount offered to preferred customers
+
+    // Constructor for PreferredCustomer
+    public PreferredCustomer(String customerName, String customerId, double billAmount, double discountPercentage) {
+        // Call to the superclass (Customer) constructor using 'super()'
+        super(customerName, customerId, billAmount);
+        this.discountPercentage = discountPercentage;
+        System.out.println("PreferredCustomer constructor called for: " + customerName);
+    }
+
+    // Method to display preferred customer specific details
+    public void displayPreferredCustomerDetails() {
+        // Reusing the superclass method using 'super.method()'
+        super.displayCustomerDetails();
+        System.out.println("Discount Percentage: " + String.format("%.2f", discountPercentage) + "%");
+    }
+
+    // Overriding the calculateFinalBill method to apply discount
+    @Override
+    public double calculateFinalBill() {
+        // Get the base bill amount from the superclass using 'super.method()'
+        double currentBill = super.calculateFinalBill();
+        double discountAmount = currentBill * (discountPercentage / 100);
+        return currentBill - discountAmount;
+    }
+}
+
+// PremiumCustomer.java - Derived Class from PreferredCustomer (Level 3)
+class PremiumCustomer extends PreferredCustomer {
+    double loyaltyBonus; // Additional bonus for premium customers
+
+    // Constructor for PremiumCustomer
+    public PremiumCustomer(String customerName, String customerId, double billAmount, double discountPercentage, double loyaltyBonus) {
+        // Call to the superclass (PreferredCustomer) constructor using 'super()'
+        super(customerName, customerId, billAmount, discountPercentage);
+        this.loyaltyBonus = loyaltyBonus;
+        System.out.println("PremiumCustomer constructor called for: " + customerName);
+    }
+
+    // Method to display premium customer specific details
+    public void displayPremiumCustomerDetails() {
+        // Reusing the superclass method using 'super.method()'
+        super.displayPreferredCustomerDetails(); // This also calls Customer's display via PreferredCustomer
+        System.out.println("Loyalty Bonus: $" + String.format("%.2f", loyaltyBonus));
+        System.out.println("-------------------------");
+    }
+
+    // Overriding the calculateFinalBill method to subtract loyalty bonus
+    @Override
+    public double calculateFinalBill() {
+        // Get the bill amount from the superclass (PreferredCustomer), which includes discount
+        double billAfterDiscount = super.calculateFinalBill();
+        return billAfterDiscount - loyaltyBonus; // Subtract loyalty bonus
+    }
+}
+
+// Main class to test the Customer Billing System
+public class CustomerBillingSystem {
+    public static void main(String[] args) {
+        System.out.println("--- Demonstrating Multilevel Inheritance with 'super' Keyword ---");
+
+        // 1. Create a regular Customer object
+        System.out.println("\nCreating a regular Customer object:");
+        Customer regularCustomer = new Customer("Alice Johnson", "CUST001", 150.00);
+        regularCustomer.displayCustomerDetails();
+        System.out.println("Final Bill for " + regularCustomer.customerName + ": $" + String.format("%.2f", regularCustomer.calculateFinalBill()));
+        System.out.println("-------------------------");
+
+        // 2. Create a PreferredCustomer object
+        System.out.println("\nCreating a Preferred Customer object:");
+        PreferredCustomer preferredCustomer = new PreferredCustomer("Bob Williams", "CUST002", 200.00, 5.0); // 5% discount
+        preferredCustomer.displayPreferredCustomerDetails(); // Displays base and preferred details
+        System.out.println("Final Bill for " + preferredCustomer.customerName + ": $" + String.format("%.2f", preferredCustomer.calculateFinalBill()));
+        System.out.println("-------------------------");
+
+        // 3. Create a PremiumCustomer object
+        System.out.println("\nCreating a Premium Customer object:");
+        PremiumCustomer premiumCustomer = new PremiumCustomer("Charlie Brown", "CUST003", 300.00, 10.0, 25.00); // 10% discount, $25 loyalty bonus
+        premiumCustomer.displayPremiumCustomerDetails(); // Displays base, preferred, and premium details
+        System.out.println("Final Bill for " + premiumCustomer.customerName + ": $" + String.format("%.2f", premiumCustomer.calculateFinalBill()));
+        System.out.println("-------------------------");
+
+        // Demonstrating polymorphism
+        System.out.println("\nDemonstrating Polymorphism:");
+
+        Customer customerRef1 = new PreferredCustomer("Diana Ross", "CUST004", 180.00, 7.5);
+        System.out.println("\nPreferred Customer (via Customer reference):");
+        customerRef1.displayCustomerDetails(); // Calls Customer's display
+        System.out.println("Calculated Bill: $" + String.format("%.2f", customerRef1.calculateFinalBill())); // Calls PreferredCustomer's calculateFinalBill
+
+        Customer customerRef2 = new PremiumCustomer("Eva Green", "CUST005", 250.00, 12.0, 30.00);
+        System.out.println("\nPremium Customer (via Customer reference):");
+        customerRef2.displayCustomerDetails(); // Calls Customer's display
+        System.out.println("Calculated Bill: $" + String.format("%.2f", customerRef2.calculateFinalBill())); // Calls PremiumCustomer's calculateFinalBill
+
+        PreferredCustomer preferredRef = new PremiumCustomer("Frank White", "CUST006", 400.00, 15.0, 50.00);
+        System.out.println("\nPremium Customer (via PreferredCustomer reference):");
+        preferredRef.displayPreferredCustomerDetails(); // Calls PreferredCustomer's display
+        System.out.println("Calculated Bill: $" + String.format("%.2f", preferredRef.calculateFinalBill())); // Calls PremiumCustomer's calculateFinalBill
+    }
+}
+
