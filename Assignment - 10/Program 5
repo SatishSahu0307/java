@@ -1,0 +1,38 @@
+import java.util.Scanner; // Import the Scanner class to get user input
+
+public class ReplaceWords {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("--- Word Replacement Program ---");
+
+        // 1. Get the sentence from the user
+        System.out.print("Enter a sentence that might contain 'cat' and 'dog': ");
+        String sentence = scanner.nextLine();
+
+        // 2. Get the replacement names from the user
+        System.out.print("Enter the name you want to use for 'cat': ");
+        String catName = scanner.nextLine();
+
+        System.out.print("Enter the name you want to use for 'dog': ");
+        String dogName = scanner.nextLine();
+
+        System.out.println("\n--- Performing Replacements ---");
+
+        // Use replaceAll with regex for case-insensitive replacement
+        // (?i) makes the pattern case-insensitive
+        // \\b matches word boundaries to avoid replacing parts of other words (e.g., "catalogue")
+        String modifiedSentence = sentence.replaceAll("(?i)\\bcat\\b", catName);
+        modifiedSentence = modifiedSentence.replaceAll("(?i)\\bdog\\b", dogName);
+
+
+        System.out.println("\nOriginal Sentence: " + sentence);
+        System.out.println("Modified Sentence: " + modifiedSentence);
+
+        // Close the scanner to prevent resource leaks
+        scanner.close();
+    }
+}
+
