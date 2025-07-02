@@ -1,0 +1,55 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class PalindromeChecker {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to get input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter an integer to check if it's a palindrome: ");
+
+        // Read the integer input from the user
+        int number = scanner.nextInt();
+
+        // Store the original number to compare later
+        int originalNumber = number;
+
+        // Initialize reversedNumber to 0
+        int reversedNumber = 0;
+
+        // Handle negative numbers: a negative number is not a palindrome
+        // unless its absolute value is considered, but typically palindromes
+        // are defined for non-negative numbers. We'll treat negative numbers
+        // as not palindromes for simplicity.
+        if (number < 0) {
+            System.out.println(originalNumber + " is not a palindrome.");
+            scanner.close();
+            return; // Exit the program
+        }
+
+        // Reverse the number using a while loop
+        // The loop continues as long as the number is greater than 0
+        while (number > 0) {
+            // Get the last digit of the number using the modulo operator (%)
+            int digit = number % 10;
+
+            // Build the reversed number:
+            // Multiply reversedNumber by 10 to shift existing digits to the left,
+            // then add the new digit.
+            reversedNumber = reversedNumber * 10 + digit;
+
+            // Remove the last digit from the number using integer division (/)
+            number /= 10;
+        }
+
+        // Compare the original number with the reversed number
+        if (originalNumber == reversedNumber) {
+            System.out.println(originalNumber + " is a palindrome.");
+        } else {
+            System.out.println(originalNumber + " is not a palindrome.");
+        }
+
+        // Close the scanner to prevent resource leaks
+        scanner.close();
+    }
+}
