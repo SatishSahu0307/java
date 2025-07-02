@@ -1,0 +1,31 @@
+package college.faculty;
+
+/**
+ * Represents a faculty member in the college system.
+ */
+public class Faculty {
+    private String facultyId;
+    private String name;
+    private String department;
+
+    /**
+     * Constructs a Faculty object.
+     * @param facultyId The unique ID of the faculty member.
+     * @param name The name of the faculty member.
+     * @param department The department the faculty member belongs to.
+     */
+    public Faculty(String facultyId, String name, String department) {
+        this.facultyId = facultyId;
+        this.name = name;
+        this.department = department;
+    }
+
+    /**
+     * Returns a string representation of the Faculty object.
+     * @return A formatted string with faculty details.
+     */
+    @Override
+    public String toString() {
+        return "Faculty [ID: " + facultyId + ", Name: " + name + ", Department: " + department + "]";
+    }
+}
