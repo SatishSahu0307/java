@@ -1,0 +1,84 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class IntegerArray {
+
+    // Method to check if a number is a palindrome
+    public static boolean isPalindrome(int number) {
+        // Handle negative numbers: palindromes are typically non-negative
+        if (number < 0) {
+            return false;
+        }
+        // Handle single-digit numbers: they are always palindromes
+        if (number >= 0 && number <= 9) {
+            return true;
+        }
+
+        int originalNumber = number; // Store the original number for comparison
+        int reversedNumber = 0;
+        int remainder;
+
+        // Reverse the number
+        while (number != 0) {
+            remainder = number % 10; // Get the last digit
+            reversedNumber = reversedNumber * 10 + remainder; // Add to reversed number
+            number /= 10; // Remove the last digit from the original number
+        }
+
+        // Compare the original number with the reversed number
+        return originalNumber == reversedNumber;
+    }
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Please enter the number of integers (n): ");
+        int n = input.nextInt(); // Read the value of 'n' from the user
+
+        // Validate if 'n' is positive
+        if (n <= 0) {
+            System.out.println("Please enter a positive number of integers.");
+            input.close();
+            return; // Exit the program if n is invalid
+        }
+
+        // Declare an array to store 'n' integers
+        int[] numbers = new int[n];
+
+        System.out.println("Please enter " + n + " integers:");
+
+        // Loop 'n' times to accept integers from the user
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter integer " + (i + 1) + ": ");
+            // Read the integer entered by the user and store it in the array
+            numbers[i] = input.nextInt();
+        }
+
+        System.out.println("\n--- Original Array Elements ---");
+
+        // Loop through the original array and display each integer
+        for (int i = 0; i < n; i++) {
+            System.out.print(numbers[i] + " ");
+        }
+        System.out.println(); // New line for better formatting
+
+        System.out.println("\n--- Palindrome Numbers in the Array ---");
+
+        boolean foundPalindrome = false;
+        // Iterate through the array and check each number for palindrome property
+        for (int i = 0; i < n; i++) {
+            if (isPalindrome(numbers[i])) {
+                System.out.println(numbers[i] + " is a palindrome.");
+                foundPalindrome = true;
+            }
+        }
+
+        if (!foundPalindrome) {
+            System.out.println("No palindrome numbers found in the array.");
+        }
+
+        // Close the scanner to prevent resource leaks
+        input.close();
+    }
+}
+
