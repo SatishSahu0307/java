@@ -1,0 +1,67 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+/**
+ * The Area class provides methods to calculate the area of a circle and a cylinder.
+ */
+class Area {
+    // Constant variable for PI
+    public static final double PI = 3.14; // Using 'final' for constants, and 'static' so it belongs to the class
+
+    /**
+     * Calculates the area of a circle given its radius.
+     * Formula: Area = PI * radius * radius
+     *
+     * @param radius The radius of the circle.
+     * @return The calculated area of the circle.
+     */
+    public double areaOfCircle(double radius) {
+        return PI * radius * radius;
+    }
+
+    /**
+     * Calculates the surface area of a cylinder given its radius and height.
+     * Formula: Surface Area = 2 * PI * radius * (radius + height)
+     *
+     * @param radius The radius of the cylinder's base.
+     * @param height The height of the cylinder.
+     * @return The calculated surface area of the cylinder.
+     */
+    public double areaOfCylinder(double radius, double height) {
+        // Area of two bases (circles) + Area of the curved surface
+        // 2 * PI * r^2 + 2 * PI * r * h
+        // Factored: 2 * PI * r * (r + h)
+        return 2 * PI * radius * (radius + height);
+    }
+}
+
+/**
+ * The MainArea class contains the main method to run the Area calculation program.
+ * It demonstrates how to create an Area object and use its methods.
+ */
+public class MainArea {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in); // Create a single Scanner object for all input
+        Area calculator = new Area(); // Create an instance of the Area class
+
+        // Calculate and display area of a circle
+        System.out.println("--- Calculate Area of Circle ---");
+        System.out.print("Enter the radius of the circle: ");
+        double circleRadius = scanner.nextDouble();
+        double circleArea = calculator.areaOfCircle(circleRadius);
+        System.out.printf("Area of Circle with radius %.2f: %.2f%n", circleRadius, circleArea);
+
+        System.out.println("\n------------------------------------");
+
+        // Calculate and display area of a cylinder
+        System.out.println("--- Calculate Surface Area of Cylinder ---");
+        System.out.print("Enter the radius of the cylinder: ");
+        double cylinderRadius = scanner.nextDouble();
+        System.out.print("Enter the height of the cylinder: ");
+        double cylinderHeight = scanner.nextDouble();
+        double cylinderArea = calculator.areaOfCylinder(cylinderRadius, cylinderHeight);
+        System.out.printf("Surface Area of Cylinder with radius %.2f and height %.2f: %.2f%n",
+                          cylinderRadius, cylinderHeight, cylinderArea);
+
+        scanner.close(); // Close the scanner to release system resources
+    }
+}
