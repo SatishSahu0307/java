@@ -1,0 +1,32 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class IntegerArray {
+
+    public static void main(String[] args) {
+        // Declare an array to store 10 integers
+        // The 'new int[10]' part creates an array that can hold 10 integer values.
+        int[] numbers = new int[10];
+
+        // Create a Scanner object to read input from the console
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Please enter 10 integers:");
+
+        // Loop 10 times to accept 10 integers from the user
+        for (int i = 0; i < 10; i++) {
+            System.out.print("Enter integer " + (i + 1) + ": ");
+            // Read the integer entered by the user and store it in the array
+            numbers[i] = input.nextInt();
+        }
+
+        System.out.println("\n--- Integers stored in the array ---");
+
+        // Loop through the array and display each integer
+        for (int i = 0; i < 10; i++) {
+            System.out.println("Integer " + (i + 1) + ": " + numbers[i]);
+        }
+
+        // Close the scanner to prevent resource leaks
+        input.close();
+    }
+}
