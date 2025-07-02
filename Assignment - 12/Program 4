@@ -1,0 +1,107 @@
+import java.io.BufferedReader; // For efficient reading of text from an input stream (like System.in)
+import java.io.IOException;    // For handling input/output exceptions
+import java.io.InputStreamReader; // To bridge byte streams to character streams
+
+import java.time.LocalDate;     // For working with dates (year, month, day)
+import java.time.LocalTime;     // For working with times (hour, minute, second, nanosecond)
+import java.time.LocalDateTime; // For working with both date and time
+import java.time.format.DateTimeFormatter; // For formatting date and time
+
+import java.util.ArrayList;     // For creating dynamic lists
+import java.util.InputMismatchException; // For handling type mismatch errors from Scanner
+import java.util.List;          // Interface for lists
+import java.util.Scanner;       // For simple reading of user input
+
+/**
+ * This Java program demonstrates the usage of various built-in Java packages:
+ * - `java.util`: For reading user input (Scanner) and working with dynamic lists (ArrayList).
+ * - `java.io`: For basic console input (BufferedReader, InputStreamReader) to show its capability.
+ * - `java.time`: For displaying the current date and time.
+ * It also includes basic exception handling for input operations.
+ */
+public class BuiltInPackagesDemo {
+
+    public static void main(String[] args) {
+        // --- 1. Demonstrating java.util.Scanner for reading user input ---
+        System.out.println("--- Using java.util.Scanner ---");
+        Scanner scanner = new Scanner(System.in);
+        int userNumber = 0;
+        boolean validInput = false;
+
+        while (!validInput) {
+            System.out.print("Enter an integer: ");
+            try {
+                userNumber = scanner.nextInt();
+                validInput = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a whole number.");
+                scanner.next(); // Consume the invalid input to prevent an infinite loop
+            }
+        }
+        System.out.println("You entered: " + userNumber);
+        scanner.nextLine(); // Consume the rest of the line after nextInt()
+
+        // --- 2. Demonstrating java.util.ArrayList (and List interface) ---
+        System.out.println("\n--- Using java.util.ArrayList ---");
+        List<String> shoppingList = new ArrayList<>(); // Create an ArrayList of Strings
+        System.out.println("Let's create a shopping list. Enter items (type 'done' to finish):");
+        String item;
+        while (true) {
+            System.out.print("Item: ");
+            item = scanner.nextLine();
+            if (item.equalsIgnoreCase("done")) {
+                break;
+            }
+            shoppingList.add(item); // Add item to the list
+        }
+
+        System.out.println("Your shopping list:");
+        if (shoppingList.isEmpty()) {
+            System.out.println("  (No items added)");
+        } else {
+            for (int i = 0; i < shoppingList.size(); i++) {
+                System.out.println("  " + (i + 1) + ". " + shoppingList.get(i));
+            }
+        }
+
+        // --- 3. Demonstrating java.io.BufferedReader for reading a line (alternative to Scanner for lines) ---
+        // Note: For simple console input, Scanner is often sufficient.
+        // BufferedReader is more common for file I/O or when fine-grained control over streams is needed.
+        System.out.println("\n--- Using java.io.BufferedReader (for console input) ---");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Enter your favorite book title: ");
+        String bookTitle = "N/A"; // Default value
+        try {
+            bookTitle = reader.readLine(); // Read a line from console
+            System.out.println("Your favorite book is: \"" + bookTitle + "\"");
+        } catch (IOException e) {
+            System.out.println("Error reading input: " + e.getMessage());
+        }
+        // In a real application, you might close the reader here.
+        // For System.in, it's generally not closed as it would prevent other parts of the program from using it.
+        // However, for this demo, we've finished with System.in via reader.
+
+        // --- 4. Demonstrating java.time for current date and time ---
+        System.out.println("\n--- Using java.time (Date and Time API) ---");
+
+        LocalDate currentDate = LocalDate.now(); // Get current date
+        System.out.println("Current Date: " + currentDate); // Default format: YYYY-MM-DD
+
+        LocalTime currentTime = LocalTime.now(); // Get current time
+        System.out.println("Current Time: " + currentTime); // Default format: HH:MM:SS.NNN
+
+        LocalDateTime currentDateTime = LocalDateTime.now(); // Get current date and time
+        System.out.println("Current Date and Time (default format): " + currentDateTime);
+
+        // Format the date and time using DateTimeFormatter
+        DateTimeFormatter customFormatter = DateTimeFormatter.ofPattern("dd MMMM yyyy 'at' HH:mm:ss");
+        String formattedDateTime = currentDateTime.format(customFormatter);
+        System.out.println("Current Date and Time (formatted): " + formattedDateTime);
+
+        // --- Final Cleanup ---
+        // It's good practice to close resources like Scanner when no longer needed.
+        scanner.close();
+        System.out.println("\nProgram finished. Scanner closed.");
+    }
+}
+
