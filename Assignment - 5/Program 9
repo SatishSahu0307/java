@@ -1,0 +1,145 @@
+import java.util.*;
+public class BankAccount {
+    // Instance variables (fields) to store account information
+    private String accountNumber;
+    private String accountHolderName;
+    private double balance;
+
+    /**
+     * Constructor 1: Initializes a BankAccount object with only the account number.
+     * Account holder name is set to "Unnamed" and balance to 0.0.
+     * @param accountNumber The unique account number.
+     */
+    public BankAccount(String accountNumber) {
+        this.accountNumber = accountNumber;
+        this.accountHolderName = "Unnamed";
+        this.balance = 0.0;
+        System.out.println("BankAccount created with Account Number only.");
+        displayAccountInfo();
+    }
+
+    /**
+     * Constructor 2: Initializes a BankAccount object with account number and account holder's name.
+     * Balance is set to 0.0.
+     * @param accountNumber The unique account number.
+     * @param accountHolderName The name of the account holder.
+     */
+    public BankAccount(String accountNumber, String accountHolderName) {
+        this.accountNumber = accountNumber;
+        this.accountHolderName = accountHolderName;
+        this.balance = 0.0;
+        System.out.println("BankAccount created with Account Number and Name.");
+        displayAccountInfo();
+    }
+
+    /**
+     * Overloaded deposit method: Deposits an integer amount into the account.
+     * @param amount The integer amount to deposit.
+     */
+    public void deposit(int amount) {
+        if (amount > 0) {
+            this.balance += amount;
+            System.out.println("Deposited (int): $" + amount + ". New balance: $" + String.format("%.2f", this.balance));
+        } else {
+            System.out.println("Deposit amount must be positive.");
+        }
+    }
+
+    /**
+     * Overloaded deposit method: Deposits a double amount into the account.
+     * @param amount The double amount to deposit.
+     */
+    public void deposit(double amount) {
+        if (amount > 0) {
+            this.balance += amount;
+            System.out.println("Deposited (double): $" + String.format("%.2f", amount) + ". New balance: $" + String.format("%.2f", this.balance));
+        } else {
+            System.out.println("Deposit amount must be positive.");
+        }
+    }
+
+    /**
+     * Overloaded withdraw method: Withdraws a double amount from the account.
+     * Does not allow overdraft.
+     * @param amount The double amount to withdraw.
+     */
+    public void withdraw(double amount) {
+        if (amount > 0) {
+            if (this.balance >= amount) {
+                this.balance -= amount;
+                System.out.println("Withdrew: $" + String.format("%.2f", amount) + ". New balance: $" + String.format("%.2f", this.balance));
+            } else {
+                System.out.println("Insufficient funds for withdrawal of $" + String.format("%.2f", amount) + ". Current balance: $" + String.format("%.2f", this.balance));
+            }
+        } else {
+            System.out.println("Withdrawal amount must be positive.");
+        }
+    }
+
+    /**
+     * Overloaded withdraw method: Withdraws a double amount, with an option for overdraft.
+     * @param amount The double amount to withdraw.
+     * @param allowOverdraft A boolean indicating whether overdraft is allowed.
+     */
+    public void withdraw(double amount, boolean allowOverdraft) {
+        if (amount > 0) {
+            if (this.balance >= amount) {
+                this.balance -= amount;
+                System.out.println("Withdrew: $" + String.format("%.2f", amount) + ". New balance: $" + String.format("%.2f", this.balance));
+            } else if (allowOverdraft) {
+                // In a real system, there would be an overdraft limit. For simplicity, we just allow it here.
+                this.balance -= amount;
+                System.out.println("Withdrew (overdraft allowed): $" + String.format("%.2f", amount) + ". New balance: $" + String.format("%.2f", this.balance));
+            } else {
+                System.out.println("Insufficient funds for withdrawal of $" + String.format("%.2f", amount) + ". Overdraft not allowed. Current balance: $" + String.format("%.2f", this.balance));
+            }
+        } else {
+            System.out.println("Withdrawal amount must be positive.");
+        }
+    }
+
+    /**
+     * A method to display the current account information.
+     */
+    public void displayAccountInfo() {
+        System.out.println("  Account Number: " + this.accountNumber);
+        System.out.println("  Account Holder: " + this.accountHolderName);
+        System.out.println("  Balance: $" + String.format("%.2f", this.balance));
+        System.out.println("--------------------");
+    }
+
+    /**
+     * Main method to demonstrate the overloaded constructors and methods.
+     */
+    public static void main(String[] args) {
+        System.out.println("Demonstrating BankAccount Class Overloading:\n");
+
+        // --- Constructor Overloading ---
+        System.out.println("--- Constructor Demonstrations ---");
+        BankAccount account1 = new BankAccount("ACC123");
+        BankAccount account2 = new BankAccount("ACC456", "Alice Wonderland");
+        System.out.println("\n");
+
+        // --- Method Overloading (Deposit) ---
+        System.out.println("--- Deposit Method Demonstrations ---");
+        account1.deposit(100);       // Using deposit(int amount)
+        account1.deposit(50.75);     // Using deposit(double amount)
+        account1.deposit(-20);       // Invalid deposit
+        System.out.println("\n");
+
+        // --- Method Overloading (Withdraw) ---
+        System.out.println("--- Withdraw Method Demonstrations ---");
+        account2.deposit(200.00); // Fund account2 first
+        account2.withdraw(75.50);    // Using withdraw(double amount) - no overdraft
+        account2.withdraw(150.00);   // Should fail due to insufficient funds (balance was 124.50)
+        account2.withdraw(100.00, true); // Using withdraw(double amount, boolean allowOverdraft) - allows overdraft
+        account2.withdraw(50.00, false); // Should fail due to insufficient funds and no overdraft (balance was -25.50)
+        account2.withdraw(-10.00);   // Invalid withdrawal
+        System.out.println("\n");
+
+        System.out.println("--- Final Account States ---");
+        account1.displayAccountInfo();
+        account2.displayAccountInfo();
+    }
+}
+
