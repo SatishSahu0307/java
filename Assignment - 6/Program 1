@@ -1,0 +1,106 @@
+import java.util.*;
+class Vehicle {
+    // Attributes common to all vehicles
+    String make;
+    String model;
+    int year;
+
+    // Constructor for the Vehicle class
+    public Vehicle(String make, String model, int year) {
+        this.make = make;
+        this.model = model;
+        this.year = year;
+        System.out.println("Vehicle constructor called for " + make + " " + model);
+    }
+
+    // Method to display basic vehicle information
+    public void displayVehicleDetails() {
+        System.out.println("--- Vehicle Details ---");
+        System.out.println("Make: " + make);
+        System.out.println("Model: " + model);
+        System.out.println("Year: " + year);
+    }
+
+    // A generic method that could be overridden by subclasses
+    public void startEngine() {
+        System.out.println("The vehicle's engine is starting.");
+    }
+}
+
+// Car.java - Subclass (Child Class) inheriting from Vehicle
+class Car extends Vehicle {
+    // Attributes specific to cars
+    int numDoors;
+    String fuelType;
+
+    // Constructor for the Car class
+    // 'super()' must be the first statement in the subclass constructor
+    // It calls the constructor of the superclass (Vehicle)
+    public Car(String make, String model, int year, int numDoors, String fuelType) {
+        super(make, model, year); // Call to Vehicle's constructor
+        this.numDoors = numDoors;
+        this.fuelType = fuelType;
+        System.out.println("Car constructor called for " + make + " " + model);
+    }
+
+    // Method to display car-specific information
+    public void displayCarDetails() {
+        // Can call superclass method to reuse functionality
+        displayVehicleDetails();
+        System.out.println("Number of Doors: " + numDoors);
+        System.out.println("Fuel Type: " + fuelType);
+        System.out.println("-----------------------");
+    }
+
+    // Overriding the startEngine method from the Vehicle class
+    @Override // Annotation to indicate that this method overrides a superclass method
+    public void startEngine() {
+        System.out.println("The car's engine is roaring to life!");
+    }
+
+    // New method specific to the Car class
+    public void honkHorn() {
+        System.out.println("Beep! Beep!");
+    }
+}
+
+// Main.java - Main class to test the inheritance
+public class VehicleManagementSystem {
+    public static void main(String[] args) {
+        System.out.println("--- Demonstrating Single Inheritance ---");
+
+        // 1. Create an instance of the superclass (Vehicle)
+        System.out.println("\nCreating a generic Vehicle object:");
+        Vehicle generalVehicle = new Vehicle("Toyota", "Camry (Generic)", 2020);
+        generalVehicle.displayVehicleDetails();
+        generalVehicle.startEngine(); // Calls Vehicle's startEngine
+
+        // 2. Create an instance of the subclass (Car)
+        System.out.println("\nCreating a specific Car object:");
+        Car myCar = new Car("Honda", "Civic", 2023, 4, "Petrol");
+
+        // Accessing inherited methods from Vehicle
+        myCar.displayVehicleDetails(); // Method inherited from Vehicle
+        myCar.startEngine();          // Calls Car's overridden startEngine
+
+        // Accessing methods specific to Car
+        myCar.displayCarDetails();    // Method specific to Car
+        myCar.honkHorn();             // Method specific to Car
+
+        // Another car instance
+        System.out.println("\nCreating another Car object:");
+        Car electricCar = new Car("Tesla", "Model 3", 2024, 4, "Electric");
+        electricCar.displayCarDetails();
+        electricCar.startEngine();
+        electricCar.honkHorn();
+
+        // Polymorphism: A Vehicle reference can point to a Car object
+        System.out.println("\nDemonstrating Polymorphism:");
+        Vehicle polymorphicVehicle = new Car("Ford", "Mustang", 2022, 2, "Gasoline");
+        polymorphicVehicle.displayVehicleDetails(); // Still calls Vehicle's display method
+        polymorphicVehicle.startEngine();           // Calls Car's overridden startEngine (runtime polymorphism)
+        // polymorphicVehicle.honkHorn(); // This would cause a compile-time error as honkHorn is not in Vehicle class
+        System.out.println("------------------------------------------");
+    }
+}
+
