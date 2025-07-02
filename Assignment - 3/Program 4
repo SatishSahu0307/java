@@ -1,0 +1,48 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class PrimeChecker {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to get input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a positive integer to check if it's a prime number: ");
+
+        // Read the integer input from the user
+        int number = scanner.nextInt();
+
+        // Check for primality
+        if (number <= 1) {
+            // Numbers less than or equal to 1 are not prime
+            System.out.println(number + " is not a prime number.");
+        } else if (number == 2) {
+            // 2 is the only even prime number
+            System.out.println(number + " is a prime number.");
+        } else if (number % 2 == 0) {
+            // Other even numbers are not prime
+            System.out.println(number + " is not a prime number.");
+        } else {
+            // For odd numbers, check for divisibility from 3 up to the square root of the number
+            // We only need to check odd divisors because even divisors are already handled.
+            boolean isPrime = true; // Assume the number is prime initially
+
+            // Loop from 3 up to the square root of the number, incrementing by 2 (checking only odd numbers)
+            for (int i = 3; i * i <= number; i += 2) {
+                if (number % i == 0) {
+                    isPrime = false; // If divisible, it's not prime
+                    break;           // No need to check further, exit the loop
+                }
+            }
+
+            // Print the result based on the isPrime flag
+            if (isPrime) {
+                System.out.println(number + " is a prime number.");
+            } else {
+                System.out.println(number + " is not a prime number.");
+            }
+        }
+
+        // Close the scanner to prevent resource leaks
+        scanner.close();
+    }
+}
