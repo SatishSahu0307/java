@@ -1,0 +1,61 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+import java.util.HashMap;  // Import HashMap to store element frequencies
+import java.util.Map;      // Import Map interface
+
+public class IntegerArray {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Please enter the number of integers (n): ");
+        int n = input.nextInt(); // Read the value of 'n' from the user
+
+        // Declare an array to store 'n' integers
+        int[] numbers = new int[n];
+
+        System.out.println("Please enter " + n + " integers:");
+
+        // Loop 'n' times to accept integers from the user
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter integer " + (i + 1) + ": ");
+            // Read the integer entered by the user and store it in the array
+            numbers[i] = input.nextInt();
+        }
+
+        System.out.println("\n--- Integers stored in the array ---");
+
+        // Loop through the array and display each integer in original order
+        for (int i = 0; i < n; i++) {
+            System.out.print(numbers[i] + " ");
+        }
+        System.out.println(); // New line for better formatting
+
+        System.out.println("\n--- Element Frequencies ---");
+
+        // Use a HashMap to store the frequency of each unique element
+        // The key will be the integer element, and the value will be its count
+        Map<Integer, Integer> frequencyMap = new HashMap<>();
+
+        // Iterate through the array to count frequencies
+        for (int number : numbers) {
+            // If the number is already in the map, increment its count
+            // Otherwise, add the number to the map with a count of 1
+            frequencyMap.put(number, frequencyMap.getOrDefault(number, 0) + 1);
+        }
+
+        // Display the frequencies
+        if (frequencyMap.isEmpty()) {
+            System.out.println("No elements were entered to count frequencies.");
+        } else {
+            System.out.println("Frequency of each unique element:");
+            for (Map.Entry<Integer, Integer> entry : frequencyMap.entrySet()) {
+                System.out.println("Element: " + entry.getKey() + " -> Frequency: " + entry.getValue());
+            }
+        }
+
+        // Close the scanner to prevent resource leaks
+        input.close();
+    }
+}
+
