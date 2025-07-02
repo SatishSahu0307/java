@@ -1,0 +1,75 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+import java.util.Arrays;   // Import Arrays class for displaying arrays
+
+public class IntegerArray {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Please enter the number of integers for the initial array (n): ");
+        int n = input.nextInt(); // Read the initial size of the array
+
+        // Validate if 'n' is positive
+        if (n < 0) {
+            System.out.println("Please enter a non-negative number of integers for the initial array.");
+            input.close();
+            return; // Exit the program if n is invalid
+        }
+
+        // Declare the original array to store 'n' integers
+        int[] originalArray = new int[n];
+
+        System.out.println("Please enter " + n + " integers for the array:");
+
+        // Loop 'n' times to accept integers from the user
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter integer " + (i + 1) + ": ");
+            originalArray[i] = input.nextInt(); // Read the integer and store it
+        }
+
+        System.out.println("\n--- Original Array Elements ---");
+        // Display the original array
+        System.out.println(Arrays.toString(originalArray));
+
+        System.out.println("\n--- Inserting Element into Array ---");
+
+        System.out.print("Enter the number you want to insert: ");
+        int numberToInsert = input.nextInt(); // Read the number to insert
+
+        System.out.print("Enter the index at which to insert the number (0 to " + n + "): ");
+        int insertIndex = input.nextInt(); // Read the index for insertion
+
+        // Validate the insertion index
+        if (insertIndex < 0 || insertIndex > n) {
+            System.out.println("Invalid index. The index must be between 0 and " + n + " (inclusive).");
+            input.close();
+            return; // Exit if index is invalid
+        }
+
+        // Create a new array with a size of originalArray.length + 1
+        int[] newArray = new int[n + 1];
+
+        // Copy elements from the original array to the new array
+        // Part 1: Copy elements before the insertion point
+        for (int i = 0; i < insertIndex; i++) {
+            newArray[i] = originalArray[i];
+        }
+
+        // Insert the new element at the specified index
+        newArray[insertIndex] = numberToInsert;
+
+        // Part 2: Copy elements from the original array after the insertion point,
+        // shifting them one position to the right in the new array.
+        for (int i = insertIndex; i < n; i++) {
+            newArray[i + 1] = originalArray[i];
+        }
+
+        System.out.println("\n--- Array After Insertion ---");
+        // Display the new array
+        System.out.println(Arrays.toString(newArray));
+
+        // Close the scanner to prevent resource leaks
+        input.close();
+    }
+}
