@@ -1,0 +1,169 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+/**
+ * Custom exception class for handling insufficient funds during a withdrawal.
+ */
+class InsufficientFundsException extends Exception {
+    private double amount; // The amount attempted to withdraw
+    private double balance; // The current balance
+
+    /**
+     * Constructs an InsufficientFundsException with the specified detail message,
+     * the attempted withdrawal amount, and the current balance.
+     * @param message The detail message.
+     * @param amount The amount the user tried to withdraw.
+     * @param balance The current balance of the account.
+     */
+    public InsufficientFundsException(String message, double amount, double balance) {
+        super(message);
+        this.amount = amount;
+        this.balance = balance;
+    }
+
+    /**
+     * @return The amount that was attempted to be withdrawn.
+     */
+    public double getAmount() {
+        return amount;
+    }
+
+    /**
+     * @return The current balance in the account.
+     */
+    public double getBalance() {
+        return balance;
+    }
+}
+
+/**
+ * Represents a simple bank account with deposit and withdrawal functionality.
+ */
+class BankAccount {
+    private double balance;
+
+    /**
+     * Constructs a BankAccount with an initial balance.
+     * @param initialBalance The starting balance of the account. Must be non-negative.
+     */
+    public BankAccount(double initialBalance) {
+        if (initialBalance < 0) {
+            this.balance = 0; // Ensure balance doesn't start negative
+            System.out.println("Initial balance cannot be negative. Setting to 0.0.");
+        } else {
+            this.balance = initialBalance;
+        }
+    }
+
+    /**
+     * Returns the current balance of the account.
+     * @return The current balance.
+     */
+    public double getBalance() {
+        return balance;
+    }
+
+    /**
+     * Deposits a specified amount into the account.
+     * @param amount The amount to deposit. Must be positive.
+     */
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance += amount;
+            System.out.printf("Successfully deposited: $%.2f. New balance: $%.2f%n", amount, balance);
+        } else {
+            System.out.println("Deposit amount must be positive.");
+        }
+    }
+
+    /**
+     * Withdraws a specified amount from the account.
+     * Throws InsufficientFundsException if the withdrawal amount exceeds the balance.
+     * @param amount The amount to withdraw. Must be positive.
+     * @throws InsufficientFundsException If the withdrawal amount is greater than the current balance.
+     */
+    public void withdraw(double amount) throws InsufficientFundsException {
+        if (amount <= 0) {
+            System.out.println("Withdrawal amount must be positive.");
+            return; // Exit method if amount is invalid
+        }
+        if (balance < amount) {
+            // Throw our custom exception if funds are insufficient
+            throw new InsufficientFundsException(
+                "Insufficient funds. You tried to withdraw $%.2f, but your current balance is only $%.2f."
+                    .formatted(amount, balance),
+                amount, balance
+            );
+        }
+        // If funds are sufficient, proceed with withdrawal
+        balance -= amount;
+        System.out.printf("Successfully withdrew: $%.2f. New balance: $%.2f%n", amount, balance);
+    }
+}
+
+/**
+ * Main class to run the Banking System simulation.
+ */
+public class BankingSystem {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        BankAccount account = new BankAccount(100.00); // Create an account with an initial balance
+        boolean running = true;
+
+        System.out.println("Welcome to the Simple Banking System!");
+        System.out.printf("Your initial balance is: $%.2f%n", account.getBalance());
+
+        while (running) {
+            System.out.println("\n--- Menu ---");
+            System.out.println("1. Deposit");
+            System.out.println("2. Withdraw");
+            System.out.println("3. Check Balance");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            try {
+                int choice = scanner.nextInt();
+                double amount;
+
+                switch (choice) {
+                    case 1:
+                        System.out.print("Enter amount to deposit: $");
+                        amount = scanner.nextDouble();
+                        account.deposit(amount);
+                        break;
+                    case 2:
+                        System.out.print("Enter amount to withdraw: $");
+                        amount = scanner.nextDouble();
+                        try {
+                            account.withdraw(amount);
+                        } catch (InsufficientFundsException e) {
+                            System.out.println("Transaction Failed: " + e.getMessage());
+                            System.out.printf("Current balance: $%.2f%n", e.getBalance());
+                        }
+                        break;
+                    case 3:
+                        System.out.printf("Current balance: $%.2f%n", account.getBalance());
+                        break;
+                    case 4:
+                        running = false;
+                        System.out.println("Thank you for using the banking system. Goodbye!");
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number for your choice or amount.");
+                scanner.nextLine(); // Consume the invalid input to prevent an infinite loop
+            } catch (Exception e) {
+                // General catch for any other unexpected exceptions
+                System.out.println("An unexpected error occurred: " + e.getMessage());
+            } finally {
+                // In a real application, you might commit transactions or save state here.
+                // For this simulation, we'll just print a message if the loop finishes.
+            }
+        }
+        scanner.close(); // Close the scanner when the program exits
+    }
+}
+
