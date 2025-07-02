@@ -1,0 +1,55 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class IntegerArray {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner input = new Scanner(System.in);
+
+        // Define the size for the first two arrays
+        int arraySize = 5;
+
+        // Declare two arrays to store 5 integers each
+        int[] array1 = new int[arraySize];
+        int[] array2 = new int[arraySize];
+
+        // Declare a third array to store the merged elements (size will be 5 + 5 = 10)
+        int[] mergedArray = new int[arraySize * 2];
+
+        System.out.println("--- Enter elements for the FIRST array (5 integers) ---");
+        // Loop to accept 5 integers for the first array
+        for (int i = 0; i < arraySize; i++) {
+            System.out.print("Enter integer " + (i + 1) + " for Array 1: ");
+            array1[i] = input.nextInt();
+        }
+
+        System.out.println("\n--- Enter elements for the SECOND array (5 integers) ---");
+        // Loop to accept 5 integers for the second array
+        for (int i = 0; i < arraySize; i++) {
+            System.out.print("Enter integer " + (i + 1) + " for Array 2: ");
+            array2[i] = input.nextInt();
+        }
+
+        System.out.println("\n--- Merging Arrays ---");
+
+        // Copy elements from the first array to the merged array
+        for (int i = 0; i < arraySize; i++) {
+            mergedArray[i] = array1[i];
+        }
+
+        // Copy elements from the second array to the merged array, starting from index 'arraySize'
+        for (int i = 0; i < arraySize; i++) {
+            mergedArray[arraySize + i] = array2[i];
+        }
+
+        System.out.println("\n--- Merged Array Elements ---");
+        // Loop through the merged array and display each integer
+        for (int i = 0; i < mergedArray.length; i++) {
+            System.out.print(mergedArray[i] + " ");
+        }
+        System.out.println(); // New line for better formatting
+
+        // Close the scanner to prevent resource leaks
+        input.close();
+    }
+}
