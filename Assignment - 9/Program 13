@@ -1,0 +1,158 @@
+import java.util.Scanner; // Import the Scanner class to get user input
+import java.util.Arrays; // Import the Arrays class for sorting
+
+public class MatrixOperations {
+
+    public static void main(String[] args) {
+        // Declare a 3x3 integer matrix for input
+        int[][] matrix = new int[3][3];
+        // Declare a 3x3 integer matrix to store the transpose (though not used in this version for printing diagonal)
+        int[][] transposeMatrix = new int[3][3]; // Still declared but not used for transpose in this specific task
+
+        // Create a Scanner object to read input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the elements of the 3x3 matrix:");
+
+        // Loop to get user input for each element of the matrix
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            // Inner loop for columns
+            for (int j = 0; j < 3; j++) {
+                System.out.print("Enter element at position [" + i + "][" + j + "]: ");
+                // Read the integer input from the user and assign it to the matrix
+                matrix[i][j] = scanner.nextInt();
+            }
+        }
+
+        System.out.println("\n--- The original matrix you entered is: ---");
+
+        // Loop to print the elements of the original matrix
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            // Inner loop for columns
+            for (int j = 0; j < 3; j++) {
+                // Print each element followed by a space
+                System.out.print(matrix[i][j] + " ");
+            }
+            // Move to the next line after printing each row
+            System.out.println();
+        }
+
+        System.out.println("\n--- Sorting each row in ascending order ---");
+        // Loop through each row and sort it
+        for (int i = 0; i < 3; i++) {
+            Arrays.sort(matrix[i]); // Sort the current row (matrix[i]) in ascending order
+        }
+
+        System.out.println("\n--- Matrix with rows sorted in ascending order: ---");
+        // Loop to print the elements of the matrix after sorting each row
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            // Inner loop for columns
+            for (int j = 0; j < 3; j++) {
+                // Print each element followed by a space
+                System.out.print(matrix[i][j] + " ");
+            }
+            // Move to the next line after printing each row
+            System.out.println();
+        }
+
+
+        System.out.println("\n--- Performing Matrix Transpose ---");
+        // Loop to perform matrix transpose
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            // Inner loop for columns
+            for (int j = 0; j < 3; j++) {
+                // Transpose: element at [i][j] in original matrix goes to [j][i] in transpose matrix
+                transposeMatrix[j][i] = matrix[i][j];
+            }
+        }
+
+        System.out.println("\n--- The transposed matrix is: ---");
+        // Loop to print the transposed matrix
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            // Inner loop for columns
+            for (int j = 0; j < 3; j++) {
+                System.out.print(transposeMatrix[i][j] + " "); // Print each element of the transposed matrix
+            }
+            // Move to the next line after printing each row
+            System.out.println();
+        }
+
+        System.out.println("\n--- Elements of the Main Diagonal: ---");
+        // Loop to print the elements of the main diagonal
+        // For a main diagonal, the row index (i) is equal to the column index (j)
+        for (int i = 0; i < 3; i++) {
+            System.out.print(matrix[i][i] + " ");
+        }
+        System.out.println(); // Add a newline for better formatting
+
+        System.out.println("\n--- Elements of the Secondary Diagonal: ---");
+        // Loop to print the elements of the secondary diagonal
+        // For a secondary diagonal, the sum of the row index (i) and column index (j) is equal to (size - 1)
+        // For a 3x3 matrix, size = 3, so i + j = 2
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (i + j == 2) { // Check if the element is on the secondary diagonal
+                    System.out.print(matrix[i][j] + " ");
+                }
+            }
+        }
+        System.out.println(); // Add a newline for better formatting
+
+        System.out.println("\n--- Searching for an Element in the Matrix ---");
+        System.out.print("Enter the element you want to search for: ");
+        int searchElement = scanner.nextInt(); // Get the element to search from the user
+
+        boolean found = false; // Flag to indicate if the element is found
+
+        // Loop to search for the element
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            // Inner loop for columns
+            for (int j = 0; j < 3; j++) {
+                if (matrix[i][j] == searchElement) { // Check if the current element matches the search element
+                    System.out.println("Element " + searchElement + " found at position [" + i + "][" + j + "]");
+                    found = true; // Set flag to true
+                    // We can break here if we only need to find the first occurrence
+                    // If you need to find all occurrences, remove the break statements
+                    break; // Break from the inner loop
+                }
+            }
+            if (found) { // If element is found, break from the outer loop as well
+                break;
+            }
+        }
+
+        if (!found) { // If the element was not found after checking all positions
+            System.out.println("Element " + searchElement + " not found in the matrix.");
+        }
+
+        System.out.println("\n--- Finding Maximum and Minimum Elements ---");
+        // Initialize max and min with the first element of the matrix
+        int maxElement = matrix[0][0];
+        int minElement = matrix[0][0];
+
+        // Loop through the matrix to find the maximum and minimum elements
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (matrix[i][j] > maxElement) {
+                    maxElement = matrix[i][j]; // Update maxElement if a larger element is found
+                }
+                if (matrix[i][j] < minElement) {
+                    minElement = matrix[i][j]; // Update minElement if a smaller element is found
+                }
+            }
+        }
+
+        System.out.println("Maximum element in the matrix: " + maxElement);
+        System.out.println("Minimum element in the matrix: " + minElement);
+
+
+        // Close the scanner to prevent resource leaks
+        scanner.close();
+    }
+}
