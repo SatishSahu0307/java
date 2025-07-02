@@ -1,0 +1,89 @@
+import java.util.Scanner; // Import the Scanner class to get user input
+
+public class MatrixOperations {
+
+    public static void main(String[] args) {
+        // Declare a 3x3 integer matrix for input
+        int[][] matrix = new int[3][3];
+        // Declare a 3x3 integer matrix to store the transpose (though not used in this version for printing diagonal)
+        int[][] transposeMatrix = new int[3][3]; // Still declared but not used for transpose in this specific task
+
+        // Create a Scanner object to read input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the elements of the 3x3 matrix:");
+
+        // Loop to get user input for each element of the matrix
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            // Inner loop for columns
+            for (int j = 0; j < 3; j++) {
+                System.out.print("Enter element at position [" + i + "][" + j + "]: ");
+                // Read the integer input from the user and assign it to the matrix
+                matrix[i][j] = scanner.nextInt();
+            }
+        }
+
+        System.out.println("\n--- The original matrix you entered is: ---");
+
+        // Loop to print the elements of the original matrix
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            // Inner loop for columns
+            for (int j = 0; j < 3; j++) {
+                // Print each element followed by a space
+                System.out.print(matrix[i][j] + " ");
+            }
+            // Move to the next line after printing each row
+            System.out.println();
+        }
+
+        System.out.println("\n--- Performing Matrix Transpose ---");
+        // Loop to perform matrix transpose
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            // Inner loop for columns
+            for (int j = 0; j < 3; j++) {
+                // Transpose: element at [i][j] in original matrix goes to [j][i] in transpose matrix
+                transposeMatrix[j][i] = matrix[i][j];
+            }
+        }
+
+        System.out.println("\n--- The transposed matrix is: ---");
+        // Loop to print the transposed matrix
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            // Inner loop for columns
+            for (int j = 0; j < 3; j++) {
+                System.out.print(transposeMatrix[i][j] + " "); // Print each element of the transposed matrix
+            }
+            // Move to the next line after printing each row
+            System.out.println();
+        }
+
+        System.out.println("\n--- Elements of the Main Diagonal: ---");
+        // Loop to print the elements of the main diagonal
+        // For a main diagonal, the row index (i) is equal to the column index (j)
+        for (int i = 0; i < 3; i++) {
+            System.out.print(matrix[i][i] + " ");
+        }
+        System.out.println(); // Add a newline for better formatting
+
+        System.out.println("\n--- Elements of the Secondary Diagonal: ---");
+        // Loop to print the elements of the secondary diagonal
+        // For a secondary diagonal, the sum of the row index (i) and column index (j) is equal to (size - 1)
+        // For a 3x3 matrix, size = 3, so i + j = 2
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (i + j == 2) { // Check if the element is on the secondary diagonal
+                    System.out.print(matrix[i][j] + " ");
+                }
+            }
+        }
+        System.out.println(); // Add a newline for better formatting
+
+        // Close the scanner to prevent resource leaks
+        scanner.close();
+    }
+}
+
