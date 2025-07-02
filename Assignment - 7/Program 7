@@ -1,0 +1,395 @@
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Interface: Defines a contract for anything that can be enrolled in.
+ * It specifies WHAT an enrollable item must do.
+ * All methods are implicitly public and abstract (unless default/static).
+ */
+interface Enrollable {
+    String getEnrollmentId();
+    String getEnrollmentTitle();
+    void displayEnrollmentDetails();
+}
+
+/**
+ * Abstract Class: Defines a common base for all users in the platform.
+ * It provides common attributes and concrete methods,
+ * and also declares abstract methods that subclasses must implement.
+ * It specifies WHAT a user IS and some common behaviors.
+ */
+abstract class AbstractUser {
+    protected String userId;
+    protected String name;
+    protected String email;
+
+    /**
+     * Constructor for AbstractUser.
+     * @param userId The unique ID of the user.
+     * @param name The name of the user.
+     * @param email The email of the user.
+     */
+    public AbstractUser(String userId, String name, String email) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        System.out.println("User " + name + " (" + userId + ") created.");
+    }
+
+    /**
+     * Concrete method: Common behavior for all users (logging in).
+     */
+    public void login() {
+        System.out.println(name + " (" + userId + ") logged in.");
+    }
+
+    /**
+     * Concrete method: Common behavior for all users (logging out).
+     */
+    public void logout() {
+        System.out.println(name + " (" + userId + ") logged out.");
+    }
+
+    /**
+     * Abstract method: How a user's profile is displayed will vary.
+     * Subclasses MUST implement this.
+     */
+    public abstract void displayProfile();
+
+    // Getters for common user properties
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+}
+
+/**
+ * Concrete Class: Represents a Student.
+ * Extends AbstractUser, so it inherits common user properties and methods,
+ * and must implement the abstract displayProfile method.
+ * A Student can enroll in Enrollable items.
+ */
+class Student extends AbstractUser {
+    private List<Enrollable> enrolledItems;
+
+    /**
+     * Constructor for Student.
+     * @param userId The unique ID of the student.
+     * @param name The name of the student.
+     * @param email The email of the student.
+     */
+    public Student(String userId, String name, String email) {
+        super(userId, name, email); // Call parent AbstractUser constructor
+        this.enrolledItems = new ArrayList<>();
+        System.out.println("Student: " + name + " initialized.");
+    }
+
+    /**
+     * Implementation of the abstract method from AbstractUser.
+     */
+    @Override
+    public void displayProfile() {
+        System.out.println("--- Student Profile ---");
+        System.out.println("ID: " + userId);
+        System.out.println("Name: " + name);
+        System.out.println("Email: " + email);
+        if (!enrolledItems.isEmpty()) {
+            System.out.println("Enrolled In:");
+            for (Enrollable item : enrolledItems) {
+                System.out.println("  - " + item.getEnrollmentTitle() + " (" + item.getEnrollmentId() + ")");
+            }
+        } else {
+            System.out.println("Not enrolled in any courses/lectures yet.");
+        }
+        System.out.println("---------------------");
+    }
+
+    /**
+     * Student-specific method to enroll in an Enrollable item.
+     * @param item The Enrollable item (Course or LectureSeries) to enroll in.
+     */
+    public void enroll(Enrollable item) {
+        if (!enrolledItems.contains(item)) {
+            enrolledItems.add(item);
+            System.out.println(name + " enrolled in " + item.getEnrollmentTitle() + ".");
+        } else {
+            System.out.println(name + " is already enrolled in " + item.getEnrollmentTitle() + ".");
+        }
+    }
+
+    /**
+     * Student-specific method to drop an Enrollable item.
+     * @param item The Enrollable item to drop.
+     */
+    public void drop(Enrollable item) {
+        if (enrolledItems.remove(item)) {
+            System.out.println(name + " dropped " + item.getEnrollmentTitle() + ".");
+        } else {
+            System.out.println(name + " was not enrolled in " + item.getEnrollmentTitle() + ".");
+        }
+    }
+}
+
+/**
+ * Concrete Class: Represents an Instructor.
+ * Extends AbstractUser and must implement displayProfile.
+ * An Instructor might teach several courses.
+ */
+class Instructor extends AbstractUser {
+    private String department;
+    private List<String> coursesTaught;
+
+    /**
+     * Constructor for Instructor.
+     * @param userId The unique ID of the instructor.
+     * @param name The name of the instructor.
+     * @param email The email of the instructor.
+     * @param department The department the instructor belongs to.
+     */
+    public Instructor(String userId, String name, String email, String department) {
+        super(userId, name, email); // Call parent AbstractUser constructor
+        this.department = department;
+        this.coursesTaught = new ArrayList<>();
+        System.out.println("Instructor: " + name + " initialized for department " + department + ".");
+    }
+
+    /**
+     * Implementation of the abstract method from AbstractUser.
+     */
+    @Override
+    public void displayProfile() {
+        System.out.println("--- Instructor Profile ---");
+        System.out.println("ID: " + userId);
+        System.out.println("Name: " + name);
+        System.out.println("Email: " + email);
+        System.out.println("Department: " + department);
+        if (!coursesTaught.isEmpty()) {
+            System.out.println("Courses Taught:");
+            for (String course : coursesTaught) {
+                System.out.println("  - " + course);
+            }
+        } else {
+            System.out.println("Not currently teaching any courses.");
+        }
+        System.out.println("--------------------------");
+    }
+
+    /**
+     * Instructor-specific method to assign a course.
+     * @param courseCode The code of the course to assign.
+     */
+    public void assignCourse(String courseCode) {
+        if (!coursesTaught.contains(courseCode)) {
+            coursesTaught.add(courseCode);
+            System.out.println(name + " assigned to teach " + courseCode + ".");
+        } else {
+            System.out.println(name + " is already assigned to " + courseCode + ".");
+        }
+    }
+}
+
+/**
+ * Concrete Class: Represents a Course.
+ * Implements the Enrollable interface.
+ */
+class Course implements Enrollable {
+    private String courseCode;
+    private String title;
+    private String instructorName;
+    private int credits;
+
+    /**
+     * Constructor for Course.
+     * @param courseCode The unique code for the course.
+     * @param title The title of the course.
+     * @param instructorName The name of the instructor teaching the course.
+     * @param credits The number of credits for the course.
+     */
+    public Course(String courseCode, String title, String instructorName, int credits) {
+        this.courseCode = courseCode;
+        this.title = title;
+        this.instructorName = instructorName;
+        this.credits = credits;
+        System.out.println("Course: '" + title + "' (" + courseCode + ") created.");
+    }
+
+    /**
+     * Implementation of getEnrollmentId from Enrollable interface.
+     */
+    @Override
+    public String getEnrollmentId() {
+        return courseCode;
+    }
+
+    /**
+     * Implementation of getEnrollmentTitle from Enrollable interface.
+     */
+    @Override
+    public String getEnrollmentTitle() {
+        return title;
+    }
+
+    /**
+     * Implementation of displayEnrollmentDetails from Enrollable interface.
+     */
+    @Override
+    public void displayEnrollmentDetails() {
+        System.out.println("Course Details:");
+        System.out.println("  Code: " + courseCode);
+        System.out.println("  Title: " + title);
+        System.out.println("  Instructor: " + instructorName);
+        System.out.println("  Credits: " + credits);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return courseCode.equals(course.courseCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return courseCode.hashCode();
+    }
+}
+
+/**
+ * Concrete Class: Represents a Lecture Series.
+ * Also implements the Enrollable interface, showing that different types
+ * of items can adhere to the same "enrollable" contract.
+ */
+class LectureSeries implements Enrollable {
+    private String seriesId;
+    private String seriesTitle;
+    private int numberOfLectures;
+    private String mainSpeaker;
+
+    /**
+     * Constructor for LectureSeries.
+     * @param seriesId The unique ID for the lecture series.
+     * @param seriesTitle The title of the lecture series.
+     * @param numberOfLectures The total number of lectures in the series.
+     * @param mainSpeaker The main speaker for the series.
+     */
+    public LectureSeries(String seriesId, String seriesTitle, int numberOfLectures, String mainSpeaker) {
+        this.seriesId = seriesId;
+        this.seriesTitle = seriesTitle;
+        this.numberOfLectures = numberOfLectures;
+        this.mainSpeaker = mainSpeaker;
+        System.out.println("Lecture Series: '" + seriesTitle + "' (" + seriesId + ") created.");
+    }
+
+    /**
+     * Implementation of getEnrollmentId from Enrollable interface.
+     */
+    @Override
+    public String getEnrollmentId() {
+        return seriesId;
+    }
+
+    /**
+     * Implementation of getEnrollmentTitle from Enrollable interface.
+     */
+    @Override
+    public String getEnrollmentTitle() {
+        return seriesTitle;
+    }
+
+    /**
+     * Implementation of displayEnrollmentDetails from Enrollable interface.
+     */
+    @Override
+    public void displayEnrollmentDetails() {
+        System.out.println("Lecture Series Details:");
+        System.out.println("  ID: " + seriesId);
+        System.out.println("  Title: " + seriesTitle);
+        System.out.println("  Number of Lectures: " + numberOfLectures);
+        System.out.println("  Main Speaker: " + mainSpeaker);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LectureSeries that = (LectureSeries) o;
+        return seriesId.equals(that.seriesId);
+    }
+
+    @Override
+    public int hashCode() {
+        return seriesId.hashCode();
+    }
+}
+
+
+// Main class to demonstrate the Online Learning Platform
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("--- Online Learning Platform Demonstration ---");
+        System.out.println("--- Abstract Class vs Interface ---");
+
+        // 1. Working with Abstract Class (AbstractUser)
+        System.out.println("\n--- Demonstrating AbstractUser ---");
+        Student alice = new Student("ST001", "Alice Smith", "alice@example.com");
+        Instructor bob = new Instructor("INS001", "Dr. Bob Johnson", "bob@example.com", "Computer Science");
+
+        alice.login();
+        bob.login();
+
+        // Both Student and Instructor must implement displayProfile()
+        alice.displayProfile();
+        bob.displayProfile();
+
+        // You cannot instantiate an abstract class directly:
+        // AbstractUser newUser = new AbstractUser("U001", "Test User", "test@example.com"); // Compile-time error!
+
+        System.out.println("\n--- Demonstrating Enrollable Interface ---");
+        // 2. Working with Interface (Enrollable)
+        Course javaCourse = new Course("CS101", "Introduction to Java", "Dr. Bob Johnson", 3);
+        LectureSeries aiEthicsSeries = new LectureSeries("AIETHICS01", "Ethics in AI", 5, "Dr. Jane Doe");
+
+        // Both Course and LectureSeries must implement Enrollable methods
+        javaCourse.displayEnrollmentDetails();
+        aiEthicsSeries.displayEnrollmentDetails();
+
+        // Enrolling a student in different types of Enrollable items
+        alice.enroll(javaCourse);
+        alice.enroll(aiEthicsSeries);
+        alice.displayProfile();
+
+        alice.drop(javaCourse);
+        alice.displayProfile();
+
+        // You cannot instantiate an interface directly:
+        // Enrollable newEnrollable = new Enrollable(); // Compile-time error!
+
+        System.out.println("\n--- Polymorphism with Abstract Class and Interface ---");
+
+        // Polymorphism with AbstractUser
+        AbstractUser[] platformUsers = new AbstractUser[]{alice, bob};
+        System.out.println("\nIterating through platform users:");
+        for (AbstractUser user : platformUsers) {
+            user.login();
+            user.displayProfile();
+            user.logout();
+        }
+
+        // Polymorphism with Enrollable
+        Enrollable[] enrollableItems = new Enrollable[]{javaCourse, aiEthicsSeries};
+        System.out.println("\nIterating through enrollable items:");
+        for (Enrollable item : enrollableItems) {
+            System.out.println("Processing: " + item.getEnrollmentTitle());
+            item.displayEnrollmentDetails();
+        }
+    }
+}
+
