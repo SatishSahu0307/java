@@ -1,0 +1,78 @@
+import java.util.*;
+public class Movie {
+    // Instance variables (fields) to store movie information
+    private String title;
+    private String genre;
+    private int releaseYear;
+
+    /**
+     * Constructor 1: Initializes a Movie object with only the title.
+     * Genre and release year are set to default values.
+     * @param title The title of the movie.
+     */
+    public Movie(String title) {
+        this.title = title;
+        this.genre = "Unknown";
+        this.releaseYear = 0; // Default year
+        System.out.println("Movie created with title only.");
+        displayMovieInfo();
+    }
+
+    /**
+     * Constructor 2: Initializes a Movie object with title and genre.
+     * Release year is set to a default value.
+     * @param title The title of the movie.
+     * @param genre The genre of the movie.
+     */
+    public Movie(String title, String genre) {
+        this.title = title;
+        this.genre = genre;
+        this.releaseYear = 0; // Default year
+        System.out.println("Movie created with title and genre.");
+        displayMovieInfo();
+    }
+
+    /**
+     * Constructor 3: Initializes a Movie object with title, genre, and release year.
+     * @param title The title of the movie.
+     * @param genre The genre of the movie.
+     * @param releaseYear The release year of the movie.
+     */
+    public Movie(String title, String genre, int releaseYear) {
+        this.title = title;
+        this.genre = genre;
+        this.releaseYear = releaseYear;
+        System.out.println("Movie created with title, genre, and release year.");
+        displayMovieInfo();
+    }
+
+    /**
+     * A method to display the movie's information.
+     */
+    public void displayMovieInfo() {
+        System.out.println("  Title: " + this.title);
+        System.out.println("  Genre: " + this.genre);
+        System.out.println("  Release Year: " + (this.releaseYear == 0 ? "N/A" : this.releaseYear));
+        System.out.println("--------------------");
+    }
+
+    /**
+     * Main method to demonstrate the overloaded constructors.
+     */
+    public static void main(String[] args) {
+        System.out.println("Demonstrating Movie Class Overloaded Constructors:\n");
+
+        // Using the constructor with title only
+        Movie movie1 = new Movie("Inception");
+
+        // Using the constructor with title and genre
+        Movie movie2 = new Movie("The Matrix", "Science Fiction");
+
+        // Using the constructor with title, genre, and release year
+        Movie movie3 = new Movie("Pulp Fiction", "Crime", 1994);
+
+        // You can also call displayMovieInfo explicitly if needed,
+        // but it's already called within each constructor for demonstration.
+        // movie1.displayMovieInfo();
+    }
+}
