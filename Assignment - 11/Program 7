@@ -1,0 +1,71 @@
+import java.util.*;
+public class CommandLineProcessor {
+
+    public static void main(String[] args) {
+        // --- 1. Check for valid number of arguments ---
+        // We expect exactly two arguments (e.g., two numbers to add).
+        if (args.length != 2) {
+            System.out.println("Usage: java CommandLineProcessor <number1> <number2>");
+            System.out.println("Example: java CommandLineProcessor 10 20");
+            // Exit the program if the argument count is incorrect
+            return;
+        }
+
+        int num1 = 0; // To store the first parsed integer
+        int num2 = 0; // To store the second parsed integer
+
+        // --- 2. Process arguments and handle potential exceptions ---
+        try {
+            // --- Inner Try Block 1: Handle ArrayIndexOutOfBoundsException for individual argument access ---
+            // Although we checked args.length above, a nested try/catch
+            // demonstrates handling access errors if the array were processed differently
+            // or if the length check was less strict.
+            try {
+                // Attempt to parse the first argument
+                // This might throw NumberFormatException
+                num1 = Integer.parseInt(args[0]);
+
+                // Attempt to parse the second argument
+                // This might throw NumberFormatException
+                num2 = Integer.parseInt(args[1]);
+
+            } catch (ArrayIndexOutOfBoundsException e) {
+                // This catch block would typically not be reached because of the initial args.length check.
+                // However, it's here to demonstrate handling this specific exception type in a nested context.
+                System.out.println("Error: Not enough arguments provided at specific index access.");
+                System.out.println("Exception Details: " + e.getMessage());
+                return; // Exit if array access failed unexpectedly
+            }
+
+            // --- Inner Try Block 2: Handle NumberFormatException for parsing ---
+            // Although parseInt itself throws NumberFormatException, structuring it this way
+            // highlights separate concerns or if there were other operations that could fail.
+            // The actual NumberFormatException would be caught by the outer catch, but this illustrates nesting.
+            // In this specific case, Integer.parseInt directly throws NumberFormatException,
+            // so the specific `try` around `parseInt` might seem redundant if only for that exception.
+            // However, this structure shows how you *would* nest if different operations in different
+            // parts of your logic could throw distinct exceptions.
+            // For simplicity and directness, parsing often just goes into the main `try` block.
+            // We will let the `NumberFormatException` be caught by the outer `catch` directly below for this example.
+
+            // If parsing is successful, perform the addition
+            int sum = num1 + num2;
+            System.out.println("Successfully processed arguments:");
+            System.out.println("First number: " + num1);
+            System.out.println("Second number: " + num2);
+            System.out.println("Sum: " + num1 + " + " + num2 + " = " + sum);
+
+        } catch (NumberFormatException e) {
+            // Catch block for when arguments cannot be converted to integers
+            System.out.println("Error: Invalid argument type. Please provide valid integers.");
+            System.out.println("Exception Details: " + e.getMessage());
+        } catch (Exception e) {
+            // General catch for any other unexpected exceptions
+            System.out.println("An unexpected error occurred during argument processing: " + e.getMessage());
+        } finally {
+            // The finally block executes regardless of whether an exception occurred or not.
+            System.out.println("Argument processing complete.");
+        }
+    }
+}
+
