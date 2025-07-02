@@ -1,0 +1,42 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class IntegerArray {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner input = new Scanner(System.in);
+
+        // The program will now accept exactly 5 integers
+        int n = 5;
+
+        // Declare an array to store 5 integers
+        int[] numbers = new int[n];
+
+        System.out.println("Please enter 5 integers:");
+
+        // Loop to accept 5 integers from the user
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter integer " + (i + 1) + ": ");
+            // Read the integer entered by the user and store it in the array
+            numbers[i] = input.nextInt();
+        }
+
+        System.out.println("\n--- Integers stored in the array (original order) ---");
+
+        // Loop through the array and display each integer in original order
+        for (int i = 0; i < n; i++) {
+            System.out.println("Integer " + (i + 1) + ": " + numbers[i]);
+        }
+
+        System.out.println("\n--- Integers in reverse order ---");
+
+        // Loop through the array from the last element to the first, and print them
+        for (int i = n - 1; i >= 0; i--) {
+            System.out.println("Integer: " + numbers[i]);
+        }
+
+        // Close the scanner to prevent resource leaks
+        input.close();
+    }
+}
+
