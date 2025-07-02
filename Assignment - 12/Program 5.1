@@ -1,0 +1,62 @@
+package utils;
+
+/**
+ * A utility class for common string manipulation operations.
+ */
+public class StringUtils {
+
+    /**
+     * Reverses the given string.
+     * @param str The string to reverse.
+     * @return The reversed string, or null if the input is null.
+     */
+    public static String reverse(String str) {
+        if (str == null) {
+            return null;
+        }
+        return new StringBuilder(str).reverse().toString();
+    }
+
+    /**
+     * Capitalizes the first letter of each word in the given string.
+     * Words are separated by spaces.
+     * @param str The string to capitalize.
+     * @return The capitalized string, or null if the input is null.
+     */
+    public static String capitalizeWords(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+        StringBuilder result = new StringBuilder();
+        Scanner wordScanner = new Scanner(str);
+        while (wordScanner.hasNext()) {
+            String word = wordScanner.next();
+            if (!word.isEmpty()) {
+                result.append(Character.toUpperCase(word.charAt(0)))
+                      .append(word.substring(1).toLowerCase())
+                      .append(" ");
+            }
+        }
+        wordScanner.close();
+        return result.toString().trim(); // Trim trailing space
+    }
+
+    /**
+     * Counts the occurrences of a character in a string.
+     * @param str The string to search within.
+     * @param charToFind The character to count.
+     * @return The number of occurrences.
+     */
+    public static int countChar(String str, char charToFind) {
+        if (str == null) {
+            return 0;
+        }
+        int count = 0;
+        for (char c : str.toCharArray()) {
+            if (c == charToFind) {
+                count++;
+            }
+        }
+        return count;
+    }
+}
