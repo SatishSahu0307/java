@@ -1,0 +1,35 @@
+public class CharArrayToString {
+
+    public static void main(String[] args) {
+        // 1. Declare and initialize a character array
+        char[] charArray = {'H', 'e', 'l', 'l', 'o', ',', ' ', 'W', 'o', 'r', 'l', 'd', '!'};
+
+        System.out.println("--- Original Character Array ---");
+        // Print the elements of the character array
+        for (char c : charArray) {
+            System.out.print(c);
+        }
+        System.out.println(); // New line for formatting
+
+        // 2. Create a String object from the character array
+        // Method 1: Using the String constructor that accepts a char array
+        String newString1 = new String(charArray);
+        System.out.println("\n--- String created using new String(charArray) ---");
+        System.out.println(newString1);
+
+        // Method 2: Using the String.valueOf() method (often preferred for clarity and handling nulls)
+        String newString2 = String.valueOf(charArray);
+        System.out.println("\n--- String created using String.valueOf(charArray) ---");
+        System.out.println(newString2);
+
+        // Method 3: Using StringBuilder (more verbose but useful for building strings dynamically)
+        StringBuilder sb = new StringBuilder();
+        for (char c : charArray) {
+            sb.append(c);
+        }
+        String newString3 = sb.toString();
+        System.out.println("\n--- String created using StringBuilder ---");
+        System.out.println(newString3);
+    }
+}
+
