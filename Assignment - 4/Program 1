@@ -1,0 +1,124 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+/**
+ * The Student class represents a student with their roll number, name, and marks in three subjects.
+ * It also calculates and stores the total and average marks.
+ */
+class Student {
+    // Data Members (Attributes)
+    String rollno;
+    String name;
+    int mark1;
+    int mark2;
+    int mark3;
+    int total;
+    double average;
+
+    /**
+     * Constructor for the Student class.
+     * Initializes the data members to default values.
+     * In Java, instance variables are automatically initialized to default values
+     * (e.g., null for objects, 0 for int, 0.0 for double), but explicit initialization
+     * can improve readability.
+     */
+    public Student() {
+        this.rollno = "";
+        this.name = "";
+        this.mark1 = 0;
+        this.mark2 = 0;
+        this.mark3 = 0;
+        this.total = 0;
+        this.average = 0.0;
+    }
+
+    /**
+     * getdata() method:
+     * Prompts the user to enter the student's roll number, name, and marks for three subjects.
+     * It uses a Scanner object to read input from the console.
+     * After reading the marks, it automatically calls the gettotal() method to calculate
+     * the total and average.
+     */
+    public void getdata() {
+        Scanner scanner = new Scanner(System.in); // Create a Scanner object for input
+
+        System.out.print("Enter Roll Number: ");
+        this.rollno = scanner.nextLine(); // Read roll number
+
+        System.out.print("Enter Name: ");
+        this.name = scanner.nextLine(); // Read name
+
+        System.out.print("Enter Mark 1: ");
+        this.mark1 = scanner.nextInt(); // Read mark 1
+
+        System.out.print("Enter Mark 2: ");
+        this.mark2 = scanner.nextInt(); // Read mark 2
+
+        System.out.print("Enter Mark 3: ");
+        this.mark3 = scanner.nextInt(); // Read mark 3
+
+        // Consume the remaining newline character after reading the last integer
+        // This is important to prevent issues with subsequent nextLine() calls
+        scanner.nextLine();
+
+        gettotal(); // Call gettotal to calculate total and average immediately
+        // Note: The scanner object is not closed here because it might be needed for
+        // subsequent calls to getdata() for other student objects within the same program run.
+        // It's better to close it in the main method when all input is done.
+    }
+
+    /**
+     * gettotal() method:
+     * Calculates the sum of mark1, mark2, and mark3 and stores it in the 'total' data member.
+     * It then calculates the average by dividing the total by 3.0 (using 3.0 ensures float division)
+     * and stores it in the 'average' data member.
+     */
+    public void gettotal() {
+        this.total = this.mark1 + this.mark2 + this.mark3;
+        this.average = (double) this.total / 3.0; // Cast total to double for accurate division
+    }
+
+    /**
+     * displaydata() method:
+     * Prints all the student's details to the console in a formatted manner.
+     * This includes the roll number, name, individual marks, total marks, and average marks.
+     * The average is formatted to two decimal places using System.out.printf.
+     */
+    public void displaydata() {
+        System.out.println("\n--- Student Details ---");
+        System.out.println("Roll Number: " + this.rollno);
+        System.out.println("Name: " + this.name);
+        System.out.println("Mark 1: " + this.mark1);
+        System.out.println("Mark 2: " + this.mark2);
+        System.out.println("Mark 3: " + this.mark3);
+        System.out.println("Total Marks: " + this.total);
+        System.out.printf("Average Marks: %.2f%n", this.average); // Format average to 2 decimal places
+    }
+}
+
+/**
+ * The Main class contains the main method to run the Student program.
+ * It demonstrates how to create Student objects and use their methods.
+ */
+public class Main {
+    public static void main(String[] args) {
+        // Create the first Student object
+        System.out.println("--- Enter details for Student 1 ---");
+        Student student1 = new Student(); // Create an instance of the Student class
+        student1.getdata();             // Call getdata to populate student1's details
+        student1.displaydata();         // Call displaydata to show student1's details
+
+        System.out.println("\n------------------------------------");
+
+        // Create the second Student object
+        System.out.println("--- Enter details for Student 2 ---");
+        Student student2 = new Student(); // Create another instance
+        student2.getdata();             // Populate student2's details
+        student2.displaydata();         // Show student2's details
+
+        // Note: In a real application, you might want to manage the Scanner object
+        // more centrally or pass it to methods, especially if you have many input operations.
+        // For this simple example, creating a new Scanner in getdata() is acceptable,
+        // but remember to handle resource closing in larger applications.
+    }
+}
+
