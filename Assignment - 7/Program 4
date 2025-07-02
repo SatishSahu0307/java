@@ -1,0 +1,318 @@
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Represents a Student in the University.
+ */
+class Student {
+    private String studentId;
+    private String name;
+    private String major;
+    private List<Course> enrolledCourses;
+
+    /**
+     * Constructor for the Student class.
+     * @param studentId The unique ID of the student.
+     * @param name The name of the student.
+     * @param major The major of the student.
+     */
+    public Student(String studentId, String name, String major) {
+        this.studentId = studentId;
+        this.name = name;
+        this.major = major;
+        this.enrolledCourses = new ArrayList<>();
+    }
+
+    // Getters
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public List<Course> getEnrolledCourses() {
+        return new ArrayList<>(enrolledCourses); // Return a copy to prevent external modification
+    }
+
+    /**
+     * Enrolls the student in a specific course.
+     * @param course The course to enroll in.
+     */
+    public void enrollInCourse(Course course) {
+        if (!enrolledCourses.contains(course)) {
+            enrolledCourses.add(course);
+            System.out.println(name + " enrolled in " + course.getTitle() + ".");
+        } else {
+            System.out.println(name + " is already enrolled in " + course.getTitle() + ".");
+        }
+    }
+
+    /**
+     * Drops a specific course.
+     * @param course The course to drop.
+     */
+    public void dropCourse(Course course) {
+        if (enrolledCourses.remove(course)) {
+            System.out.println(name + " dropped " + course.getTitle() + ".");
+        } else {
+            System.out.println(name + " was not enrolled in " + course.getTitle() + ".");
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Student ID: " + studentId + ", Name: " + name + ", Major: " + major;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return studentId.equals(student.studentId);
+    }
+
+    @Override
+    public int hashCode() {
+        return studentId.hashCode();
+    }
+}
+
+/**
+ * Represents a Course offered by the University.
+ */
+class Course {
+    private String courseCode;
+    private String title;
+    private int credits;
+
+    /**
+     * Constructor for the Course class.
+     * @param courseCode The unique code for the course.
+     * @param title The title of the course.
+     * @param credits The number of credits for the course.
+     */
+    public Course(String courseCode, String title, int credits) {
+        this.courseCode = courseCode;
+        this.title = title;
+        this.credits = credits;
+    }
+
+    // Getters
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public int getCredits() {
+        return credits;
+    }
+
+    @Override
+    public String toString() {
+        return "Course Code: " + courseCode + ", Title: " + title + ", Credits: " + credits;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return courseCode.equals(course.courseCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return courseCode.hashCode();
+    }
+}
+
+/**
+ * A final class representing the University.
+ * This class cannot be extended, ensuring its core behavior and structure
+ * remain consistent and cannot be altered through inheritance.
+ */
+final class University {
+    private final String name; // Name cannot be changed after creation
+    private final List<Student> students;
+    private final List<Course> courses;
+
+    /**
+     * Constructor for the University class.
+     * @param name The name of the university.
+     */
+    public University(String name) {
+        this.name = name;
+        this.students = new ArrayList<>();
+        this.courses = new ArrayList<>();
+        System.out.println("University '" + name + "' established.");
+    }
+
+    // Getters for name, students, and courses
+    public String getName() {
+        return name;
+    }
+
+    public List<Student> getStudents() {
+        return new ArrayList<>(students); // Return a copy to prevent external modification
+    }
+
+    public List<Course> getCourses() {
+        return new ArrayList<>(courses); // Return a copy to prevent external modification
+    }
+
+    /**
+     * Adds a student to the university.
+     * @param student The student to add.
+     */
+    public void addStudent(Student student) {
+        if (!students.contains(student)) {
+            students.add(student);
+            System.out.println(student.getName() + " has been admitted to " + name + ".");
+        } else {
+            System.out.println(student.getName() + " is already a student at " + name + ".");
+        }
+    }
+
+    /**
+     * Removes a student from the university.
+     * @param student The student to remove.
+     */
+    public void removeStudent(Student student) {
+        if (students.remove(student)) {
+            System.out.println(student.getName() + " has withdrawn from " + name + ".");
+        } else {
+            System.out.println(student.getName() + " is not found in " + name + "'s records.");
+        }
+    }
+
+    /**
+     * Adds a course to the university's offerings.
+     * @param course The course to add.
+     */
+    public void addCourse(Course course) {
+        if (!courses.contains(course)) {
+            courses.add(course);
+            System.out.println(course.getTitle() + " (" + course.getCourseCode() + ") has been added to " + name + "'s curriculum.");
+        } else {
+            System.out.println(course.getTitle() + " is already offered at " + name + ".");
+        }
+    }
+
+    /**
+     * Removes a course from the university's offerings.
+     * @param course The course to remove.
+     */
+    public void removeCourse(Course course) {
+        if (courses.remove(course)) {
+            System.out.println(course.getTitle() + " (" + course.getCourseCode() + ") has been removed from " + name + "'s curriculum.");
+            // Also remove this course from any enrolled students
+            for (Student student : students) {
+                student.dropCourse(course);
+            }
+        } else {
+            System.out.println(course.getTitle() + " is not found in " + name + "'s course offerings.");
+        }
+    }
+
+    /**
+     * Displays all students registered at the university.
+     */
+    public void displayAllStudents() {
+        System.out.println("\n--- Students at " + name + " ---");
+        if (students.isEmpty()) {
+            System.out.println("No students registered yet.");
+        } else {
+            for (Student student : students) {
+                System.out.println(student);
+                if (!student.getEnrolledCourses().isEmpty()) {
+                    System.out.print("  Enrolled in: ");
+                    student.getEnrolledCourses().forEach(c -> System.out.print(c.getCourseCode() + " "));
+                    System.out.println();
+                }
+            }
+        }
+    }
+
+    /**
+     * Displays all courses offered by the university.
+     */
+    public void displayAllCourses() {
+        System.out.println("\n--- Courses offered by " + name + " ---");
+        if (courses.isEmpty()) {
+            System.out.println("No courses offered yet.");
+        } else {
+            for (Course course : courses) {
+                System.out.println(course);
+            }
+        }
+    }
+}
+
+// Main class to demonstrate the University Management System
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("--- University Management System Demonstration ---");
+
+        // Create a final University instance
+        University myUniversity = new University("Tech Innovators University");
+
+        // Create some students
+        Student alice = new Student("S001", "Alice Smith", "Computer Science");
+        Student bob = new Student("S002", "Bob Johnson", "Electrical Engineering");
+        Student charlie = new Student("S003", "Charlie Brown", "Computer Science");
+
+        // Create some courses
+        Course programming101 = new Course("CS101", "Introduction to Programming", 3);
+        Course dataStructures = new Course("CS201", "Data Structures and Algorithms", 4);
+        Course circuits = new Course("EE101", "Basic Circuits", 3);
+
+        // Add students and courses to the university
+        myUniversity.addStudent(alice);
+        myUniversity.addStudent(bob);
+        myUniversity.addStudent(charlie);
+
+        myUniversity.addCourse(programming101);
+        myUniversity.addCourse(dataStructures);
+        myUniversity.addCourse(circuits);
+
+        // Enroll students in courses
+        alice.enrollInCourse(programming101);
+        alice.enrollInCourse(dataStructures);
+        bob.enrollInCourse(programming101);
+        bob.enrollInCourse(circuits);
+        charlie.enrollInCourse(dataStructures);
+
+        myUniversity.displayAllStudents();
+        myUniversity.displayAllCourses();
+
+        System.out.println("\n--- Demonstrating further actions ---");
+        // Alice drops a course
+        alice.dropCourse(programming101);
+        myUniversity.displayAllStudents();
+
+        // Remove a course from the university (should also remove from enrolled students)
+        myUniversity.removeCourse(dataStructures);
+        myUniversity.displayAllStudents(); // Check Alice and Charlie's enrolled courses
+
+        // Attempt to re-add a student already present
+        myUniversity.addStudent(bob);
+
+        // Attempt to create a subclass of University (this would cause a compile-time error)
+        // class MySpecificUniversity extends University {
+        //     public MySpecificUniversity(String name) {
+        //         super(name);
+        //     }
+        // }
+    }
+}
+
