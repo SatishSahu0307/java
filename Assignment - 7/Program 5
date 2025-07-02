@@ -1,0 +1,236 @@
+import java.util.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+/**
+ * Represents a basic Bank Account.
+ * This class will have a final method to demonstrate its immutability in subclasses.
+ */
+class Account {
+    protected String accountNumber;
+    protected String accountHolderName;
+    protected BigDecimal balance;
+    protected static final BigDecimal DEFAULT_INTEREST_RATE = new BigDecimal("0.02"); // 2% annual interest
+
+    /**
+     * Constructor for the Account class.
+     * @param accountNumber The unique account number.
+     * @param accountHolderName The name of the account holder.
+     * @param initialBalance The initial balance of the account.
+     */
+    public Account(String accountNumber, String accountHolderName, double initialBalance) {
+        this.accountNumber = accountNumber;
+        this.accountHolderName = accountHolderName;
+        // Use BigDecimal for financial calculations to avoid floating-point inaccuracies
+        this.balance = new BigDecimal(Double.toString(initialBalance)).setScale(2, RoundingMode.HALF_UP);
+        System.out.println("Account " + accountNumber + " created for " + accountHolderName +
+                           " with initial balance: " + balance + ".");
+    }
+
+    /**
+     * Deposits money into the account.
+     * @param amount The amount to deposit.
+     */
+    public void deposit(double amount) {
+        if (amount > 0) {
+            BigDecimal depositAmount = new BigDecimal(Double.toString(amount)).setScale(2, RoundingMode.HALF_UP);
+            balance = balance.add(depositAmount);
+            System.out.println("Deposited " + depositAmount + " into account " + accountNumber + ". New balance: " + balance);
+        } else {
+            System.out.println("Deposit amount must be positive.");
+        }
+    }
+
+    /**
+     * Withdraws money from the account.
+     * @param amount The amount to withdraw.
+     * @return true if withdrawal is successful, false otherwise.
+     */
+    public boolean withdraw(double amount) {
+        BigDecimal withdrawAmount = new BigDecimal(Double.toString(amount)).setScale(2, RoundingMode.HALF_UP);
+        if (amount <= 0) {
+            System.out.println("Withdrawal amount must be positive.");
+            return false;
+        }
+        if (balance.compareTo(withdrawAmount) >= 0) { // Check if balance is greater than or equal to withdrawal amount
+            balance = balance.subtract(withdrawAmount);
+            System.out.println("Withdrew " + withdrawAmount + " from account " + accountNumber + ". New balance: " + balance);
+            return true;
+        } else {
+            System.out.println("Insufficient funds in account " + accountNumber + ". Current balance: " + balance +
+                               ", Requested: " + withdrawAmount + ".");
+            return false;
+        }
+    }
+
+    /**
+     * Displays current account information.
+     */
+    public void displayAccountInfo() {
+        System.out.println("Account Number: " + accountNumber);
+        System.out.println("Account Holder: " + accountHolderName);
+        System.out.println("Balance: " + balance);
+    }
+
+    /**
+     * FINAL METHOD: Calculates the annual interest for the account.
+     * This method is declared 'final' to prevent any subclass from overriding it.
+     * This ensures that the core interest calculation logic remains consistent
+     * across all types of accounts that extend this class, preventing
+     * potential errors or inconsistencies in financial calculations.
+     *
+     * @return The calculated interest amount.
+     */
+    public final BigDecimal calculateInterest() {
+        // Interest calculation is a critical business logic that should not be changed easily.
+        BigDecimal interest = balance.multiply(DEFAULT_INTEREST_RATE);
+        // Round to 2 decimal places for currency
+        return interest.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    // Getters for account details
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public String getAccountHolderName() {
+        return accountHolderName;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+}
+
+/**
+ * Represents a Savings Account, which extends the basic Account.
+ * It inherits the final calculateInterest method.
+ */
+class SavingsAccount extends Account {
+    private double bonusRate; // Additional rate for savings accounts
+
+    /**
+     * Constructor for SavingsAccount.
+     * @param accountNumber The unique account number.
+     * @param accountHolderName The name of the account holder.
+     * @param initialBalance The initial balance.
+     * @param bonusRate An additional bonus interest rate.
+     */
+    public SavingsAccount(String accountNumber, String accountHolderName, double initialBalance, double bonusRate) {
+        super(accountNumber, accountHolderName, initialBalance);
+        this.bonusRate = bonusRate;
+        System.out.println("Savings Account created with bonus rate: " + (bonusRate * 100) + "%.");
+    }
+
+    /**
+     * Apply the calculated interest to the account balance.
+     * This method is specific to SavingsAccount, and it uses the final calculateInterest
+     * method inherited from the parent Account class.
+     */
+    public void applyInterest() {
+        BigDecimal totalInterest = calculateInterest(); // Calls the final method from Account
+        // Apply bonus interest on top of the base interest
+        BigDecimal bonusInterest = balance.multiply(new BigDecimal(Double.toString(bonusRate)));
+        totalInterest = totalInterest.add(bonusInterest.setScale(2, RoundingMode.HALF_UP));
+
+        balance = balance.add(totalInterest);
+        System.out.println("Applied " + totalInterest + " interest to Savings Account " + accountNumber + ". New balance: " + balance);
+    }
+
+    // Attempting to override calculateInterest() here would cause a compile-time error:
+    // @Override
+    // public BigDecimal calculateInterest() {
+    //     // This method cannot be overridden because it's final in the parent class.
+    //     // super.calculateInterest(); // This would be the only way to call it from here
+    //     return new BigDecimal("0.0"); // This line would never compile
+    // }
+}
+
+/**
+ * Represents a Checking Account, also extending the basic Account.
+ */
+class CheckingAccount extends Account {
+    private double overdraftLimit;
+
+    /**
+     * Constructor for CheckingAccount.
+     * @param accountNumber The unique account number.
+     * @param accountHolderName The name of the account holder.
+     * @param initialBalance The initial balance.
+     * @param overdraftLimit The maximum overdraft allowed.
+     */
+    public CheckingAccount(String accountNumber, String accountHolderName, double initialBalance, double overdraftLimit) {
+        super(accountNumber, accountHolderName, initialBalance);
+        this.overdraftLimit = overdraftLimit;
+        System.out.println("Checking Account created with overdraft limit: " + overdraftLimit + ".");
+    }
+
+    /**
+     * Overrides the withdraw method to allow overdraft up to a certain limit.
+     * Note: calculateInterest() is still inherited and cannot be overridden.
+     * @param amount The amount to withdraw.
+     * @return true if withdrawal is successful, false otherwise.
+     */
+    @Override
+    public boolean withdraw(double amount) {
+        BigDecimal withdrawAmount = new BigDecimal(Double.toString(amount)).setScale(2, RoundingMode.HALF_UP);
+        if (amount <= 0) {
+            System.out.println("Withdrawal amount must be positive.");
+            return false;
+        }
+
+        BigDecimal availableFunds = balance.add(new BigDecimal(Double.toString(overdraftLimit)));
+
+        if (availableFunds.compareTo(withdrawAmount) >= 0) {
+            balance = balance.subtract(withdrawAmount);
+            System.out.println("Withdrew " + withdrawAmount + " from Checking Account " + accountNumber + ". New balance: " + balance);
+            return true;
+        } else {
+            System.out.println("Withdrawal exceeds overdraft limit. Current balance: " + balance +
+                               ", Overdraft Limit: " + overdraftLimit + ", Requested: " + withdrawAmount + ".");
+            return false;
+        }
+    }
+}
+
+// Main class to demonstrate the Banking System
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("--- Banking System Demonstration ---");
+
+        // Create a standard Account
+        Account generalAccount = new Account("1001", "Alice Wonderland", 1000.00);
+        generalAccount.displayAccountInfo();
+        BigDecimal generalInterest = generalAccount.calculateInterest();
+        System.out.println("Calculated Interest for General Account: " + generalInterest);
+        generalAccount.deposit(500.00);
+        generalAccount.withdraw(200.00);
+        System.out.println("-------------------------------------");
+
+        // Create a Savings Account
+        SavingsAccount savings = new SavingsAccount("2001", "Bob The Builder", 2500.00, 0.005); // 0.5% bonus rate
+        savings.displayAccountInfo();
+        // The calculateInterest() method is called, which is the final method from the parent Account class.
+        BigDecimal savingsBaseInterest = savings.calculateInterest();
+        System.out.println("Base Interest for Savings Account (via final method): " + savingsBaseInterest);
+        savings.applyInterest(); // Custom method in SavingsAccount that uses calculateInterest()
+        savings.displayAccountInfo();
+        savings.deposit(100.00);
+        System.out.println("-------------------------------------");
+
+        // Create a Checking Account
+        CheckingAccount checking = new CheckingAccount("3001", "Charlie Chaplin", 700.00, 300.00);
+        checking.displayAccountInfo();
+        BigDecimal checkingInterest = checking.calculateInterest(); // Still calls the final method from Account
+        System.out.println("Calculated Interest for Checking Account (via final method): " + checkingInterest);
+        checking.withdraw(900.00); // This should succeed due to overdraft
+        checking.withdraw(200.00); // This should fail
+        checking.displayAccountInfo();
+        System.out.println("-------------------------------------");
+
+        // Demonstrating that calculateInterest cannot be overridden
+        // If you uncomment the commented-out calculateInterest method in SavingsAccount,
+        // it will cause a compile-time error, proving that a final method cannot be overridden.
+    }
+}
+
