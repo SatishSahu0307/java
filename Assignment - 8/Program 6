@@ -1,0 +1,59 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class IntegerArray {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner input = new Scanner(System.in);
+
+        // The program will accept exactly 5 integers
+        int n = 5;
+
+        // Declare an array to store 5 integers
+        int[] numbers = new int[n];
+
+        System.out.println("Please enter 5 integers:");
+
+        // Loop to accept 5 integers from the user
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter integer " + (i + 1) + ": ");
+            // Read the integer entered by the user and store it in the array
+            numbers[i] = input.nextInt();
+        }
+
+        System.out.println("\n--- Integers stored in the array ---");
+
+        // Loop through the array and display each integer in original order
+        for (int i = 0; i < n; i++) {
+            System.out.println("Integer " + (i + 1) + ": " + numbers[i]);
+        }
+
+        System.out.println("\n--- Linear Search ---");
+        System.out.print("Enter the number to search for: ");
+        int searchElement = input.nextInt(); // Read the element to search
+
+        // Perform linear search
+        boolean found = false; // Flag to track if the element is found
+        int foundIndex = -1;   // Variable to store the index if found
+
+        // Iterate through the array to find the element
+        for (int i = 0; i < n; i++) {
+            if (numbers[i] == searchElement) {
+                found = true;
+                foundIndex = i;
+                break; // Exit the loop once the element is found
+            }
+        }
+
+        // Display the result of the search
+        if (found) {
+            System.out.println("Element " + searchElement + " found at index: " + foundIndex);
+        } else {
+            System.out.println("Element " + searchElement + " not found in the array.");
+        }
+
+        // Close the scanner to prevent resource leaks
+        input.close();
+    }
+}
+
