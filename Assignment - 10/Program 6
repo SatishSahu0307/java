@@ -1,0 +1,40 @@
+import java.util.Arrays; // Import the Arrays class for sorting
+import java.util.Scanner; // Import the Scanner class to get user input
+
+public class SortPersonNames {
+
+    public static void main(String[] args) {
+        // Declare a String array to hold 6 person names
+        String[] personNames = new String[6];
+
+        // Create a Scanner object to read input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("--- Enter 6 Person Names ---");
+
+        // Loop to accept names from the user
+        for (int i = 0; i < personNames.length; i++) {
+            System.out.print("Enter name for person " + (i + 1) + ": ");
+            personNames[i] = scanner.nextLine(); // Read the name
+        }
+
+        System.out.println("\n--- Original Names ---");
+        // Print the names before sorting
+        for (String name : personNames) {
+            System.out.println(name);
+        }
+
+        // Perform sorting on the array in ascending (alphabetical) order
+        Arrays.sort(personNames);
+
+        System.out.println("\n--- Sorted Names (Ascending Order) ---");
+        // Print the names after sorting
+        for (String name : personNames) {
+            System.out.println(name);
+        }
+
+        // Close the scanner to prevent resource leaks
+        scanner.close();
+    }
+}
+
