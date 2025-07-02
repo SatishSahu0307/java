@@ -1,0 +1,82 @@
+public class TemperatureConverter {
+
+    /**
+     * Overloaded method to convert Celsius to Fahrenheit.
+     * Formula: F = C * 9/5 + 32
+     * @param celsius The temperature in Celsius.
+     * @return The temperature in Fahrenheit.
+     */
+    public double convert(double celsius) {
+        double fahrenheit = (celsius * 9 / 5) + 32;
+        System.out.println("Converting Celsius to Fahrenheit:");
+        System.out.println("  " + String.format("%.2f", celsius) + "°C = " + String.format("%.2f", fahrenheit) + "°F");
+        System.out.println("--------------------");
+        return fahrenheit;
+    }
+
+    /**
+     * Overloaded method to convert Fahrenheit to Celsius.
+     * Uses a boolean dummy parameter to differentiate its signature from other 'convert' methods.
+     * Formula: C = (F - 32) * 5/9
+     * @param fahrenheit The temperature in Fahrenheit.
+     * @param isFahrenheit A dummy boolean parameter (always pass true) to enable overloading.
+     * @return The temperature in Celsius.
+     */
+    public double convert(double fahrenheit, boolean isFahrenheit) {
+        // The 'isFahrenheit' parameter is just for overloading, its value isn't strictly used in calculation.
+        double celsius = (fahrenheit - 32) * 5 / 9;
+        System.out.println("Converting Fahrenheit to Celsius:");
+        System.out.println("  " + String.format("%.2f", fahrenheit) + "°F = " + String.format("%.2f", celsius) + "°C");
+        System.out.println("--------------------");
+        return celsius;
+    }
+
+    /**
+     * Overloaded method to convert Kelvin to Celsius.
+     * Uses an int dummy parameter to differentiate its signature from other 'convert' methods.
+     * Formula: C = K - 273.15
+     * @param kelvin The temperature in Kelvin.
+     * @param dummyForKelvin A dummy integer parameter (e.g., pass 0) to enable overloading.
+     * @return The temperature in Celsius.
+     */
+    public double convert(double kelvin, int dummyForKelvin) {
+        // The 'dummyForKelvin' parameter is just for overloading, its value isn't strictly used in calculation.
+        double celsius = kelvin - 273.15;
+        System.out.println("Converting Kelvin to Celsius:");
+        System.out.println("  " + String.format("%.2f", kelvin) + "K = " + String.format("%.2f", celsius) + "°C");
+        System.out.println("--------------------");
+        return celsius;
+    }
+
+    /**
+     * Main method to demonstrate the overloaded convert methods.
+     */
+    public static void main(String[] args) {
+        System.out.println("Demonstrating TemperatureConverter Class Overloaded convert() Methods:\n");
+
+        TemperatureConverter converter = new TemperatureConverter();
+
+        // 1. Convert Celsius to Fahrenheit
+        // Example: 25°C should be 77°F
+        converter.convert(25.0);
+
+        // 2. Convert Fahrenheit to Celsius
+        // Example: 77°F should be 25°C
+        converter.convert(77.0, true); // The 'true' is the dummy boolean for overloading
+
+        // 3. Convert Kelvin to Celsius
+        // Example: 300.15K should be 27°C
+        converter.convert(300.15, 0); // The '0' is the dummy int for overloading
+
+        System.out.println("\n--- More Examples ---");
+        // Freezing point conversions
+        converter.convert(0.0);        // 0°C to Fahrenheit (should be 32°F)
+        converter.convert(32.0, true); // 32°F to Celsius (should be 0°C)
+        converter.convert(273.15, 0);  // 273.15K to Celsius (should be 0°C)
+
+        // Boiling point conversions
+        converter.convert(100.0);       // 100°C to Fahrenheit (should be 212°F)
+        converter.convert(212.0, true); // 212°F to Celsius (should be 100°C)
+    }
+}
+
