@@ -1,0 +1,21 @@
+BugTrackingSystem/src/main/java/com/bugtracker/BugTrackingSystemApp.java
+BugTrackingSystem/src/main/java/com/bugtracker/util/DBConnection.java
+BugTrackingSystem/src/main/java/com/bugtracker/model/Employee.java
+BugTrackingSystem/src/main/java/com/bugtracker/model/Project.java
+BugTrackingSystem/src/main/java/com/bugtracker/model/BugReport.java
+BugTrackingSystem/src/main/java/com/bugtracker/model/BugType.java
+BugTrackingSystem/src/main/java/com/bugtracker/dao/EmployeeDAO.java
+BugTrackingSystem/src/main/java/com/bugtracker/dao/ProjectDAO.java
+BugTrackingSystem/src/main/java/com/bugtracker/dao/BugReportDAO.java
+BugTrackingSystem/src/main/java/com/bugtracker/dao/BugTypeDAO.java
+BugTrackingSystem/src/main/java/com/bugtracker/dao/impl/JdbcEmployeeDAO.java
+BugTrackingSystem/src/main/java/com/bugtracker/dao/impl/JdbcProjectDAO.java
+BugTrackingSystem/src/main/java/com/bugtracker/dao/impl/JdbcBugReportDAO.java
+BugTrackingSystem/src/main/java/com/bugtracker/dao/impl/JdbcBugTypeDAO.java
+BugTrackingSystem/src/main/java/com/bugtracker/service/AuthService.java
+BugTrackingSystem/src/main/java/com/bugtracker/service/AdminService.java
+BugTrackingSystem/src/main/java/com/bugtracker/service/ManagerService.java
+BugTrackingSystem/src/main/java/com/bugtracker/service/EmployeeService.java
+BugTrackingSystem/src/main/java/com/bugtracker/view/ConsoleMenu.java
+BugTrackingSystem/src/main/java/com/bugtracker/Project Structure
+BugTrackingSystem/src/main/java/com/bugtracker/MySQL Database Schema
