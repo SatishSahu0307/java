@@ -1,0 +1,97 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+/**
+ * The Flight class represents a flight with its number, destination, distance, and calculated fuel.
+ * It encapsulates data and provides methods for setting and displaying flight information.
+ */
+class Flight {
+    // Private Data Members (Attributes)
+    private String flightNumber;
+    private String destination;
+    private double distance;
+    private double fuel; // This will be calculated by calFuel()
+
+    /**
+     * Private method: calFuel()
+     * Calculates the required fuel based on the flight distance according to the specified criteria:
+     * - If distance < 1000, fuel = 500
+     * - If 1000 <= distance <= 2000, fuel = 1100
+     * - If distance > 2000, fuel = 2200
+     */
+    private void calFuel() {
+        if (this.distance < 1000) {
+            this.fuel = 500;
+        } else if (this.distance >= 1000 && this.distance <= 2000) {
+            this.fuel = 1100;
+        } else { // distance > 2000
+            this.fuel = 2200;
+        }
+    }
+
+    /**
+     * Public method: feedInfo()
+     * Allows the user to input the flight number, destination, and distance.
+     * After reading the distance, it automatically calls the private calFuel() method
+     * to determine the required fuel quantity.
+     */
+    public void feedInfo() {
+        Scanner scanner = new Scanner(System.in); // Create a Scanner object for input
+
+        System.out.print("Enter Flight Number: ");
+        this.flightNumber = scanner.nextLine(); // Read flight number
+
+        System.out.print("Enter Destination: ");
+        this.destination = scanner.nextLine(); // Read destination
+
+        System.out.print("Enter Distance (in km): ");
+        this.distance = scanner.nextDouble(); // Read distance
+
+        // Consume the remaining newline character after reading the double
+        // This is crucial to prevent issues with subsequent nextLine() calls
+        scanner.nextLine();
+
+        calFuel(); // Call the private method to calculate fuel based on the entered distance
+        // Note: The scanner object is not closed here as it might be used for other
+        // Flight objects within the same program run. It's best to close it in main.
+    }
+
+    /**
+     * Public method: showInfo()
+     * Displays all the data members of the Flight object to the console.
+     * This includes the flight number, destination, distance, and the calculated fuel.
+     */
+    public void showInfo() {
+        System.out.println("\n--- Flight Information ---");
+        System.out.println("Flight Number: " + this.flightNumber);
+        System.out.println("Destination: " + this.destination);
+        System.out.printf("Distance: %.2f km%n", this.distance); // Format distance to 2 decimal places
+        System.out.printf("Fuel Required: %.2f units%n", this.fuel); // Format fuel to 2 decimal places
+    }
+}
+
+/**
+ * The MainFlight class contains the main method to run the Flight program.
+ * It demonstrates how to create Flight objects and use their public methods.
+ */
+public class MainFlight {
+    public static void main(String[] args) {
+        // Create the first Flight object
+        System.out.println("--- Enter details for Flight 1 ---");
+        Flight flight1 = new Flight(); // Create an instance of the Flight class
+        flight1.feedInfo();           // Call feedInfo to populate flight1's details
+        flight1.showInfo();           // Call showInfo to display flight1's details
+
+        System.out.println("\n------------------------------------");
+
+        // Create the second Flight object
+        System.out.println("--- Enter details for Flight 2 ---");
+        Flight flight2 = new Flight(); // Create another instance
+        flight2.feedInfo();           // Populate flight2's details
+        flight2.showInfo();           // Show flight2's details
+
+        // In a more complex application, you might manage the Scanner object
+        // more centrally or pass it to methods. For this simple example,
+        // creating a new Scanner in feedInfo() is acceptable,
+        // but remember to handle resource closing in larger applications.
+    }
+}
