@@ -1,0 +1,132 @@
+import java.util.*;
+class LibraryItem {
+    // Protected: Accessible within this class and by subclasses.
+    protected String title;
+    protected String itemId; // Unique identifier for the item
+    protected int yearPublished;
+
+    // Public constructor for LibraryItem
+    public LibraryItem(String title, String itemId, int yearPublished) {
+        this.title = title;
+        this.itemId = itemId;
+        this.yearPublished = yearPublished;
+        System.out.println("LibraryItem constructor called for: " + title);
+    }
+
+    // Public method to display basic item details
+    public void displayDetails() {
+        System.out.println("--- Library Item Details ---");
+        System.out.println("Title: " + title);
+        System.out.println("Item ID: " + itemId);
+        System.out.println("Year Published: " + yearPublished);
+    }
+
+    // Protected method to simulate checking out (accessible by subclasses)
+    protected void checkoutStatus(String user) {
+        System.out.println("[Status Update]: '" + title + "' is being checked out by " + user + ".");
+    }
+}
+
+// Book.java - Derived Class from LibraryItem
+class Book extends LibraryItem {
+    // Specific attributes for Book
+    private String author; // Private: only accessible within Book class
+    private String isbn;   // Private: only accessible within Book class
+
+    // Public constructor for Book
+    public Book(String title, String itemId, int yearPublished, String author, String isbn) {
+        super(title, itemId, yearPublished); // Call to LibraryItem's constructor
+        this.author = author;
+        this.isbn = isbn;
+        System.out.println("Book constructor called for: " + title);
+    }
+
+    // Overriding displayDetails to include book-specific information
+    @Override
+    public void displayDetails() {
+        super.displayDetails(); // Call to LibraryItem's displayDetails
+        System.out.println("Author: " + author);
+        System.out.println("ISBN: " + isbn);
+        System.out.println("Type: Book");
+        System.out.println("----------------------------");
+    }
+
+    // Public method specific to Book
+    public void readBook() {
+        System.out.println("You are now reading the book: '" + title + "' by " + author + ".");
+        checkoutStatus("a patron"); // Accessing protected method from superclass
+    }
+}
+
+// DVD.java - Derived Class from LibraryItem
+class DVD extends LibraryItem {
+    // Specific attributes for DVD
+    private String director; // Private: only accessible within DVD class
+    private int durationMinutes; // Private: only accessible within DVD class
+
+    // Public constructor for DVD
+    public DVD(String title, String itemId, int yearPublished, String director, int durationMinutes) {
+        super(title, itemId, yearPublished); // Call to LibraryItem's constructor
+        this.director = director;
+        this.durationMinutes = durationMinutes;
+        System.out.println("DVD constructor called for: " + title);
+    }
+
+    // Overriding displayDetails to include DVD-specific information
+    @Override
+    public void displayDetails() {
+        super.displayDetails(); // Call to LibraryItem's displayDetails
+        System.out.println("Director: " + director);
+        System.out.println("Duration: " + durationMinutes + " minutes");
+        System.out.println("Type: DVD");
+        System.out.println("----------------------------");
+    }
+
+    // Public method specific to DVD
+    public void playMovie() {
+        System.out.println("Playing the movie: '" + title + "' directed by " + director + ".");
+        checkoutStatus("a viewer"); // Accessing protected method from superclass
+    }
+}
+
+// Main class to test the Library System
+public class LibrarySystem {
+    public static void main(String[] args) {
+        System.out.println("--- Demonstrating Hierarchical Inheritance in a Library System ---");
+
+        // 1. Create a Book object
+        System.out.println("\nCreating a Book object:");
+        Book book1 = new Book("The Lord of the Rings", "B001", 1954, "J.R.R. Tolkien", "978-0618053267");
+        book1.displayDetails(); // Calls overridden method in Book
+        book1.readBook();
+        System.out.println("------------------------------------------");
+
+        // 2. Create a DVD object
+        System.out.println("\nCreating a DVD object:");
+        DVD dvd1 = new DVD("Inception", "D001", 2010, "Christopher Nolan", 148);
+        dvd1.displayDetails(); // Calls overridden method in DVD
+        dvd1.playMovie();
+        System.out.println("------------------------------------------");
+
+        // 3. Create another Book object
+        System.out.println("\nCreating another Book object:");
+        Book book2 = new Book("Pride and Prejudice", "B002", 1813, "Jane Austen", "978-0141439518");
+        book2.displayDetails();
+        System.out.println("------------------------------------------");
+
+        // Demonstrating Polymorphism with LibraryItem references
+        System.out.println("\n--- Demonstrating Polymorphism with LibraryItem references ---");
+
+        LibraryItem item1 = new Book("The Hitchhiker's Guide to the Galaxy", "B003", 1979, "Douglas Adams", "978-0345391803");
+        System.out.println("\nBook (via LibraryItem reference):");
+        item1.displayDetails(); // Calls Book's overridden displayDetails (Runtime Polymorphism)
+        // item1.readBook(); // Compile-time error: readBook is not defined in LibraryItem
+
+        LibraryItem item2 = new DVD("The Matrix", "D002", 1999, "The Wachowskis", 136);
+        System.out.println("\nDVD (via LibraryItem reference):");
+        item2.displayDetails(); // Calls DVD's overridden displayDetails (Runtime Polymorphism)
+        // item2.playMovie(); // Compile-time error: playMovie is not defined in LibraryItem
+        System.out.println("----------------------------------------------------------");
+    }
+}
+
