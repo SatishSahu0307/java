@@ -1,0 +1,79 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class IntegerArray {
+
+    // Method to check if a number is prime
+    public static boolean isPrime(int number) {
+        // Prime numbers are greater than 1
+        if (number <= 1) {
+            return false;
+        }
+        // Check for divisibility from 2 up to the square root of the number
+        // We only need to check up to sqrt(number) because if a number 'n' has a divisor 'd' greater than sqrt(n),
+        // then it must also have a divisor 'n/d' which is less than sqrt(n).
+        for (int i = 2; i * i <= number; i++) {
+            if (number % i == 0) {
+                return false; // If divisible, it's not prime
+            }
+        }
+        return true; // If no divisors found, it's prime
+    }
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Please enter the number of integers (n): ");
+        int n = input.nextInt(); // Read the value of 'n' from the user
+
+        // Validate if 'n' is positive
+        if (n <= 0) {
+            System.out.println("Please enter a positive number of integers.");
+            input.close();
+            return; // Exit the program if n is invalid
+        }
+
+        // Declare an array to store 'n' integers
+        int[] numbers = new int[n];
+
+        System.out.println("Please enter " + n + " integers:");
+
+        // Loop 'n' times to accept integers from the user
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter integer " + (i + 1) + ": ");
+            // Read the integer entered by the user and store it in the array
+            numbers[i] = input.nextInt();
+        }
+
+        System.out.println("\n--- Original Array Elements ---");
+
+        // Loop through the original array and display each integer
+        for (int i = 0; i < n; i++) {
+            System.out.print(numbers[i] + " ");
+        }
+        System.out.println(); // New line for better formatting
+
+        System.out.println("\n--- Sum of Prime Numbers in the Array ---");
+
+        long sumOfPrimes = 0; // Use long to handle potentially large sums
+        boolean foundPrimes = false;
+
+        // Iterate through the array and check each number for primality
+        for (int i = 0; i < n; i++) {
+            if (isPrime(numbers[i])) {
+                System.out.println(numbers[i] + " is a prime number.");
+                sumOfPrimes += numbers[i]; // Add prime number to the sum
+                foundPrimes = true;
+            }
+        }
+
+        if (foundPrimes) {
+            System.out.println("\nTotal sum of prime numbers: " + sumOfPrimes);
+        } else {
+            System.out.println("No prime numbers found in the array.");
+        }
+
+        // Close the scanner to prevent resource leaks
+        input.close();
+    }
+}
