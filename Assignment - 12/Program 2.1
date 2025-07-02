@@ -1,0 +1,40 @@
+package packone;
+
+/**
+ * This class demonstrates different access modifiers (public, private, protected, default).
+ * It will be accessed from another package (packtwo) to show accessibility rules.
+ */
+public class MyClassInPackOne {
+
+    // Public member: Accessible from anywhere
+    public int publicVar = 10;
+    public void publicMethod() {
+        System.out.println("  (packone.MyClassInPackOne) Public method accessed.");
+    }
+
+    // Private member: Accessible only within this class
+    private int privateVar = 20;
+    private void privateMethod() {
+        System.out.println("  (packone.MyClassInPackOne) Private method accessed.");
+    }
+
+    // Protected member: Accessible within this package and by subclasses in any package
+    protected int protectedVar = 30;
+    protected void protectedMethod() {
+        System.out.println("  (packone.MyClassInPackOne) Protected method accessed.");
+    }
+
+    // Default (package-private) member: Accessible only within this package
+    int defaultVar = 40; // No access modifier keyword means default
+    void defaultMethod() {
+        System.out.println("  (packone.MyClassInPackOne) Default method accessed.");
+    }
+
+    // Method to demonstrate internal access to private members
+    public void demonstrateInternalAccess() {
+        System.out.println("  (packone.MyClassInPackOne) Inside MyClassInPackOne:");
+        System.out.println("  Accessing privateVar internally: " + privateVar);
+        privateMethod();
+    }
+}
+
