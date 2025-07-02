@@ -1,0 +1,24 @@
+package packtwo;
+
+import packone.MyClassInPackOne; // Import the class from packone
+
+/**
+ * This class extends MyClassInPackOne from packone to demonstrate
+ * protected member access through inheritance.
+ */
+class SubClassInPackTwo extends MyClassInPackOne { // Note: Must be public or default, not private
+
+    public void accessProtectedMembers() {
+        System.out.println("\n--- Accessing Protected Members from SubClassInPackTwo (subclass in another package) ---");
+        System.out.println("  Accessing protectedVar: " + protectedVar); // Accessible because SubClassInPackTwo is a subclass
+        protectedMethod(); // Accessible because SubClassInPackTwo is a subclass
+        System.out.println("  Protected members ARE accessible from a subclass in another package.");
+    }
+
+    public static void main(String[] args) {
+        // This main is just for demonstrating this specific subclass's access.
+        // The primary demo runs via AccessChecker.main().
+        SubClassInPackTwo subObj = new SubClassInPackTwo();
+        subObj.accessProtectedMembers();
+    }
+}
