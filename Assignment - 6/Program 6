@@ -1,0 +1,178 @@
+import java.util.*;
+class BankAccount {
+    // Private: Accessible only within this class. Subclasses cannot directly access.
+    private String accountNumber;
+    // Protected: Accessible within this class, by subclasses, and by classes in the same package.
+    protected String accountHolderName;
+    // Public: Accessible from anywhere.
+    public double balance;
+
+    // Constructor for BankAccount
+    public BankAccount(String accountNumber, String accountHolderName, double initialBalance) {
+        this.accountNumber = accountNumber;
+        this.accountHolderName = accountHolderName;
+        this.balance = initialBalance;
+        System.out.println("BankAccount constructor called for: " + accountHolderName);
+    }
+
+    // Public method to get account number (since accountNumber is private)
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    // Public method for depositing money
+    public void deposit(double amount) {
+        if (amount > 0) {
+            this.balance += amount;
+            System.out.println(accountHolderName + " deposited $" + String.format("%.2f", amount) + ". New balance: $" + String.format("%.2f", balance));
+        } else {
+            System.out.println("Deposit amount must be positive.");
+        }
+    }
+
+    // Public method for withdrawing money (basic implementation)
+    public void withdraw(double amount) {
+        if (amount > 0 && this.balance >= amount) {
+            this.balance -= amount;
+            System.out.println(accountHolderName + " withdrew $" + String.format("%.2f", amount) + ". New balance: $" + String.format("%.2f", balance));
+        } else if (amount <= 0) {
+            System.out.println("Withdrawal amount must be positive.");
+        } else {
+            System.out.println("Insufficient funds for " + accountHolderName + ". Current balance: $" + String.format("%.2f", balance));
+        }
+    }
+
+    // Public method to display general account info
+    public void displayAccountInfo() {
+        System.out.println("--- Account Info ---");
+        System.out.println("Account Number: " + getAccountNumber()); // Accessing private via public getter
+        System.out.println("Account Holder: " + accountHolderName); // Accessing protected directly
+        System.out.println("Balance: $" + String.format("%.2f", balance)); // Accessing public directly
+    }
+
+    // Protected helper method (can be accessed by subclasses)
+    protected void logTransaction(String type, double amount) {
+        System.out.println("[Log]: " + type + " of $" + String.format("%.2f", amount) + " for account " + getAccountNumber());
+    }
+}
+
+// SavingsAccount.java - Derived Class from BankAccount
+class SavingsAccount extends BankAccount {
+    // Specific attribute for SavingsAccount
+    private double interestRate; // Private to SavingsAccount
+
+    // Constructor for SavingsAccount
+    public SavingsAccount(String accountNumber, String accountHolderName, double initialBalance, double interestRate) {
+        super(accountNumber, accountHolderName, initialBalance); // Call to BankAccount's constructor
+        this.interestRate = interestRate;
+        System.out.println("SavingsAccount constructor called for: " + accountHolderName);
+    }
+
+    // Method to add interest to the balance
+    public void addInterest() {
+        double interest = balance * (interestRate / 100);
+        balance += interest; // Directly accessing public 'balance' from superclass
+        System.out.println(accountHolderName + " earned $" + String.format("%.2f", interest) + " in interest. New balance: $" + String.format("%.2f", balance));
+        logTransaction("Interest Added", interest); // Accessing protected method from superclass
+    }
+
+    // Overriding displayAccountInfo to include savings-specific details
+    @Override
+    public void displayAccountInfo() {
+        super.displayAccountInfo(); // Call to BankAccount's displayAccountInfo
+        System.out.println("Interest Rate: " + String.format("%.2f", interestRate) + "%");
+        System.out.println("-------------------------");
+    }
+
+    // Example of trying to access private member from superclass (will cause error if uncommented)
+    // public String getParentAccountNumber() {
+    //     return accountNumber; // Compile-time error: accountNumber has private access in BankAccount
+    // }
+}
+
+// CheckingAccount.java - Derived Class from BankAccount
+class CheckingAccount extends BankAccount {
+    // Specific attribute for CheckingAccount
+    protected double overdraftLimit; // Protected to CheckingAccount (can be accessed by further subclasses if any)
+
+    // Constructor for CheckingAccount
+    public CheckingAccount(String accountNumber, String accountHolderName, double initialBalance, double overdraftLimit) {
+        super(accountNumber, accountHolderName, initialBalance); // Call to BankAccount's constructor
+        this.overdraftLimit = overdraftLimit;
+        System.out.println("CheckingAccount constructor called for: " + accountHolderName);
+    }
+
+    // Overriding withdraw method to allow overdraft up to a limit
+    @Override
+    public void withdraw(double amount) {
+        if (amount > 0) {
+            if (balance + overdraftLimit >= amount) {
+                this.balance -= amount;
+                System.out.println(accountHolderName + " withdrew $" + String.format("%.2f", amount) + ". New balance: $" + String.format("%.2f", balance));
+                logTransaction("Withdrawal (Checking)", amount); // Accessing protected method from superclass
+            } else {
+                System.out.println("Withdrawal exceeds overdraft limit for " + accountHolderName + ".");
+            }
+        } else {
+            System.out.println("Withdrawal amount must be positive.");
+        }
+    }
+
+    // Overriding displayAccountInfo to include checking-specific details
+    @Override
+    public void displayAccountInfo() {
+        super.displayAccountInfo(); // Call to BankAccount's displayAccountInfo
+        System.out.println("Overdraft Limit: $" + String.format("%.2f", overdraftLimit));
+        System.out.println("-------------------------");
+    }
+}
+
+// Main class to test the Bank Account System
+public class BankSystem {
+    public static void main(String[] args) {
+        System.out.println("--- Demonstrating Inheritance with Access Modifiers ---");
+
+        // 1. Create a BankAccount object
+        System.out.println("\n--- Regular Bank Account ---");
+        BankAccount account1 = new BankAccount("BA98765", "Sarah Connor", 500.00);
+        account1.displayAccountInfo();
+        account1.deposit(100.00);
+        account1.withdraw(200.00);
+        // System.out.println(account1.accountNumber); // Compile-time error: accountNumber is private
+        // System.out.println(account1.accountHolderName); // Direct access (OK if in same package, but we prefer methods)
+        System.out.println("Account Number via getter: " + account1.getAccountNumber());
+        System.out.println("-----------------------------");
+
+        // 2. Create a SavingsAccount object
+        System.out.println("\n--- Savings Account ---");
+        SavingsAccount savings1 = new SavingsAccount("SA12345", "John Doe", 1000.00, 1.5); // 1.5% interest
+        savings1.displayAccountInfo(); // Calls overridden method in SavingsAccount
+        savings1.deposit(200.00);
+        savings1.withdraw(50.00);
+        savings1.addInterest();
+        // savings1.logTransaction("Bonus", 10.0); // Compile-time error: logTransaction is protected, not accessible from outside hierarchy/package
+        System.out.println("-----------------------------");
+
+        // 3. Create a CheckingAccount object
+        System.out.println("\n--- Checking Account ---");
+        CheckingAccount checking1 = new CheckingAccount("CA67890", "Jane Smith", 300.00, 200.00); // $200 overdraft limit
+        checking1.displayAccountInfo(); // Calls overridden method in CheckingAccount
+        checking1.deposit(50.00);
+        checking1.withdraw(400.00); // This will trigger overdraft
+        checking1.withdraw(200.00); // This will exceed overdraft limit
+        System.out.println("-----------------------------");
+
+        // Demonstrating Polymorphism
+        System.out.println("\n--- Polymorphism and Access Modifiers ---");
+        BankAccount polymorphicAccount1 = new SavingsAccount("SA54321", "Alice Wonderland", 750.00, 2.0);
+        polymorphicAccount1.displayAccountInfo(); // Calls SavingsAccount's overridden method
+        polymorphicAccount1.withdraw(800.00); // Calls BankAccount's withdraw (SavingsAccount does not override it)
+        // polymorphicAccount1.addInterest(); // Compile-time error: addInterest is not in BankAccount
+
+        BankAccount polymorphicAccount2 = new CheckingAccount("CA09876", "Bob Builder", 200.00, 150.00);
+        polymorphicAccount2.displayAccountInfo(); // Calls CheckingAccount's overridden method
+        polymorphicAccount2.withdraw(300.00); // Calls CheckingAccount's overridden withdraw (allows overdraft)
+        System.out.println("---------------------------------------------");
+    }
+}
+
