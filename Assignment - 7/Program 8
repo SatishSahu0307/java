@@ -1,0 +1,276 @@
+import java.util.*;
+interface Playable {
+    /**
+     * Plays a sound or melody from the instrument.
+     */
+    void play();
+}
+
+/**
+ * Intermediate Interface: Represents instruments that use strings.
+ * Extends 'Playable' and adds string-specific behavior.
+ */
+interface StringInstrument extends Playable {
+    /**
+     * Tunes the strings of the instrument.
+     */
+    void tuneStrings();
+}
+
+/**
+ * Intermediate Interface: Represents instruments that use wind/breath.
+ * Extends 'Playable' and adds wind-specific maintenance.
+ */
+interface WindInstrument extends Playable {
+    /**
+     * Cleans the mouthpiece of the instrument.
+     */
+    void cleanMouthpiece();
+}
+
+/**
+ * Specialized Interface: Represents string instruments that are plucked.
+ * Extends 'StringInstrument' and adds a specific plucking action.
+ */
+interface PluckedStringInstrument extends StringInstrument {
+    /**
+     * Performs a plucking action on the strings.
+     */
+    void pluck();
+}
+
+/**
+ * Specialized Interface: Represents string instruments that are bowed.
+ * Extends 'StringInstrument' and adds a specific bowing action.
+ */
+interface BowedStringInstrument extends StringInstrument {
+    /**
+     * Performs a bowing action on the strings.
+     */
+    void bow();
+}
+
+/**
+ * Concrete Class: Represents a Guitar.
+ * Implements 'PluckedStringInstrument', meaning it must implement
+ * all methods from Playable, StringInstrument, and PluckedStringInstrument.
+ */
+class Guitar implements PluckedStringInstrument {
+    private String type; // e.g., Acoustic, Electric
+    private boolean tuned;
+
+    /**
+     * Constructor for Guitar.
+     * @param type The type of guitar (e.g., "Acoustic", "Electric").
+     */
+    public Guitar(String type) {
+        this.type = type;
+        this.tuned = false;
+        System.out.println(type + " Guitar created.");
+    }
+
+    /**
+     * Implements 'play()' from Playable.
+     */
+    @Override
+    public void play() {
+        if (tuned) {
+            System.out.println("Playing a harmonious melody on the " + type + " Guitar.");
+        } else {
+            System.out.println("The " + type + " Guitar is out of tune! Needs tuning before playing.");
+        }
+    }
+
+    /**
+     * Implements 'tuneStrings()' from StringInstrument.
+     */
+    @Override
+    public void tuneStrings() {
+        System.out.println("Tuning the strings of the " + type + " Guitar.");
+        this.tuned = true;
+    }
+
+    /**
+     * Implements 'pluck()' from PluckedStringInstrument.
+     */
+    @Override
+    public void pluck() {
+        System.out.println("Plucking the strings of the " + type + " Guitar.");
+    }
+
+    /**
+     * Guitar-specific method.
+     */
+    public void strum() {
+        System.out.println("Strumming the " + type + " Guitar.");
+    }
+}
+
+/**
+ * Concrete Class: Represents a Violin.
+ * Implements 'BowedStringInstrument', meaning it must implement
+ * all methods from Playable, StringInstrument, and BowedStringInstrument.
+ */
+class Violin implements BowedStringInstrument {
+    private boolean tuned;
+
+    /**
+     * Constructor for Violin.
+     */
+    public Violin() {
+        this.tuned = false;
+        System.out.println("Violin created.");
+    }
+
+    /**
+     * Implements 'play()' from Playable.
+     */
+    @Override
+    public void play() {
+        if (tuned) {
+            System.out.println("Producing a rich sound from the Violin.");
+        } else {
+            System.out.println("The Violin is out of tune! Needs tuning before playing.");
+        }
+    }
+
+    /**
+     * Implements 'tuneStrings()' from StringInstrument.
+     */
+    @Override
+    public void tuneStrings() {
+        System.out.println("Carefully tuning the Violin strings.");
+        this.tuned = true;
+    }
+
+    /**
+     * Implements 'bow()' from BowedStringInstrument.
+     */
+    @Override
+    public void bow() {
+        System.out.println("Drawing the bow across the Violin strings.");
+    }
+
+    /**
+     * Violin-specific method.
+     */
+    public void applyRosin() {
+        System.out.println("Applying rosin to the violin bow.");
+    }
+}
+
+/**
+ * Concrete Class: Represents a Flute.
+ * Implements 'WindInstrument', meaning it must implement
+ * all methods from Playable and WindInstrument.
+ */
+class Flute implements WindInstrument {
+    private boolean clean;
+
+    /**
+     * Constructor for Flute.
+     */
+    public Flute() {
+        this.clean = true; // Assume clean initially
+        System.out.println("Flute created.");
+    }
+
+    /**
+     * Implements 'play()' from Playable.
+     */
+    @Override
+    public void play() {
+        if (clean) {
+            System.out.println("Playing a clear, airy tune on the Flute.");
+        } else {
+            System.out.println("The Flute's mouthpiece is dirty! Needs cleaning before playing.");
+        }
+    }
+
+    /**
+     * Implements 'cleanMouthpiece()' from WindInstrument.
+     */
+    @Override
+    public void cleanMouthpiece() {
+        System.out.println("Cleaning the Flute's mouthpiece.");
+        this.clean = true;
+    }
+
+    /**
+     * Flute-specific method.
+     */
+    public void polishBody() {
+        System.out.println("Polishing the Flute's body.");
+    }
+}
+
+// Main class to demonstrate Interface Inheritance
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("--- Musical Instruments: Interface Inheritance Demonstration ---");
+
+        // Create instances of concrete instruments
+        Guitar acousticGuitar = new Guitar("Acoustic");
+        Violin classicalViolin = new Violin();
+        Flute concertFlute = new Flute();
+
+        System.out.println("\n--- Guitar Actions ---");
+        acousticGuitar.play(); // Out of tune initially
+        acousticGuitar.tuneStrings();
+        acousticGuitar.play();
+        acousticGuitar.pluck();
+        acousticGuitar.strum();
+
+        System.out.println("\n--- Violin Actions ---");
+        classicalViolin.play(); // Out of tune initially
+        classicalViolin.applyRosin(); // Specific pre-play action
+        classicalViolin.tuneStrings();
+        classicalViolin.play();
+        classicalViolin.bow();
+
+        System.out.println("\n--- Flute Actions ---");
+        concertFlute.play(); // Clean initially
+        concertFlute.polishBody(); // Specific action
+        concertFlute.cleanMouthpiece(); // Even if clean, can re-clean
+        concertFlute.play();
+
+        System.out.println("\n--- Demonstrating Polymorphism with Interface Inheritance ---");
+
+        // An array of the base interface type 'Playable'
+        Playable[] orchestra = new Playable[]{acousticGuitar, classicalViolin, concertFlute};
+        System.out.println("\nOrchestra members playing:");
+        for (Playable instrument : orchestra) {
+            System.out.println("\nAttempting to play an instrument...");
+            // We can only call 'play()' method directly on 'Playable' type
+            instrument.play();
+        }
+
+        // An array of the StringInstrument interface type
+        StringInstrument[] stringSection = new StringInstrument[]{acousticGuitar, classicalViolin};
+        System.out.println("\nString section tuning and playing:");
+        for (StringInstrument instrument : stringSection) {
+            System.out.println("\nProcessing a string instrument...");
+            instrument.tuneStrings(); // Can call StringInstrument methods
+            instrument.play();       // Can call Playable methods
+        }
+
+        // An array of the WindInstrument interface type
+        WindInstrument[] windSection = new WindInstrument[]{concertFlute};
+        System.out.println("\nWind instrument cleaning and playing:");
+        for (WindInstrument instrument : windSection) {
+            System.out.println("\nProcessing a wind instrument...");
+            instrument.cleanMouthpiece(); // Can call WindInstrument methods
+            instrument.play();            // Can call Playable methods
+        }
+
+        // An array of PluckedStringInstrument
+        PluckedStringInstrument[] pluckedInstruments = new PluckedStringInstrument[]{acousticGuitar};
+        System.out.println("\nPlucked instruments in action:");
+        for (PluckedStringInstrument instrument : pluckedInstruments) {
+            System.out.println("\nProcessing a plucked string instrument...");
+            instrument.tuneStrings(); // Inherited from StringInstrument
+            instrument.play();        // Inherited from Playable
+            instrument.pluck();       // Specific to PluckedStringInstrument
+        }
+    }
+}
