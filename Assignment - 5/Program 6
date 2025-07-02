@@ -1,0 +1,78 @@
+import java.util.*;
+public class Employee {
+    // Instance variables (fields) to store employee information
+    private String employeeId;
+    private String name;
+    private double salary;
+
+    /**
+     * Constructor 1: Initializes an Employee object with only the employee ID.
+     * Name and salary are set to default values.
+     * @param employeeId The unique ID of the employee.
+     */
+    public Employee(String employeeId) {
+        this.employeeId = employeeId;
+        this.name = "Unnamed";
+        this.salary = 0.0; // Default salary
+        System.out.println("Employee created with ID only.");
+        displayEmployeeInfo();
+    }
+
+    /**
+     * Constructor 2: Initializes an Employee object with employee ID and name.
+     * Salary is set to a default value.
+     * @param employeeId The unique ID of the employee.
+     * @param name The name of the employee.
+     */
+    public Employee(String employeeId, String name) {
+        this.employeeId = employeeId;
+        this.name = name;
+        this.salary = 0.0; // Default salary
+        System.out.println("Employee created with ID and name.");
+        displayEmployeeInfo();
+    }
+
+    /**
+     * Constructor 3: Initializes an Employee object with employee ID, name, and salary.
+     * @param employeeId The unique ID of the employee.
+     * @param name The name of the employee.
+     * @param salary The salary of the employee.
+     */
+    public Employee(String employeeId, String name, double salary) {
+        this.employeeId = employeeId;
+        this.name = name;
+        this.salary = salary;
+        System.out.println("Employee created with ID, name, and salary.");
+        displayEmployeeInfo();
+    }
+
+    /**
+     * A method to display the employee's information.
+     */
+    public void displayEmployeeInfo() {
+        System.out.println("  Employee ID: " + this.employeeId);
+        System.out.println("  Name: " + this.name);
+        System.out.println("  Salary: $" + String.format("%.2f", this.salary)); // Format salary to 2 decimal places
+        System.out.println("--------------------");
+    }
+
+    /**
+     * Main method to demonstrate the overloaded constructors.
+     */
+    public static void main(String[] args) {
+        System.out.println("Demonstrating Employee Class Overloaded Constructors:\n");
+
+        // Using the constructor with Employee ID only
+        Employee emp1 = new Employee("EMP001");
+
+        // Using the constructor with Employee ID and name
+        Employee emp2 = new Employee("EMP002", "Jane Doe");
+
+        // Using the constructor with Employee ID, name, and salary
+        Employee emp3 = new Employee("EMP003", "John Smith", 75000.50);
+
+        // You can also call displayEmployeeInfo explicitly if needed,
+        // but it's already called within each constructor for demonstration.
+        // emp1.displayEmployeeInfo();
+    }
+}
