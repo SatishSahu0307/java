@@ -1,0 +1,71 @@
+import java.util.*;
+public class ShapeDrawer {
+
+    /**
+     * Overloaded method: Draws a generic shape.
+     * No parameters.
+     */
+    public void draw() {
+        System.out.println("Drawing shape.");
+        System.out.println("--------------------");
+    }
+
+    /**
+     * Overloaded method: Draws a shape with a specified name.
+     * @param shapeName The name of the shape (e.g., "Circle", "Square").
+     */
+    public void draw(String shapeName) {
+        System.out.println("Drawing a " + shapeName + ".");
+        System.out.println("--------------------");
+    }
+
+    /**
+     * Overloaded method: Draws a shape with a specified name and size.
+     * This is typically for shapes like circles (radius) or squares (side length).
+     * @param shapeName The name of the shape.
+     * @param size The size of the shape (e.g., radius for circle, side length for square).
+     */
+    public void draw(String shapeName, int size) {
+        System.out.println("Drawing a " + shapeName + " with size " + size + ".");
+        System.out.println("--------------------");
+    }
+
+    /**
+     * Overloaded method: Draws a shape with a specified name, width, and height.
+     * This is typically for shapes like rectangles or ellipses.
+     * @param shapeName The name of the shape.
+     * @param width The width dimension of the shape.
+     * @param height The height dimension of the shape.
+     */
+    public void draw(String shapeName, int width, int height) {
+        System.out.println("Drawing a " + shapeName + " with dimensions " + width + "x" + height + ".");
+        System.out.println("--------------------");
+    }
+
+    /**
+     * Main method to demonstrate the overloaded draw methods.
+     */
+    public static void main(String[] args) {
+        System.out.println("Demonstrating ShapeDrawer Class Overloaded draw() Methods:\n");
+
+        ShapeDrawer drawer = new ShapeDrawer();
+
+        // 1. Call draw() with no parameters
+        drawer.draw();
+
+        // 2. Call draw(String shapeName)
+        drawer.draw("Circle");
+
+        // 3. Call draw(String shapeName, int size)
+        drawer.draw("Square", 10);
+
+        // 4. Call draw(String shapeName, int width, int height)
+        drawer.draw("Rectangle", 20, 15);
+
+        // More examples
+        drawer.draw("Triangle");
+        drawer.draw("Pentagon", 7);
+        drawer.draw("Ellipse", 30, 10);
+    }
+}
+
