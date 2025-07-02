@@ -1,0 +1,52 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class IntegerArray {
+
+    public static void main(String[] args) {
+        // Declare an array to store 6 integers
+        int[] numbers = new int[6];
+
+        // Create a Scanner object to read input from the console
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Please enter 6 integers:");
+
+        // Loop 6 times to accept 6 integers from the user
+        for (int i = 0; i < 6; i++) {
+            System.out.print("Enter integer " + (i + 1) + ": ");
+            // Read the integer entered by the user and store it in the array
+            numbers[i] = input.nextInt();
+        }
+
+        System.out.println("\n--- Integers stored in the array ---");
+
+        // Loop through the array and display each integer
+        for (int i = 0; i < 6; i++) {
+            System.out.println("Integer " + (i + 1) + ": " + numbers[i]);
+        }
+
+        // Find the maximum and minimum values in the array
+        // Initialize max and min with the first element of the array
+        int maximum = numbers[0];
+        int minimum = numbers[0];
+
+        // Iterate through the array starting from the second element (index 1)
+        for (int i = 1; i < numbers.length; i++) {
+            // If the current element is greater than the current maximum, update maximum
+            if (numbers[i] > maximum) {
+                maximum = numbers[i];
+            }
+            // If the current element is less than the current minimum, update minimum
+            if (numbers[i] < minimum) {
+                minimum = numbers[i];
+            }
+        }
+
+        System.out.println("\n--- Analysis Results ---");
+        System.out.println("Maximum value in the array: " + maximum);
+        System.out.println("Minimum value in the array: " + minimum);
+
+        // Close the scanner to prevent resource leaks
+        input.close();
+    }
+}
