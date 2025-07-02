@@ -1,0 +1,83 @@
+import java.util.Scanner; // Import the Scanner class to get user input
+
+public class MatrixOperations {
+
+    public static void main(String[] args) {
+        // Declare a 3x3 integer matrix
+        int[][] matrix = new int[3][3];
+
+        // Create a Scanner object to read input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter the elements of the 3x3 matrix:");
+
+        // Loop to get user input for each element of the matrix
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            // Inner loop for columns
+            for (int j = 0; j < 3; j++) {
+                System.out.print("Enter element at position [" + i + "][" + j + "]: ");
+                // Read the integer input from the user and assign it to the matrix
+                matrix[i][j] = scanner.nextInt();
+            }
+        }
+
+        System.out.println("\n--- The matrix you entered is: ---");
+
+        // Loop to print the elements of the matrix
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            // Inner loop for columns
+            for (int j = 0; j < 3; j++) {
+                // Print each element followed by a space
+                System.out.print(matrix[i][j] + " ");
+            }
+            // Move to the next line after printing each row
+            System.out.println();
+        }
+
+        // Calculate the sum of all elements in the matrix
+        int sum = 0; // Initialize sum to 0
+        System.out.println("\n--- Calculating sum of all elements ---");
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            // Inner loop for columns
+            for (int j = 0; j < 3; j++) {
+                sum += matrix[i][j]; // Add current element to sum
+            }
+        }
+
+        // Print the total sum of the matrix elements
+        System.out.println("The sum of all elements in the matrix is: " + sum);
+
+        System.out.println("\n--- Calculating row-wise sum ---");
+        // Loop to calculate and print the sum of each row
+        // Outer loop for rows
+        for (int i = 0; i < 3; i++) {
+            int rowSum = 0; // Initialize rowSum for each new row
+            // Inner loop for columns (elements within the current row)
+            for (int j = 0; j < 3; j++) {
+                rowSum += matrix[i][j]; // Add current element to rowSum
+            }
+            // Print the sum for the current row
+            System.out.println("Sum of Row " + (i + 1) + ": " + rowSum);
+        }
+
+        System.out.println("\n--- Calculating column-wise sum ---");
+        // Loop to calculate and print the sum of each column
+        // Outer loop for columns
+        for (int j = 0; j < 3; j++) {
+            int colSum = 0; // Initialize colSum for each new column
+            // Inner loop for rows (elements within the current column)
+            for (int i = 0; i < 3; i++) {
+                colSum += matrix[i][j]; // Add current element to colSum
+            }
+            // Print the sum for the current column
+            System.out.println("Sum of Column " + (j + 1) + ": " + colSum);
+        }
+
+        // Close the scanner to prevent resource leaks
+        scanner.close();
+    }
+}
+
