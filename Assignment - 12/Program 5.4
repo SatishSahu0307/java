@@ -1,0 +1,81 @@
+import utils.StringUtils;        // Import StringUtils from the utils package
+import utils.MathUtils;          // Import MathUtils from the utils package
+import utils.ValidationUtils;    // Import ValidationUtils from the utils package
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+/**
+ * Main application class to demonstrate the usage of utility classes from the 'utils' package.
+ */
+public class MainApp {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("--- Demonstrating Utility Package 'utils' ---");
+
+        // --- StringUtils Demonstrations ---
+        System.out.println("\n--- StringUtils ---");
+        String originalString = "hello world java";
+        System.out.println("Original: \"" + originalString + "\"");
+        System.out.println("Reversed: \"" + StringUtils.reverse(originalString) + "\"");
+        System.out.println("Capitalized: \"" + StringUtils.capitalizeWords(originalString) + "\"");
+        System.out.println("Occurrences of 'l': " + StringUtils.countChar(originalString, 'l'));
+        System.out.println("Occurrences of ' ': " + StringUtils.countChar(originalString, ' '));
+        System.out.println("Capitalized (empty string): \"" + StringUtils.capitalizeWords("") + "\"");
+        System.out.println("Reverse (null string): " + StringUtils.reverse(null));
+
+
+        // --- MathUtils Demonstrations ---
+        System.out.println("\n--- MathUtils ---");
+        int numFactorial = 5;
+        try {
+            System.out.println("Factorial of " + numFactorial + ": " + MathUtils.factorial(numFactorial));
+            System.out.println("Factorial of -3: " + MathUtils.factorial(-3)); // This will throw an exception
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error calculating factorial: " + e.getMessage());
+        }
+
+        System.out.println("Is 7 prime? " + MathUtils.isPrime(7));
+        System.out.println("Is 10 prime? " + MathUtils.isPrime(10));
+        System.out.println("Is 1 prime? " + MathUtils.isPrime(1));
+        System.out.println("2 raised to the power of 3: " + MathUtils.power(2, 3));
+        System.out.println("5.5 raised to the power of 2: " + MathUtils.power(5.5, 2));
+
+
+        // --- ValidationUtils Demonstrations ---
+        System.out.println("\n--- ValidationUtils ---");
+        System.out.println("Is '123' numeric? " + ValidationUtils.isNumeric("123"));
+        System.out.println("Is 'abc' numeric? " + ValidationUtils.isNumeric("abc"));
+        System.out.println("Is '-45' numeric? " + ValidationUtils.isNumeric("-45"));
+        System.out.println("Is '12.3' numeric? " + ValidationUtils.isNumeric("12.3")); // False, as it checks for Integer
+
+        System.out.println("Is 'test@example.com' a valid email? " + ValidationUtils.isValidEmail("test@example.com"));
+        System.out.println("Is 'invalid-email' a valid email? " + ValidationUtils.isValidEmail("invalid-email"));
+        System.out.println("Is 'user@sub.domain.co' a valid email? " + ValidationUtils.isValidEmail("user@sub.domain.co"));
+
+        System.out.println("Is null string empty? " + ValidationUtils.isNullOrEmpty(null));
+        System.out.println("Is '' empty? " + ValidationUtils.isNullOrEmpty(""));
+        System.out.println("Is '   ' empty? " + ValidationUtils.isNullOrEmpty("   "));
+        System.out.println("Is 'hello' empty? " + ValidationUtils.isNullOrEmpty("hello"));
+
+        // Example of using scanner for interactive input with validation
+        System.out.println("\n--- Interactive Validation Example ---");
+        String emailInput = "";
+        boolean validEmail = false;
+        while (!validEmail) {
+            System.out.print("Please enter a valid email address: ");
+            emailInput = scanner.nextLine();
+            if (ValidationUtils.isValidEmail(emailInput)) {
+                System.out.println("Thank you, '" + emailInput + "' is a valid email.");
+                validEmail = true;
+            } else {
+                System.out.println("Invalid email format. Please try again.");
+            }
+        }
+
+        scanner.close();
+        System.out.println("\n--- Utility Package Demonstration Complete ---");
+    }
+}
+
