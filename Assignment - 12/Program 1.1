@@ -1,0 +1,49 @@
+package shapes;
+
+/**
+ * Represents a Circle and provides methods to calculate its area and perimeter.
+ */
+public class Circle {
+    private double radius; // Radius of the circle
+
+    /**
+     * Constructs a Circle object with the specified radius.
+     * @param radius The radius of the circle. Must be non-negative.
+     */
+    public Circle(double radius) {
+        if (radius < 0) {
+            System.out.println("Warning: Circle radius cannot be negative. Setting to 0.");
+            this.radius = 0;
+        } else {
+            this.radius = radius;
+        }
+    }
+
+    /**
+     * Calculates the area of the circle.
+     * Formula: Area = p * radius^2
+     * @return The area of the circle.
+     */
+    public double calculateArea() {
+        return Math.PI * radius * radius;
+    }
+
+    /**
+     * Calculates the perimeter (circumference) of the circle.
+     * Formula: Perimeter = 2 * p * radius
+     * @return The perimeter of the circle.
+     */
+    public double calculatePerimeter() {
+        return 2 * Math.PI * radius;
+    }
+
+    /**
+     * Returns a string representation of the Circle object.
+     * @return A string containing the circle's radius, area, and perimeter.
+     */
+    @Override
+    public String toString() {
+        return String.format("Circle [Radius: %.2f, Area: %.2f, Perimeter: %.2f]",
+                             radius, calculateArea(), calculatePerimeter());
+    }
+}
