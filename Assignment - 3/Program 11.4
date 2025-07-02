@@ -1,0 +1,36 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class InvertedRightAngledNumberPattern {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to get input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of rows for the inverted right-angled N to 1 pattern: ");
+
+        // Read the integer input from the user for the number of rows
+        int numRows = scanner.nextInt();
+
+        // Validate input: ensure the number of rows is positive
+        if (numRows <= 0) {
+            System.out.println("Please enter a positive number of rows.");
+        } else {
+            System.out.println("\nHere is your inverted right-angled N to 1 pattern:");
+
+            // Outer loop: controls the number of rows
+            // 'i' represents the current row number, iterating downwards from numRows to 1
+            for (int i = numRows; i >= 1; i--) {
+                // Inner loop: controls the numbers printed in each row
+                // It prints numbers from 'numRows' down to 'numRows - i + 1'
+                for (int j = numRows; j >= (numRows - i + 1); j--) {
+                    System.out.print(j + " "); // Print the number 'j' followed by a space
+                }
+                System.out.println(); // Move to the next line after printing all numbers for the current row
+            }
+        }
+
+        // Close the scanner to prevent resource leaks
+        scanner.close();
+    }
+}
+
