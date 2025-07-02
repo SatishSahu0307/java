@@ -1,0 +1,90 @@
+import java.util.InputMismatchException; // For handling non-numeric input
+import java.util.Scanner; // For reading user input
+import java.util.Arrays; // For displaying the array (optional, for verification)
+
+/**
+ * This Java program demonstrates how to read an array of integers
+ * and a specific position (index) from the user, then display
+ * the element at that position. It includes exception handling
+ * for invalid input (non-numeric) and for accessing an array
+ * out of its valid bounds (ArrayIndexOutOfBoundsException).
+ */
+public class ArrayElementDisplay {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in); // Scanner for user input
+        int[] intArray = null; // Declare the array, initialized to null
+        int arraySize = 0; // To store the size of the array
+        boolean validInput = false; // Flag for input validation loops
+
+        // --- Get Array Size Input ---
+        while (!validInput) {
+            System.out.print("Enter the number of elements for the array: ");
+            try {
+                arraySize = scanner.nextInt(); // Read the size
+                if (arraySize <= 0) {
+                    System.out.println("Array size must be a positive integer. Please try again.");
+                } else {
+                    validInput = true; // Valid size, exit loop
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a whole number for the array size.");
+                scanner.next(); // Consume the invalid input
+            }
+        }
+
+        intArray = new int[arraySize]; // Initialize the array with the given size
+        System.out.println("Please enter " + arraySize + " integer elements for the array:");
+
+        // --- Get Array Elements Input ---
+        for (int i = 0; i < arraySize; i++) {
+            validInput = false; // Reset flag for each element
+            while (!validInput) {
+                System.out.print("Enter element at index " + i + ": ");
+                try {
+                    intArray[i] = scanner.nextInt(); // Read each element
+                    validInput = true; // Valid input, move to next element
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input. Please enter a whole number for the array element.");
+                    scanner.next(); // Consume the invalid input
+                }
+            }
+        }
+
+        System.out.println("\nArray created: " + Arrays.toString(intArray)); // Display the created array
+
+        int position = -1; // To store the desired position/index
+        validInput = false; // Reset flag for position input
+
+        // --- Get Position Input ---
+        while (!validInput) {
+            System.out.print("Enter the position (index) of the element you want to retrieve (0 to " + (arraySize - 1) + "): ");
+            try {
+                position = scanner.nextInt(); // Read the position
+                validInput = true; // Input was numeric, proceed to check bounds
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a whole number for the position.");
+                scanner.next(); // Consume the invalid input
+            }
+        }
+
+        // --- Display Element and Handle ArrayIndexOutOfBoundsException ---
+        try {
+            // Access the element at the specified position
+            int element = intArray[position];
+            System.out.println("Element at position " + position + " is: " + element);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            // Catch block for when the position is outside the array's valid range
+            System.out.println("Error: Invalid position entered. The array has " + arraySize + " elements, so valid indices are from 0 to " + (arraySize - 1) + ".");
+            System.out.println("Exception Details: " + e.getMessage());
+        } catch (Exception e) {
+            // General catch block for any other unexpected exceptions
+            System.out.println("An unexpected error occurred: " + e.getMessage());
+        } finally {
+            // Ensure the scanner is closed to release system resources
+            scanner.close();
+            System.out.println("Program finished. Scanner closed.");
+        }
+    }
+}
+
