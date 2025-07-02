@@ -1,0 +1,35 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class RightAngledNumberPattern {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to get input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of rows for the right-angled 1 to N pattern: ");
+
+        // Read the integer input from the user for the number of rows
+        int numRows = scanner.nextInt();
+
+        // Validate input: ensure the number of rows is positive
+        if (numRows <= 0) {
+            System.out.println("Please enter a positive number of rows.");
+        } else {
+            System.out.println("\nHere is your right-angled 1 to N pattern:");
+
+            // Outer loop: controls the number of rows
+            // 'i' represents the current row number
+            for (int i = 1; i <= numRows; i++) {
+                // Inner loop: controls the numbers printed in each row
+                // It prints numbers from 1 up to 'i' for the 'i-th' row
+                for (int j = 1; j <= i; j++) {
+                    System.out.print(j + " "); // Print the number 'j' followed by a space
+                }
+                System.out.println(); // Move to the next line after printing all numbers for the current row
+            }
+        }
+
+        // Close the scanner to prevent resource leaks
+        scanner.close();
+    }
+}
