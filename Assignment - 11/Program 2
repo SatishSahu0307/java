@@ -1,0 +1,62 @@
+import java.util.InputMismatchException; // Not strictly needed for Integer.parseInt but good for consistency
+import java.util.Scanner; // Required for reading user input
+
+/**
+ * This Java program demonstrates the use of try, catch, and finally blocks
+ * by reading an integer from the user and attempting to calculate its square root.
+ * It handles NumberFormatException for invalid input and checks for negative numbers.
+ */
+public class SquareRootCalculator {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in); // Create a Scanner object to read user input
+        int number = 0; // Initialize the number
+        double result = 0; // Initialize the result of the square root
+        boolean validInput = false; // Flag to control input loop
+
+        // --- Get Integer Input ---
+        while (!validInput) {
+            System.out.print("Enter an integer to calculate its square root: ");
+            String inputLine = scanner.nextLine(); // Read the entire line as a string
+
+            try {
+                number = Integer.parseInt(inputLine); // Attempt to convert string to integer
+                validInput = true; // Input was valid, exit loop
+
+                // Check for negative numbers before calculating square root
+                if (number < 0) {
+                    // Although Math.sqrt handles negative numbers by returning NaN,
+                    // we want to explicitly handle this as an invalid input for square root
+                    // and demonstrate throwing a custom exception or error message.
+                    // Here, we'll just print an error and set validInput to false to re-prompt.
+                    System.out.println("Error: Cannot calculate the square root of a negative number. Please enter a non-negative integer.");
+                    validInput = false; // Stay in the loop to ask for input again
+                }
+
+            } catch (NumberFormatException e) {
+                // Catch block for non-integer input
+                System.out.println("Invalid input. Please enter a whole number (integer).");
+                // No need to consume scanner.next() here as nextLine() already consumed the whole line
+            }
+        }
+
+        // --- Perform Square Root Operation ---
+        try {
+            // This block will only be reached if validInput is true and number is non-negative
+            result = Math.sqrt(number);
+            System.out.println("The square root of " + number + " is: " + result);
+        } catch (Exception e) {
+            // This catch block is a general fallback, though with the input validation above,
+            // it's less likely for an unexpected exception to occur here specifically from Math.sqrt().
+            // Math.sqrt returns NaN for negative numbers, not throws an exception.
+            // We handled negative numbers earlier.
+            System.out.println("An unexpected error occurred during calculation: " + e.getMessage());
+        } finally {
+            // The finally block executes regardless of whether an exception occurred or not.
+            // It's crucial for closing resources like the Scanner to prevent resource leaks.
+            scanner.close();
+            System.out.println("Program finished. Scanner closed.");
+        }
+    }
+}
+
