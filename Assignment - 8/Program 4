@@ -1,0 +1,49 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class IntegerArray {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to read input from the console
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Please enter the number of integers (n): ");
+        int n = input.nextInt(); // Read the value of 'n' from the user
+
+        // Declare an array to store 'n' integers
+        int[] numbers = new int[n];
+
+        // Initialize counters for even and odd numbers
+        int evenCount = 0;
+        int oddCount = 0;
+
+        System.out.println("Please enter " + n + " integers:");
+
+        // Loop 'n' times to accept integers from the user and count evens/odds
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter integer " + (i + 1) + ": ");
+            // Read the integer entered by the user and store it in the array
+            numbers[i] = input.nextInt();
+
+            // Check if the current number is even or odd
+            if (numbers[i] % 2 == 0) {
+                evenCount++; // Increment even count if the number is even
+            } else {
+                oddCount++;  // Increment odd count if the number is odd
+            }
+        }
+
+        System.out.println("\n--- Integers stored in the array ---");
+
+        // Loop through the array and display each integer
+        for (int i = 0; i < n; i++) {
+            System.out.println("Integer " + (i + 1) + ": " + numbers[i]);
+        }
+
+        System.out.println("\n--- Analysis Results ---");
+        System.out.println("Total even numbers: " + evenCount);
+        System.out.println("Total odd numbers: " + oddCount);
+
+        // Close the scanner to prevent resource leaks
+        input.close();
+    }
+}
