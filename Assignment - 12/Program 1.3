@@ -1,0 +1,40 @@
+import shapes.Circle;    // Import the Circle class from the shapes package
+import shapes.Rectangle; // Import the Rectangle class from the shapes package
+// Alternatively, you could use: import shapes.*; to import all classes from the package.
+
+/**
+ * Main application class to demonstrate the usage of classes from the 'shapes' package.
+ */
+public class MainApplication {
+
+    public static void main(String[] args) {
+        System.out.println("--- Demonstrating User-Defined Package 'shapes' ---");
+
+        // Create a Circle object using the class from the 'shapes' package
+        Circle myCircle = new Circle(7.5);
+        System.out.println("\nCreated Circle:");
+        System.out.println("Radius: " + myCircle.calculateArea());
+        System.out.println("Perimeter: " + myCircle.calculatePerimeter());
+        System.out.println(myCircle); // Uses the overridden toString method
+
+        // Create a Rectangle object using the class from the 'shapes' package
+        Rectangle myRectangle = new Rectangle(10.0, 5.0);
+        System.out.println("\nCreated Rectangle:");
+        System.out.println("Length: " + myRectangle.calculateArea());
+        System.out.println("Width: " + myRectangle.calculatePerimeter());
+        System.out.println(myRectangle); // Uses the overridden toString method
+
+        // Demonstrate another instance
+        Circle smallCircle = new Circle(2.0);
+        Rectangle square = new Rectangle(4.0, 4.0);
+
+        System.out.println("\nAnother Circle:");
+        System.out.println(smallCircle);
+
+        System.out.println("\nAnother Rectangle (a square):");
+        System.out.println(square);
+
+        System.out.println("\n--- Package Demonstration Complete ---");
+    }
+}
+
