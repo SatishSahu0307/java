@@ -1,0 +1,150 @@
+package shapes;
+import java.util.*;
+
+/**
+ * Represents a Circle and provides methods to calculate its area and perimeter.
+ */
+public class Circle {
+    private double radius; // Radius of the circle
+
+    /**
+     * Constructs a Circle object with the specified radius.
+     * @param radius The radius of the circle. Must be non-negative.
+     */
+    public Circle(double radius) {
+        if (radius < 0) {
+            System.out.println("Warning: Circle radius cannot be negative. Setting to 0.");
+            this.radius = 0;
+        } else {
+            this.radius = radius;
+        }
+    }
+
+    /**
+     * Calculates the area of the circle.
+     * Formula: Area = p * radius^2
+     * @return The area of the circle.
+     */
+    public double calculateArea() {
+        return Math.PI * radius * radius;
+    }
+
+    /**
+     * Calculates the perimeter (circumference) of the circle.
+     * Formula: Perimeter = 2 * p * radius
+     * @return The perimeter of the circle.
+     */
+    public double calculatePerimeter() {
+        return 2 * Math.PI * radius;
+    }
+
+    /**
+     * Returns a string representation of the Circle object.
+     * @return A string containing the circle's radius, area, and perimeter.
+     */
+    @Override
+    public String toString() {
+        return String.format("Circle [Radius: %.2f, Area: %.2f, Perimeter: %.2f]",
+                             radius, calculateArea(), calculatePerimeter());
+    }
+}
+
+// --- File 2: shapes/Rectangle.java ---
+// This class also belongs to the 'shapes' package.
+package shapes;
+
+/**
+ * Represents a Rectangle and provides methods to calculate its area and perimeter.
+ */
+public class Rectangle {
+    private double length;  // Length of the rectangle
+    private double width;   // Width of the rectangle
+
+    /**
+     * Constructs a Rectangle object with the specified length and width.
+     * @param length The length of the rectangle. Must be non-negative.
+     * @param width The width of the rectangle. Must be non-negative.
+     */
+    public Rectangle(double length, double width) {
+        if (length < 0 || width < 0) {
+            System.out.println("Warning: Rectangle dimensions cannot be negative. Setting to 0.");
+            this.length = 0;
+            this.width = 0;
+        } else {
+            this.length = length;
+            this.width = width;
+        }
+    }
+
+    /**
+     * Calculates the area of the rectangle.
+     * Formula: Area = length * width
+     * @return The area of the rectangle.
+     */
+    public double calculateArea() {
+        return length * width;
+    }
+
+    /**
+     * Calculates the perimeter of the rectangle.
+     * Formula: Perimeter = 2 * (length + width)
+     * @return The perimeter of the rectangle.
+     */
+    public double calculatePerimeter() {
+        return 2 * (length + width);
+    }
+
+    /**
+     * Returns a string representation of the Rectangle object.
+     * @return A string containing the rectangle's dimensions, area, and perimeter.
+     */
+    @Override
+    public String toString() {
+        return String.format("Rectangle [Length: %.2f, Width: %.2f, Area: %.2f, Perimeter: %.2f]",
+                             length, width, calculateArea(), calculatePerimeter());
+    }
+}
+
+// --- File 3: MainApplication.java ---
+// This class is outside the 'shapes' package and imports it.
+// It would typically be in the root directory of your project or another package.
+import shapes.Circle;    // Import the Circle class from the shapes package
+import shapes.Rectangle; // Import the Rectangle class from the shapes package
+// Alternatively, you could use: import shapes.*; to import all classes from the package.
+
+/**
+ * Main application class to demonstrate the usage of classes from the 'shapes' package.
+ */
+public class MainApplication {
+
+    public static void main(String[] args) {
+        System.out.println("--- Demonstrating User-Defined Package 'shapes' ---");
+
+        // Create a Circle object using the class from the 'shapes' package
+        Circle myCircle = new Circle(7.5);
+        System.out.println("\nCreated Circle:");
+        System.out.println("Radius: " + myCircle.calculateArea());
+        System.out.println("Perimeter: " + myCircle.calculatePerimeter());
+        System.out.println(myCircle); // Uses the overridden toString method
+
+        // Create a Rectangle object using the class from the 'shapes' package
+        Rectangle myRectangle = new Rectangle(10.0, 5.0);
+        System.out.println("\nCreated Rectangle:");
+        System.out.println("Length: " + myRectangle.calculateArea());
+        System.out.println("Width: " + myRectangle.calculatePerimeter());
+        System.out.println(myRectangle); // Uses the overridden toString method
+
+        // Demonstrate another instance
+        Circle smallCircle = new Circle(2.0);
+        Rectangle square = new Rectangle(4.0, 4.0);
+
+        System.out.println("\nAnother Circle:");
+        System.out.println(smallCircle);
+
+        System.out.println("\nAnother Rectangle (a square):");
+        System.out.println(square);
+
+        System.out.println("\n--- Package Demonstration Complete ---");
+    }
+}
+
