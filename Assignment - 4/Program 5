@@ -1,0 +1,67 @@
+import java.util.Scanner; // Import the Scanner class for potential future input, though not used in this specific example
+
+/**
+ * The Test class demonstrates object creation, constructor usage,
+ * and a method to reverse an integer.
+ */
+class Test {
+    // Instance variable
+    private int number;
+
+    /**
+     * Constructor for the Test class.
+     * Initializes the 'number' instance variable with the value passed during object creation.
+     *
+     * @param num The integer value to initialize the 'number' field.
+     */
+    public Test(int num) {
+        this.number = num;
+        System.out.println("Test object created with number: " + this.number);
+    }
+
+    /**
+     * getReverse() method:
+     * Calculates the reverse of the 'number' instance variable.
+     * For example, if number is 123, the reverse is 321.
+     *
+     * @return The reversed integer.
+     */
+    public int getReverse() {
+        int originalNumber = this.number;
+        int reversedNumber = 0;
+
+        // Loop to reverse the number
+        while (originalNumber != 0) {
+            int digit = originalNumber % 10; // Get the last digit
+            reversedNumber = reversedNumber * 10 + digit; // Add the digit to the reversed number
+            originalNumber /= 10; // Remove the last digit from the original number
+        }
+        return reversedNumber;
+    }
+}
+
+/**
+ * The MainTest class contains the main method to run the Test program.
+ * It demonstrates how to create a Test object, initialize it with a number
+ * using the constructor, and then call the getReverse() method.
+ */
+public class MainTest {
+    public static void main(String[] args) {
+        // Create an object of the Test class, passing an integer to the constructor
+        System.out.println("--- Demonstrating Test Class ---");
+        Test myTestObject = new Test(12345); // Initializes 'number' to 12345
+
+        // Call the getReverse() method to get the reversed number
+        int reversedNum = myTestObject.getReverse();
+
+        // Print the original and reversed number
+        System.out.println("Original Number: " + 12345); // We know the original number passed
+        System.out.println("Reversed Number: " + reversedNum);
+
+        System.out.println("\n--- Another Example ---");
+        Test anotherTestObject = new Test(987); // Initializes 'number' to 987
+        int anotherReversedNum = anotherTestObject.getReverse();
+        System.out.println("Original Number: " + 987);
+        System.out.println("Reversed Number: " + anotherReversedNum);
+    }
+}
