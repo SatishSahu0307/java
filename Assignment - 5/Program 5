@@ -1,0 +1,53 @@
+import java.util.*;
+public class InfoDisplay {
+
+    /**
+     * Overloaded method to display an integer.
+     * @param number The integer to be displayed.
+     */
+    public void show(int number) {
+        System.out.println("Displaying an integer:");
+        System.out.println("  Integer value: " + number);
+        System.out.println("--------------------");
+    }
+
+    /**
+     * Overloaded method to display a string.
+     * @param message The string to be displayed.
+     */
+    public void show(String message) {
+        System.out.println("Displaying a string:");
+        System.out.println("  String message: \"" + message + "\"");
+        System.out.println("--------------------");
+    }
+
+    /**
+     * Overloaded method to display a string and an integer.
+     * @param message The string to be displayed.
+     * @param number The integer to be displayed.
+     */
+    public void show(String message, int number) {
+        System.out.println("Displaying a string and an integer:");
+        System.out.println("  String message: \"" + message + "\"");
+        System.out.println("  Integer value: " + number);
+        System.out.println("--------------------");
+    }
+
+    /**
+     * Main method to demonstrate the overloaded show methods.
+     */
+    public static void main(String[] args) {
+        System.out.println("Demonstrating InfoDisplay Class Overloaded show() Methods:\n");
+
+        InfoDisplay display = new InfoDisplay();
+
+        // Calling show() with an integer
+        display.show(123);
+
+        // Calling show() with a string
+        display.show("Hello, Java Overloading!");
+
+        // Calling show() with a string and an integer
+        display.show("The answer is", 42);
+    }
+}
