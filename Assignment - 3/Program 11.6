@@ -1,0 +1,38 @@
+import java.util.Scanner; // Import the Scanner class to read user input
+
+public class InvertedLeftAngledCharPattern {
+
+    public static void main(String[] args) {
+        // Create a Scanner object to get input from the console
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of rows for the inverted left-angled A to E pattern (e.g., 5 for E to A): ");
+
+        // Read the integer input from the user for the number of rows
+        int numRows = scanner.nextInt();
+
+        // Validate input: ensure the number of rows is positive and reasonable for A-E
+        if (numRows <= 0) {
+            System.out.println("Please enter a positive number of rows.");
+        } else {
+            System.out.println("\nHere is your inverted left-angled A to E pattern:");
+
+            // Outer loop: controls the number of rows
+            // 'i' represents the current row number, iterating downwards from numRows to 1
+            for (int i = numRows; i >= 1; i--) {
+                // Inner loop: controls the characters printed in each row
+                // It prints characters starting from 'A' up to the character
+                // corresponding to the current value of 'i'
+                for (int j = 0; j < i; j++) {
+                    // Convert integer 'j' to a character by adding it to 'A'
+                    // 'A' + 0 = 'A', 'A' + 1 = 'B', and so on.
+                    System.out.print((char) ('A' + j) + " ");
+                }
+                System.out.println(); // Move to the next line after printing all characters for the current row
+            }
+        }
+
+        // Close the scanner to prevent resource leaks
+        scanner.close();
+    }
+}
